@@ -1,6 +1,7 @@
 module Scenes.SceneSettings exposing
     ( SceneDataTypes(..)
-    , SceneT, nullSceneT
+    , SceneT
+    , nullSceneT
     )
 
 {-| This is the doc for this module
@@ -11,8 +12,8 @@ module Scenes.SceneSettings exposing
 
 -}
 
+import Canvas exposing (empty)
 import Lib.Scene.Base exposing (Scene)
-import Lib.Tools.Maybe exposing (nothing2)
 $0
 
 
@@ -45,5 +46,5 @@ nullSceneT : SceneT
 nullSceneT =
     { init = \_ _ -> NullSceneData
     , update = \_ g ( _, _ ) -> ( NullSceneData, [], g )
-    , view = nothing2
+    , view = \_ _ -> empty
     }

@@ -15,7 +15,7 @@ This is a component model module. It should define init, update and view model.
 -}
 
 import Base exposing (GlobalData, Msg)
-import Canvas exposing (Renderable)
+import Canvas exposing (Renderable, empty)
 import Dict
 import Lib.Component.Base exposing (ComponentTMsg(..), ComponentTarget(..), Data, DefinedTypes(..))
 
@@ -49,6 +49,6 @@ Change this to your own component view function.
 If there is no view function, return Nothing.
 
 -}
-viewModel : ( Data, Int ) -> GlobalData -> Maybe Renderable
+viewModel : ( Data, Int ) -> GlobalData -> Renderable
 viewModel _ _ =
-    Nothing
+    empty

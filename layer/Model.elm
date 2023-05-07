@@ -14,7 +14,7 @@ module Scenes.$0.$1.Model exposing
 
 import Array
 import Base exposing (GlobalData, Msg)
-import Canvas exposing (Renderable, group)
+import Canvas exposing (Renderable)
 import Lib.Component.Base exposing (ComponentTMsg(..))
 import Lib.Component.ComponentHandler exposing (updateComponents, viewComponent)
 import Lib.Layer.Base exposing (LayerMsg(..), LayerTarget(..))
@@ -76,10 +76,6 @@ If you don't have components, remove viewComponent.
 If you have other elements than components, add them after viewComponent.
 
 -}
-viewModel : ( Model, Int ) -> CommonData -> GlobalData -> Maybe Renderable
+viewModel : ( Model, Int ) -> CommonData -> GlobalData -> Renderable
 viewModel ( model, t ) _ gd =
-    Just
-        (group []
-            [ Maybe.withDefault (group [] []) (viewComponent gd t model.components)
-            ]
-        )
+    viewComponent gd t model.components
