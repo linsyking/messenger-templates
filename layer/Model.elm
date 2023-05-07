@@ -54,8 +54,10 @@ If you don't have components, remove viewComponent.
 If you have other elements than components, add them after viewComponent.
 
 -}
-viewModel : ( Model, Int ) -> CommonData -> GlobalData -> Renderable
+viewModel : ( Model, Int ) -> CommonData -> GlobalData -> Maybe Renderable
 viewModel ( model, t ) _ gd =
-    group []
-        [ Maybe.withDefault (group [] []) (viewComponent gd t model.components)
-        ]
+    Just
+        (group []
+            [ renderText gd 30 "Ver. 1.0.0" "Courier New" ( 1700, 1000 )
+            ]
+        )

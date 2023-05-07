@@ -49,6 +49,6 @@ Change this to your own component view function.
 If there is no view function, remove this and change the view function in export module to nothing.
 
 -}
-viewModel : ( Data, Int ) -> GlobalData -> Renderable
+viewModel : ( Data, Int ) -> GlobalData -> Maybe Renderable
 viewModel _ _ =
-    group [] []
+    Nothing

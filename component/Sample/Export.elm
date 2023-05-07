@@ -11,7 +11,6 @@ Write a description here for how to use your component.
 
 import Components.$0.$0 exposing (initModel, updateModel, viewModel)
 import Lib.Component.Base exposing (Component, ComponentTMsg(..))
-import Lib.Tools.Maybe exposing (just2)
 
 
 {-| initComponent
@@ -24,5 +23,5 @@ initComponent t id ct =
     , data = initModel t id ct
     , init = initModel
     , update = updateModel
-    , view = just2 viewModel
+    , view = viewModel
     }

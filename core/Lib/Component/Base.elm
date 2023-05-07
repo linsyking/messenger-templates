@@ -1,5 +1,6 @@
 module Lib.Component.Base exposing
     ( ComponentTMsg(..)
+    , ComponentTMsgType(..)
     , DefinedTypes(..)
     , Component
     , Data
@@ -23,6 +24,7 @@ It is **not** fast to communicate between many components.
 Gamecomponents have better speed when communicating with each other. (their message types are built-in)
 
 @docs ComponentTMsg
+@docs ComponentTMsgType
 @docs DefinedTypes
 @docs Component
 @docs Data
@@ -89,16 +91,24 @@ However, if your data types are too complicated, you might want to create your o
 
 -}
 type ComponentTMsg
+    = ComponentUnnamedMsg ComponentTMsgType
+    | ComponentNamedMsg ComponentTarget ComponentTMsgType
+    | NullComponentMsg
+
+
+{-| Data types for message sending
+-}
+type ComponentTMsgType
     = ComponentStringMsg String
+    | ComponentStringDataMsg String ComponentTMsgType
     | ComponentIntMsg Int
     | ComponentFloatMsg Float
     | ComponentBoolMsg Bool
-    | ComponentListMsg (List ComponentTMsg)
+    | ComponentListMsg (List ComponentTMsgType)
     | ComponentDictMsg Data
     | ComponentComponentMsg Component
     | ComponentComponentTargetMsg ComponentTarget
     | ComponentDTMsg DefinedTypes
-    | NullComponentMsg
 
 
 {-| ComponentTarget is the target you want to send the message to.
