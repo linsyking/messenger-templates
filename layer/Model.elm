@@ -58,6 +58,6 @@ viewModel : ( Model, Int ) -> CommonData -> GlobalData -> Maybe Renderable
 viewModel ( model, t ) _ gd =
     Just
         (group []
-            [ renderText gd 30 "Ver. 1.0.0" "Courier New" ( 1700, 1000 )
+            [ Maybe.withDefault (group [] []) (viewComponent gd t model.components)
             ]
         )

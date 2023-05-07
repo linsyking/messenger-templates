@@ -15,7 +15,7 @@ This is a component model module. It should define init, update and view model.
 -}
 
 import Base exposing (GlobalData, Msg)
-import Canvas exposing (Renderable, group)
+import Canvas exposing (Renderable)
 import Dict
 import Lib.Component.Base exposing (ComponentTMsg(..), ComponentTarget(..), Data, DefinedTypes(..))
 
