@@ -7,19 +7,17 @@ module Scenes.$0.$1.Global exposing
 {-| This is the doc for this module
 
 @docs dataToLDT
-
 @docs ldtToData
-
 @docs getLayerT
 
 -}
 
 import Base exposing (GlobalData, Msg)
 import Canvas exposing (Renderable)
-import Lib.Layer.Base exposing (..)
+import Lib.Layer.Base exposing (Layer, LayerMsg, LayerTarget)
 import Scenes.$0.$1.Export exposing (Data, nullData)
 import Scenes.$0.LayerBase exposing (CommonData)
-import Scenes.$0.LayerSettings exposing (..)
+import Scenes.$0.LayerSettings exposing (LayerDataType(..), LayerT)
 
 
 {-| dataToLDT
@@ -58,7 +56,7 @@ getLayerT layer =
             in
             ( ( dataToLDT rldt, rcd, ltm ), newgd )
 
-        view : ( LayerDataType, Int ) -> CommonData -> GlobalData -> Renderable
+        view : ( LayerDataType, Int ) -> CommonData -> GlobalData -> Maybe Renderable
         view ( ldt, t ) cd gd =
             layer.view ( ldtToData ldt, t ) cd gd
     in

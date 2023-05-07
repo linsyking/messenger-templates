@@ -7,12 +7,10 @@ module Main exposing (main)
 -}
 
 import Audio exposing (AudioCmd, AudioData)
-import Base exposing (..)
+import Base exposing (Flags, Msg(..))
 import Browser.Events exposing (onKeyDown, onKeyUp, onMouseDown, onMouseMove, onResize)
 import Canvas
-import Canvas.Settings exposing (fill)
-import Color
-import Common exposing (..)
+import Common exposing (Model, audio, initGlobalData, resetSceneStartTime, updateSceneStartTime)
 import Dict
 import Html exposing (Html)
 import Html.Attributes exposing (style)
@@ -22,11 +20,11 @@ import Lib.Coordinate.Coordinates exposing (fromMouseToReal, getStartPoint, maxH
 import Lib.Layer.Base exposing (LayerMsg(..))
 import Lib.LocalStorage.LocalStorage exposing (decodeLSInfo, encodeLSInfo, sendInfo)
 import Lib.Resources.Base exposing (allTexture, getTexture, saveSprite)
-import Lib.Scene.Base exposing (..)
+import Lib.Scene.Base exposing (SceneMsg(..), SceneOutputMsg(..))
 import Lib.Scene.SceneLoader exposing (getCurrentScene, loadSceneByName)
 import Lib.Tools.Browser exposing (alert)
 import MainConfig exposing (initScene, timeInterval)
-import Scenes.SceneSettings exposing (..)
+import Scenes.SceneSettings exposing (SceneDataTypes(..), nullSceneT)
 import Task
 import Time
 
@@ -164,17 +162,11 @@ update _ msg model =
 
         TextureLoaded name (Just t) ->
             let
-                oldsprites =
-                    model.currentGlobalData.sprites
-
-                newsp =
-                    saveSprite oldsprites name t
-
                 oldgd =
                     model.currentGlobalData
 
                 newgd =
-                    { oldgd | sprites = newsp }
+                    { oldgd | sprites = saveSprite model.currentGlobalData.sprites name t }
             in
             ( { model | currentGlobalData = newgd }, Cmd.none, Audio.cmdNone )
 
@@ -254,15 +246,36 @@ You can change the mouse style here.
 -}
 view : AudioData -> Model -> Html Msg
 view _ model =
-    Canvas.toHtmlWith
-        { width = model.currentGlobalData.realWidth
-        , height = model.currentGlobalData.realHeight
-        , textures = getTexture
-        }
-        [ style "left" (String.fromFloat model.currentGlobalData.startLeft)
-        , style "top" (String.fromFloat model.currentGlobalData.startTop)
-        , style "position" "fixed"
-        ]
-        [ Canvas.shapes [ fill Color.white ] [ Canvas.rect ( 0, 0 ) (toFloat model.currentGlobalData.realWidth) (toFloat model.currentGlobalData.realHeight) ]
-        , (getCurrentScene model).view ( model.currentData, model.time ) model.currentGlobalData
-        ]
+    let
+        canvas =
+            Canvas.toHtmlWith
+                { width = model.currentGlobalData.realWidth
+                , height = model.currentGlobalData.realHeight
+                , textures = getTexture
+                }
+                [ style "left" (String.fromFloat model.currentGlobalData.startLeft)
+                , style "top" (String.fromFloat model.currentGlobalData.startTop)
+                , style "position" "fixed"
+                ]
+                (MainConfig.background model.currentGlobalData
+                    :: (let
+                            sceneView =
+                                (getCurrentScene model).view ( model.currentData, model.time ) model.currentGlobalData
+                        in
+                        case sceneView of
+                            Just x ->
+                                [ x ]
+
+                            Nothing ->
+                                []
+                       )
+                )
+    in
+    Html.div []
+        (case model.currentGlobalData.extraHTML of
+            Just x ->
+                [ canvas, x ]
+
+            Nothing ->
+                [ canvas ]
+        )

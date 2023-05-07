@@ -20,18 +20,16 @@ Different levels are different scenes.
 You have to transmit data to next scene if you don't store the data in globaldata.
 
 @docs SceneMsg
-
 @docs SceneOutputMsg
-
 @docs Scene
-
 @docs nullScene
 
 -}
 
 import Base exposing (GlobalData, Msg)
-import Canvas exposing (Renderable, group)
+import Canvas exposing (Renderable)
 import Lib.Audio.Base exposing (AudioOption)
+import Lib.Tools.Maybe exposing (nothing2)
 
 
 {-| Scene
@@ -39,7 +37,7 @@ import Lib.Audio.Base exposing (AudioOption)
 type alias Scene a =
     { init : Int -> SceneMsg -> a
     , update : Msg -> GlobalData -> ( a, Int ) -> ( a, List SceneOutputMsg, GlobalData )
-    , view : ( a, Int ) -> GlobalData -> Renderable
+    , view : ( a, Int ) -> GlobalData -> Maybe Renderable
     }
 
 
@@ -49,7 +47,7 @@ nullScene : Scene Bool
 nullScene =
     { init = \_ _ -> True
     , update = \_ gd ( x, _ ) -> ( x, [], gd )
-    , view = \_ _ -> group [] []
+    , view = nothing2
     }
 
 

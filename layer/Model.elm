@@ -7,21 +7,19 @@ module Scenes.$0.$1.Model exposing
 {-| This is the doc for this module
 
 @docs initModel
-
 @docs updateModel
-
 @docs viewModel
 
 -}
 
 import Array
-import Base exposing (..)
-import Canvas exposing (Renderable)
+import Base exposing (GlobalData, Msg)
+import Canvas exposing (Renderable, group)
 import Lib.Component.Base exposing (ComponentTMsg(..))
 import Lib.Component.ComponentHandler exposing (updateComponents, viewComponent)
 import Lib.Layer.Base exposing (LayerMsg(..), LayerTarget(..))
-import Lib.Scene.Base exposing (..)
-import Scenes.$0.$1.Common exposing (..)
+import Lib.Render.Render exposing (renderText)
+import Scenes.$0.$1.Common exposing (Model)
 import Scenes.$0.LayerBase exposing (CommonData)
 
 

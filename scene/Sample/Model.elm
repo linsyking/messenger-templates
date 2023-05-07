@@ -8,11 +8,8 @@ module Scenes.$0.Model exposing
 {-| This is the doc for this module
 
 @docs initModel
-
 @docs handleLayerMsg
-
 @docs updateModel
-
 @docs viewModel
 
 -}
@@ -72,6 +69,6 @@ updateModel msg gd ( model, t ) =
 
 {-| Default view function
 -}
-viewModel : ( Model, Int ) -> GlobalData -> Renderable
+viewModel : ( Model, Int ) -> GlobalData -> Maybe Renderable
 viewModel ( model, t ) gd =
     viewLayer gd t model.commonData model.layers

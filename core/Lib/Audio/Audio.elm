@@ -22,7 +22,7 @@ import Audio exposing (AudioData)
 import Duration
 import Json.Decode as Decode
 import Json.Encode as Encode
-import Lib.Audio.Base exposing (..)
+import Lib.Audio.Base exposing (AudioOption(..), AudioRepo)
 import Time
 
 

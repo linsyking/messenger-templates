@@ -13,6 +13,8 @@ module Lib.DefinedTypes.Parser exposing
     , dDictDTSet
     , dComponentGet
     , dComponentSet
+    , dComponentTargetGet
+    , dComponentTargetSet
     )
 
 {-| This is a parser for DefinedTypes.
@@ -20,37 +22,26 @@ module Lib.DefinedTypes.Parser exposing
 You have to use functions here to decode and encode DefinedTypes.
 
 @docs dIntGet
-
 @docs dIntSet
-
 @docs dFloatGet
-
 @docs dFloatSet
-
 @docs dBoolGet
-
 @docs dBoolSet
-
 @docs dStringGet
-
 @docs dStringSet
-
 @docs dListDTGet
-
 @docs dListDTSet
-
 @docs dDictDTGet
-
 @docs dDictDTSet
-
 @docs dComponentGet
-
 @docs dComponentSet
+@docs dComponentTargetGet
+@docs dComponentTargetSet
 
 -}
 
 import Dict exposing (Dict)
-import Lib.Component.Base exposing (Component, DefinedTypes(..), nullComponent)
+import Lib.Component.Base exposing (Component, ComponentTarget(..), DefinedTypes(..), nullComponent)
 
 
 {-| dIntGet
@@ -204,3 +195,22 @@ dComponentGet f s =
 dComponentSet : String -> Component -> Dict String DefinedTypes -> Dict String DefinedTypes
 dComponentSet s t f =
     Dict.update s (\_ -> Just (CDComponent t)) f
+
+
+{-| dComponentTargetGet
+-}
+dComponentTargetGet : Dict String DefinedTypes -> String -> ComponentTarget
+dComponentTargetGet f s =
+    case Dict.get s f of
+        Just (CDComponentTarget x) ->
+            x
+
+        _ ->
+            ComponentParentLayer
+
+
+{-| dComponentTargetSet
+-}
+dComponentTargetSet : String -> ComponentTarget -> Dict String DefinedTypes -> Dict String DefinedTypes
+dComponentTargetSet s t f =
+    Dict.update s (\_ -> Just (CDComponentTarget t)) f

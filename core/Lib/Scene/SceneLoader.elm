@@ -8,20 +8,17 @@ module Lib.Scene.SceneLoader exposing
 {-| This is the doc for this module
 
 @docs getScene
-
 @docs loadScene
-
 @docs loadSceneByName
-
 @docs getCurrentScene
 
 -}
 
-import Common exposing (..)
+import Common exposing (Model)
 import Lib.Scene.Base exposing (SceneMsg)
 import List exposing (head)
 import Scenes.AllScenes exposing (allScenes)
-import Scenes.SceneSettings exposing (..)
+import Scenes.SceneSettings exposing (SceneT, nullSceneT)
 
 
 {-| getScene

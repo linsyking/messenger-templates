@@ -23,20 +23,17 @@ It is **not** fast to communicate between many components.
 Gamecomponents have better speed when communicating with each other. (their message types are built-in)
 
 @docs ComponentTMsg
-
 @docs DefinedTypes
-
 @docs Component
-
 @docs Data
-
 @docs nullComponent
 
 -}
 
 import Base exposing (GlobalData, Msg)
-import Canvas exposing (Renderable, group)
+import Canvas exposing (Renderable)
 import Dict exposing (Dict)
+import Lib.Tools.Maybe exposing (nothing2)
 
 
 
@@ -59,7 +56,7 @@ type alias Component =
     , data : Data
     , init : Int -> Int -> ComponentTMsg -> Data
     , update : Msg -> GlobalData -> ComponentTMsg -> ( Data, Int ) -> ( Data, List ( ComponentTarget, ComponentTMsg ), GlobalData )
-    , view : ( Data, Int ) -> GlobalData -> Renderable
+    , view : ( Data, Int ) -> GlobalData -> Maybe Renderable
     }
 
 
@@ -76,7 +73,7 @@ nullComponent =
             , []
             , gd
             )
-    , view = \_ _ -> group [] []
+    , view = nothing2
     }
 
 
@@ -94,10 +91,13 @@ However, if your data types are too complicated, you might want to create your o
 type ComponentTMsg
     = ComponentStringMsg String
     | ComponentIntMsg Int
-    | ComponentLStringMsg (List String)
-    | ComponentLSStringMsg String (List String)
-    | ComponentStringDictMsg String Data
-    | ComponentStringIntMsg String Int
+    | ComponentFloatMsg Float
+    | ComponentBoolMsg Bool
+    | ComponentListMsg (List ComponentTMsg)
+    | ComponentDictMsg Data
+    | ComponentComponentMsg Component
+    | ComponentComponentTargetMsg ComponentTarget
+    | ComponentDTMsg DefinedTypes
     | NullComponentMsg
 
 
@@ -142,5 +142,6 @@ type DefinedTypes
     | CDFloat Float
     | CDString String
     | CDComponent Component
+    | CDComponentTarget ComponentTarget
     | CDListDT (List DefinedTypes)
     | CDDictDT (Dict String DefinedTypes)

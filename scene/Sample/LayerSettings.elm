@@ -11,7 +11,7 @@ module Scenes.$0.LayerSettings exposing
 
 -}
 
-import Lib.Layer.Base exposing (..)
+import Lib.Layer.Base exposing (Layer)
 import Scenes.$0.LayerBase exposing (CommonData)
 $1
 

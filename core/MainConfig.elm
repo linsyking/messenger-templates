@@ -1,7 +1,7 @@
 module MainConfig exposing
     ( initScene
     , timeInterval
-    , plHeight, plWidth
+    , background, plHeight, plWidth
     )
 
 {-| This module is used for configuring the parameters of the game framework.
@@ -10,6 +10,11 @@ module MainConfig exposing
 @docs timeInterval
 
 -}
+
+import Base exposing (GlobalData)
+import Canvas exposing (Renderable)
+import Canvas.Settings exposing (fill)
+import Color
 
 
 {-| Start scene of the game
@@ -45,3 +50,15 @@ plHeight =
 plWidth : Int
 plWidth =
     1920
+
+
+{-| The background of the game.
+
+This renderable will be rendered below all other renderables.
+
+Default is a white rectangle. You can change the background color to other color when debugging.
+
+-}
+background : GlobalData -> Renderable
+background gd =
+    Canvas.shapes [ fill Color.white ] [ Canvas.rect ( 0, 0 ) (toFloat gd.realWidth) (toFloat gd.realHeight) ]

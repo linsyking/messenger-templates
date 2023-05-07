@@ -81,6 +81,11 @@ updateLayerProto =
     updateObjects recBody
 
 
+{-| updateLayer
+
+Update all the layers.
+
+-}
 updateLayer : Msg -> GlobalData -> Int -> a -> List ( String, Layer a b ) -> ( ( List ( String, Layer a b ), a, List LayerMsg ), GlobalData )
 updateLayer msg gd t cd xs =
     let
@@ -98,7 +103,14 @@ updateLayer msg gd t cd xs =
 Get the view of the layer.
 
 -}
-viewLayer : GlobalData -> Int -> a -> List ( String, Layer a b ) -> Renderable
+viewLayer : GlobalData -> Int -> a -> List ( String, Layer a b ) -> Maybe Renderable
 viewLayer vp t cd xs =
-    Canvas.group []
-        (List.map (\( _, l ) -> l.view ( l.data, t ) cd vp) xs)
+    let
+        children =
+            List.filterMap (\( _, l ) -> l.view ( l.data, t ) cd vp) xs
+    in
+    if List.isEmpty children then
+        Nothing
+
+    else
+        Just (Canvas.group [] children)

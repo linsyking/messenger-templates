@@ -9,13 +9,9 @@ module Lib.Render.Render exposing
 {-| This is the doc for this module
 
 @docs renderSprite
-
 @docs renderSpriteWithRev
-
 @docs renderText
-
 @docs renderTextWithColor
-
 @docs renderSpriteRawPos
 
 -}

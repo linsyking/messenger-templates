@@ -13,9 +13,7 @@ It is mainly used to seperate different rendering layers.
 Using layers can help us deal with different things in different layers.
 
 @docs LayerMsg
-
 @docs LayerTarget
-
 @docs Layer
 
 -}
@@ -36,7 +34,7 @@ type alias Layer a b =
     { data : b
     , init : Int -> LayerMsg -> a -> b
     , update : Msg -> GlobalData -> LayerMsg -> ( b, Int ) -> a -> ( ( b, a, List ( LayerTarget, LayerMsg ) ), GlobalData )
-    , view : ( b, Int ) -> a -> GlobalData -> Renderable
+    , view : ( b, Int ) -> a -> GlobalData -> Maybe Renderable
     }
 
 

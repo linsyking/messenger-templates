@@ -16,11 +16,8 @@ I storage TMsg here that every scene can use it to transmit data, however, those
 This message is the GLOBAL scope message. This message limits what messsages you can get inside a scene.
 
 @docs Msg
-
 @docs GlobalData
-
 @docs Flags
-
 @docs LSInfo
 
 -}
@@ -28,6 +25,7 @@ This message is the GLOBAL scope message. This message limits what messsages you
 import Audio
 import Canvas.Texture exposing (Texture)
 import Dict exposing (Dict)
+import Html exposing (Html)
 import Lib.Audio.Base exposing (AudioOption)
 import Time
 
@@ -69,6 +67,8 @@ It is mainly used for display and reading/writing some localstorage data.
 
 `localstorage` records the data that we save in localstorage.
 
+`extraHTML` is used to render extra HTML tags. Be careful to use this.
+
 -}
 type alias GlobalData =
     { browserViewPort : ( Int, Int )
@@ -80,6 +80,7 @@ type alias GlobalData =
     , sprites : Dict String Texture
     , scenestarttime : Int
     , mousePos : ( Float, Float )
+    , extraHTML : Maybe (Html Msg)
     , localstorage : LSInfo
     }
 

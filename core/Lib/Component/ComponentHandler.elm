@@ -140,9 +140,17 @@ updateOnceComponentById msg ct gd t id xs =
 
 {-| Generate the view of the components
 -}
-viewComponent : GlobalData -> Int -> Array Component -> Renderable
+viewComponent : GlobalData -> Int -> Array Component -> Maybe Renderable
 viewComponent vp t xs =
-    Canvas.group [] (Array.toList (Array.map (\x -> x.view ( x.data, t ) vp) xs))
+    let
+        children =
+            List.filterMap (\x -> x.view ( x.data, t ) vp) (Array.toList xs)
+    in
+    if List.isEmpty children then
+        Nothing
+
+    else
+        Just (Canvas.group [] children)
 
 
 {-| Get the nth component in an array

@@ -9,7 +9,7 @@ This module records all the scenes.
 -}
 
 $0
-import Scenes.SceneSettings exposing (..)
+import Scenes.SceneSettings exposing (SceneT)
 
 
 {-| allScenes

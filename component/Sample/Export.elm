@@ -1,13 +1,9 @@
-module Components.$0.Export exposing
-    ( component
-    , initComponent
-    )
+module Components.$0.Export exposing (initComponent)
 
-{-| This is the doc for this module
+{-|
+Component Export
 
-Console is a tool to load levels and enter commands.
-
-@docs component
+Write a description here for how to use your component.
 
 @docs initComponent
 
@@ -15,26 +11,18 @@ Console is a tool to load levels and enter commands.
 
 import Components.$0.$0 exposing (initModel, updateModel, viewModel)
 import Lib.Component.Base exposing (Component, ComponentTMsg(..))
-
-
-{-| component
--}
-component : Component
-component =
-    { name = "$0"
-    , data = initModel 0 0 NullComponentMsg
-    , init = initModel
-    , update = updateModel
-    , view = viewModel
-    }
+import Lib.Tools.Maybe exposing (just2)
 
 
 {-| initComponent
-t is the initial time for this component.
-
-You need to pass a ComponentIntMsg for its id.
+Write a description here for how to initialize your component.
 
 -}
 initComponent : Int -> Int -> ComponentTMsg -> Component
 initComponent t id ct =
-    { component | data = component.init t id ct }
+    { name = "$0"
+    , data = initModel t id ct
+    , init = initModel
+    , update = updateModel
+    , view = just2 viewModel
+    }

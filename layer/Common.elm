@@ -7,7 +7,6 @@ module Scenes.$0.Common exposing (Model)
 -}
 
 import Array exposing (Array)
-import Base exposing (..)
 import Lib.Component.Base exposing (Component)
 
 

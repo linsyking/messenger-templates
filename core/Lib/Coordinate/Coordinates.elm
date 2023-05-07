@@ -19,19 +19,12 @@ This module deals with the coordinate transformation.
 This module is very important because it can calculate the correct position of the point you want to draw.
 
 @docs fixedPosToReal
-
 @docs posToReal
-
 @docs widthToReal
-
 @docs heightToReal
-
 @docs maxHandW
-
 @docs getStartPoint
-
 @docs judgeMouse
-
 @docs fromMouseToReal
 
 -}
