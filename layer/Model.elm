@@ -18,7 +18,6 @@ import Canvas exposing (Renderable, group)
 import Lib.Component.Base exposing (ComponentTMsg(..))
 import Lib.Component.ComponentHandler exposing (updateComponents, viewComponent)
 import Lib.Layer.Base exposing (LayerMsg(..), LayerTarget(..))
-import Lib.Render.Render exposing (renderText)
 import Scenes.$0.$1.Common exposing (Model)
 import Scenes.$0.LayerBase exposing (CommonData)
 
@@ -49,7 +48,14 @@ updateModel msg gd _ ( model, t ) cd =
 
 {-| viewModel
 Default view function
+
+If you don't have components, remove viewComponent.
+
+If you have other elements than components, add them after viewComponent.
+
 -}
 viewModel : ( Model, Int ) -> CommonData -> GlobalData -> Renderable
 viewModel ( model, t ) _ gd =
-    viewComponent gd t model.components
+    group []
+        [ Maybe.withDefault (group [] []) (viewComponent gd t model.components)
+        ]
