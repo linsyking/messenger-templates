@@ -46,7 +46,7 @@ updateModel _ gd _ ( d, _ ) =
 
 Change this to your own component view function.
 
-If there is no view function, remove this and change the view function in export module to nothing.
+If there is no view function, return Nothing.
 
 -}
 viewModel : ( Data, Int ) -> GlobalData -> Maybe Renderable
