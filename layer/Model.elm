@@ -31,8 +31,18 @@ initModel _ _ _ =
     }
 
 
+{-| Handle component messages (that are sent to this layer).
+-}
+handleComponentMsg : GlobalData -> ComponentTMsg -> ( Model, Int ) -> CommonData -> ( ( Model, CommonData, List ( LayerTarget, LayerMsg ) ), GlobalData )
+handleComponentMsg gd _ ( model, _ ) cd =
+    ( ( model, cd, [] ), gd )
+
+
 {-| updateModel
 Default update function
+
+Add your logic to handle msg and LayerMsg here
+
 -}
 updateModel : Msg -> GlobalData -> LayerMsg -> ( Model, Int ) -> CommonData -> ( ( Model, CommonData, List ( LayerTarget, LayerMsg ) ), GlobalData )
 updateModel msg gd _ ( model, t ) cd =
@@ -40,10 +50,22 @@ updateModel msg gd _ ( model, t ) cd =
         components =
             model.components
 
-        ( newComponents, _, newGlobalData ) =
+        ( newComponents, newMsg, newGlobalData ) =
             updateComponents msg gd t components
+
+        ( ( newModel, newCommonData, newMsg2 ), newGlobalData2 ) =
+            List.foldl
+                (\cTMsg ( ( m, ccd, cmsg ), cgd ) ->
+                    let
+                        ( ( nm, ncd, nmsg ), ngd ) =
+                            handleComponentMsg cgd cTMsg ( m, t ) ccd
+                    in
+                    ( ( nm, ncd, nmsg ++ cmsg ), ngd )
+                )
+                ( ( { model | components = newComponents }, cd, [] ), newGlobalData )
+                newMsg
     in
-    ( ( { model | components = newComponents }, cd, [] ), newGlobalData )
+    ( ( newModel, newCommonData, newMsg2 ), newGlobalData2 )
 
 
 {-| viewModel

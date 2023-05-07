@@ -46,6 +46,8 @@ Add your own layer messages here.
 type LayerMsg
     = LayerStringMsg String
     | LayerIntMsg Int
+    | LayerFloatMsg Float
+    | LayerStringDataMsg String LayerMsg
     | LayerSoundMsg String String AudioOption
     | LayerStopSoundMsg String
     | NullLayerMsg
