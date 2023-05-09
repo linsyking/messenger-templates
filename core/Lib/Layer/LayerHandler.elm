@@ -20,45 +20,29 @@ For example, you can implement a "stopper" that stops the layer updating if some
 
 -}
 
-import Base exposing (GlobalData, Msg)
 import Canvas exposing (Renderable)
-import Lib.Layer.Base exposing (Layer, LayerMsg(..), LayerTarget(..))
+import Lib.Layer.Base exposing (Env, Layer, LayerMsg(..), LayerTarget(..))
 import Messenger.Recursion exposing (RecBody)
 import Messenger.RecursionList exposing (updateObjects)
 
 
-type alias Env a =
-    { msg : Msg
-    , globalData : GlobalData
-    , t : Int
-    , commonData : a
-    }
-
-
-type alias LayerT a b =
-    ( String, Layer a b )
-
-
-update : LayerT a b -> Env a -> LayerMsg -> ( LayerT a b, List ( LayerTarget, LayerMsg ), Env a )
-update l env lm =
+update : Layer a b c -> Env b -> LayerMsg -> ( Layer a b c, List ( LayerTarget, LayerMsg ), Env b )
+update layer env lm =
     let
-        layer =
-            Tuple.second l
-
-        ( ( newData, newCD, nl ), newGD ) =
-            layer.update env.msg env.globalData lm ( layer.data, env.t ) env.commonData
+        ( newData, newMsgs, newEnv ) =
+            layer.update env lm layer.data
     in
-    ( ( Tuple.first l, { layer | data = newData } ), nl, { env | globalData = newGD, commonData = newCD } )
+    ( { layer | data = newData }, newMsgs, newEnv )
 
 
-match : LayerT a b -> LayerTarget -> Bool
+match : Layer a b c -> LayerTarget -> Bool
 match l t =
     case t of
         LayerParentScene ->
             False
 
         LayerName n ->
-            n == Tuple.first l
+            n == l.name
 
 
 super : LayerTarget -> Bool
@@ -71,14 +55,9 @@ super t =
             False
 
 
-recBody : RecBody (LayerT a b) LayerMsg (Env a) LayerTarget
+recBody : RecBody (Layer a b c) LayerMsg (Env b) LayerTarget
 recBody =
     { update = update, match = match, super = super }
-
-
-updateLayerProto : Env a -> LayerMsg -> List (LayerT a b) -> ( List (LayerT a b), List LayerMsg, Env a )
-updateLayerProto =
-    updateObjects recBody
 
 
 {-| updateLayer
@@ -86,16 +65,9 @@ updateLayerProto =
 Update all the layers.
 
 -}
-updateLayer : Msg -> GlobalData -> Int -> a -> List ( String, Layer a b ) -> ( ( List ( String, Layer a b ), a, List LayerMsg ), GlobalData )
-updateLayer msg gd t cd xs =
-    let
-        env =
-            { msg = msg, globalData = gd, t = t, commonData = cd }
-
-        ( nl, nlm, nenv ) =
-            updateLayerProto env NullLayerMsg xs
-    in
-    ( ( nl, nenv.commonData, nlm ), nenv.globalData )
+updateLayer : Env b -> LayerMsg -> List (Layer a b c) -> ( List (Layer a b c), List LayerMsg, Env b )
+updateLayer =
+    updateObjects recBody
 
 
 {-| viewLayer
@@ -103,7 +75,7 @@ updateLayer msg gd t cd xs =
 Get the view of the layer.
 
 -}
-viewLayer : GlobalData -> Int -> a -> List ( String, Layer a b ) -> Renderable
-viewLayer vp t cd xs =
+viewLayer : Env b -> List (Layer a b c) -> Renderable
+viewLayer env xs =
     Canvas.group []
-        (List.map (\( _, l ) -> l.view ( l.data, t ) cd vp) xs)
+        (List.map (\l -> l.view env l.data) xs)

@@ -13,29 +13,28 @@ module Scenes.$0.$1.Model exposing
 -}
 
 import Array
-import Base exposing (GlobalData, Msg)
 import Canvas exposing (Renderable)
 import Lib.Component.Base exposing (ComponentTMsg(..))
 import Lib.Component.ComponentHandler exposing (updateComponents, viewComponent)
-import Lib.Layer.Base exposing (LayerMsg(..), LayerTarget(..))
-import Scenes.$0.$1.Common exposing (Model)
-import Scenes.$0.LayerBase exposing (CommonData)
+import Lib.Layer.Base exposing (LayerMsg(..), LayerTarget(..), addCommonData, noCommonData)
+import Scenes.$0.$1.Common exposing (Env, Model)
+import Scenes.$0.LayerBase exposing (LayerInitData)
 
 
 {-| initModel
 Add components here
 -}
-initModel : Int -> LayerMsg -> CommonData -> Model
-initModel _ _ _ =
+initModel : Env -> LayerInitData -> Model
+initModel _ _ =
     { components = Array.empty
     }
 
 
 {-| Handle component messages (that are sent to this layer).
 -}
-handleComponentMsg : GlobalData -> ComponentTMsg -> ( Model, Int ) -> CommonData -> ( ( Model, CommonData, List ( LayerTarget, LayerMsg ) ), GlobalData )
-handleComponentMsg gd _ ( model, _ ) cd =
-    ( ( model, cd, [] ), gd )
+handleComponentMsg : Env -> ComponentTMsg -> Model -> ( Model, List ( LayerTarget, LayerMsg ), Env )
+handleComponentMsg env _ model =
+    ( model, [], env )
 
 
 {-| updateModel
@@ -44,28 +43,28 @@ Default update function
 Add your logic to handle msg and LayerMsg here
 
 -}
-updateModel : Msg -> GlobalData -> LayerMsg -> ( Model, Int ) -> CommonData -> ( ( Model, CommonData, List ( LayerTarget, LayerMsg ) ), GlobalData )
-updateModel msg gd _ ( model, t ) cd =
+updateModel : Env -> LayerMsg -> Model -> ( Model, List ( LayerTarget, LayerMsg ), Env )
+updateModel env _ model =
     let
         components =
             model.components
 
-        ( newComponents, newMsg, newGlobalData ) =
-            updateComponents msg gd t components
+        ( newComponents, newMsg, newEnv ) =
+            updateComponents (noCommonData env) NullComponentMsg components
 
-        ( ( newModel, newCommonData, newMsg2 ), newGlobalData2 ) =
+        ( newModel, newMsg2, newEnv2 ) =
             List.foldl
-                (\cTMsg ( ( m, ccd, cmsg ), cgd ) ->
+                (\cTMsg ( m, cmsg, cenv ) ->
                     let
-                        ( ( nm, ncd, nmsg ), ngd ) =
-                            handleComponentMsg cgd cTMsg ( m, t ) ccd
+                        ( nm, nmsg, nenv ) =
+                            handleComponentMsg cenv cTMsg m
                     in
-                    ( ( nm, ncd, nmsg ++ cmsg ), ngd )
+                    ( nm, nmsg ++ cmsg, nenv )
                 )
-                ( ( { model | components = newComponents }, cd, [] ), newGlobalData )
+                ( { model | components = newComponents }, [], addCommonData env.commonData newEnv )
                 newMsg
     in
-    ( ( newModel, newCommonData, newMsg2 ), newGlobalData2 )
+    ( newModel, newMsg2, newEnv2 )
 
 
 {-| viewModel
@@ -76,6 +75,6 @@ If you don't have components, remove viewComponent.
 If you have other elements than components, add them after viewComponent.
 
 -}
-viewModel : ( Model, Int ) -> CommonData -> GlobalData -> Renderable
-viewModel ( model, t ) _ gd =
-    viewComponent gd t model.components
+viewModel : Env -> Model -> Renderable
+viewModel env model =
+    viewComponent (noCommonData env) model.components

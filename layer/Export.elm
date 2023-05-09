@@ -16,7 +16,7 @@ import Array
 import Lib.Layer.Base exposing (Layer)
 import Scenes.$0.$1.Common exposing (Model)
 import Scenes.$0.$1.Model exposing (initModel, updateModel, viewModel)
-import Scenes.$0.LayerBase exposing (CommonData)
+import Scenes.$0.LayerBase exposing (CommonData, LayerInitData)
 
 
 {-| Data
@@ -35,9 +35,10 @@ nullData =
 
 {-| layer
 -}
-layer : Layer CommonData Data
+layer : Layer Data CommonData LayerInitData
 layer =
-    { data = nullData
+    { name = "$1"
+    , data = nullData
     , init = initModel
     , update = updateModel
     , view = viewModel

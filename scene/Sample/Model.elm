@@ -14,22 +14,21 @@ module Scenes.$0.Model exposing
 
 -}
 
-import Base exposing (GlobalData, Msg)
 import Canvas exposing (Renderable)
 import Lib.Audio.Base exposing (AudioOption(..))
-import Lib.Layer.Base exposing (LayerMsg(..))
-import Lib.Layer.LayerHandlerRaw exposing (updateLayer, viewLayer)
-import Lib.Scene.Base exposing (SceneMsg(..), SceneOutputMsg(..))
+import Lib.Layer.Base as L exposing (LayerMsg(..), addCommonData, noCommonData)
+import Lib.Layer.LayerHandler exposing (updateLayer, viewLayer)
+import Lib.Scene.Base exposing (Env, SceneInitData(..), SceneMsg(..), SceneOutputMsg(..))
 import Scenes.$0.Common exposing (Model)
-import Scenes.$0.LayerBase exposing (initCommonData)
+import Scenes.$0.LayerBase exposing (CommonData, LayerInitData(..), nullCommonData)
 $1
 
 
 {-| Initialize the model
 -}
-initModel : Int -> SceneMsg -> Model
-initModel t _ =
-    { commonData = initCommonData
+initModel : Env -> SceneInitData -> Model
+initModel env _ =
+    { commonData = nullCommonData
     , layers =
         [
             $2
@@ -42,9 +41,9 @@ initModel t _ =
 Usually you are adding logic here.
 
 -}
-handleLayerMsg : GlobalData -> LayerMsg -> ( Model, Int ) -> ( Model, List SceneOutputMsg, GlobalData )
-handleLayerMsg gd _ ( model, _ ) =
-    ( model, [], gd )
+handleLayerMsg : L.Env CommonData -> LayerMsg -> Model -> ( Model, List SceneOutputMsg, L.Env CommonData )
+handleLayerMsg env _ model =
+    ( model, [], env )
 
 
 {-| updateModel
@@ -52,23 +51,23 @@ handleLayerMsg gd _ ( model, _ ) =
 Default update function. Normally you won't change this function.
 
 -}
-updateModel : Msg -> GlobalData -> ( Model, Int ) -> ( Model, List SceneOutputMsg, GlobalData )
-updateModel msg gd ( model, t ) =
+updateModel : Env -> Model -> ( Model, List SceneOutputMsg, Env )
+updateModel env model =
     let
-        ( ( newdata, newcd, msgs ), newgd ) =
-            updateLayer msg gd t model.commonData model.layers
+        ( newdata, msgs, newenv ) =
+            updateLayer (addCommonData model.commonData env) NullLayerMsg model.layers
 
         nmodel =
-            { model | commonData = newcd, layers = newdata }
+            { model | commonData = newenv.commonData, layers = newdata }
 
         ( newmodel, newsow, newgd2 ) =
-            List.foldl (\x ( y, _, cgd ) -> handleLayerMsg cgd x ( y, t )) ( nmodel, [], newgd ) msgs
+            List.foldl (\x ( y, _, cgd ) -> handleLayerMsg cgd x y) ( nmodel, [], newenv ) msgs
     in
-    ( newmodel, newsow, newgd2 )
+    ( newmodel, newsow, noCommonData newgd2 )
 
 
 {-| Default view function
 -}
-viewModel : ( Model, Int ) -> GlobalData -> Renderable
-viewModel ( model, t ) gd =
-    viewLayer gd t model.commonData model.layers
+viewModel : Env -> Model -> Renderable
+viewModel env model =
+    viewLayer (addCommonData model.commonData env) model.layers

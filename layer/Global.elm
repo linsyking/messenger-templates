@@ -12,11 +12,12 @@ module Scenes.$0.$1.Global exposing
 
 -}
 
-import Base exposing (GlobalData, Msg)
 import Canvas exposing (Renderable)
 import Lib.Layer.Base exposing (Layer, LayerMsg, LayerTarget)
+import Messenger.GeneralModel exposing (GeneralModel)
+import Scenes.$0.$1.Common exposing (Env)
 import Scenes.$0.$1.Export exposing (Data, nullData)
-import Scenes.$0.LayerBase exposing (CommonData)
+import Scenes.$0.LayerBase exposing (CommonData, LayerInitData)
 import Scenes.$0.LayerSettings exposing (LayerDataType(..), LayerT)
 
 
@@ -41,23 +42,23 @@ ldtToData ldt =
 
 {-| getLayerT
 -}
-getLayerT : Layer CommonData Data -> LayerT
+getLayerT : Layer Data CommonData LayerInitData -> LayerT
 getLayerT layer =
     let
-        init : Int -> LayerMsg -> CommonData -> LayerDataType
-        init t lm cd =
-            dataToLDT (layer.init t lm cd)
+        init : Env -> LayerInitData -> LayerDataType
+        init env i =
+            dataToLDT (layer.init env i)
 
-        update : Msg -> GlobalData -> LayerMsg -> ( LayerDataType, Int ) -> CommonData -> ( ( LayerDataType, CommonData, List ( LayerTarget, LayerMsg ) ), GlobalData )
-        update m gd lm ( ldt, t ) cd =
+        update : Env -> LayerMsg -> LayerDataType -> ( LayerDataType, List ( LayerTarget, LayerMsg ), Env )
+        update env lm ldt =
             let
-                ( ( rldt, rcd, ltm ), newgd ) =
-                    layer.update m gd lm ( ldtToData ldt, t ) cd
+                ( rldt, newmsg, newenv ) =
+                    layer.update env lm (ldtToData ldt)
             in
-            ( ( dataToLDT rldt, rcd, ltm ), newgd )
+            ( dataToLDT rldt, newmsg, newenv )
 
-        view : ( LayerDataType, Int ) -> CommonData -> GlobalData -> Renderable
-        view ( ldt, t ) cd gd =
-            layer.view ( ldtToData ldt, t ) cd gd
+        view : Env -> LayerDataType -> Renderable
+        view env ldt =
+            layer.view env (ldtToData ldt)
     in
-    Layer (dataToLDT layer.data) init update view
+    GeneralModel layer.name (dataToLDT layer.data) init update view

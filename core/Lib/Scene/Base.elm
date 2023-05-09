@@ -1,8 +1,7 @@
 module Lib.Scene.Base exposing
     ( SceneMsg(..)
     , SceneOutputMsg(..)
-    , Scene
-    , nullScene
+    , Scene, Env, SceneInitData(..)
     , LayerPacker
     )
 
@@ -21,33 +20,37 @@ You have to transmit data to next scene if you don't store the data in globaldat
 
 @docs SceneMsg
 @docs SceneOutputMsg
-@docs Scene
-@docs nullScene
+@docs Scene, Env, SceneInitData
 
 -}
 
 import Base exposing (GlobalData, Msg)
-import Canvas exposing (Renderable, empty)
+import Canvas exposing (Renderable)
 import Lib.Audio.Base exposing (AudioOption)
 
 
 {-| Scene
 -}
 type alias Scene a =
-    { init : Int -> SceneMsg -> a
-    , update : Msg -> GlobalData -> ( a, Int ) -> ( a, List SceneOutputMsg, GlobalData )
-    , view : ( a, Int ) -> GlobalData -> Renderable
+    { init : Env -> SceneInitData -> a
+    , update : Env -> a -> ( a, List SceneOutputMsg, Env )
+    , view : Env -> a -> Renderable
     }
 
 
-{-| nullScene
+{-| Environment data
 -}
-nullScene : Scene Bool
-nullScene =
-    { init = \_ _ -> True
-    , update = \_ gd ( x, _ ) -> ( x, [], gd )
-    , view = \_ _ -> empty
+type alias Env =
+    { msg : Msg
+    , t : Int
+    , globalData : GlobalData
     }
+
+
+{-| Data to initilize the scene.
+-}
+type SceneInitData
+    = NullSceneInitData
 
 
 {-| SceneMsg
@@ -72,7 +75,7 @@ Add your own messages here if you want to do more things.
 
 -}
 type SceneOutputMsg
-    = SOMChangeScene ( SceneMsg, String )
+    = SOMChangeScene ( SceneInitData, String )
     | SOMPlayAudio String String AudioOption
     | SOMAlert String
     | SOMStopAudio String
@@ -84,5 +87,5 @@ A default scene will have those data in it.
 -}
 type alias LayerPacker a b =
     { commonData : a
-    , layers : List ( String, b )
+    , layers : List b
     }

@@ -1,7 +1,6 @@
 module Components.$0.Export exposing (initComponent)
 
-{-|
-Component Export
+{-| Component Export
 
 Write a description here for how to use your component.
 
@@ -10,17 +9,16 @@ Write a description here for how to use your component.
 -}
 
 import Components.$0.$0 exposing (initModel, updateModel, viewModel)
-import Lib.Component.Base exposing (Component, ComponentTMsg(..))
+import Lib.Component.Base exposing (Component, ComponentInitData, ComponentTMsg(..), Env)
 
 
 {-| initComponent
 Write a description here for how to initialize your component.
-
 -}
-initComponent : Int -> Int -> ComponentTMsg -> Component
-initComponent t id ct =
+initComponent : Env -> ComponentInitData -> Component
+initComponent env i =
     { name = "$0"
-    , data = initModel t id ct
+    , data = initModel env i
     , init = initModel
     , update = updateModel
     , view = viewModel

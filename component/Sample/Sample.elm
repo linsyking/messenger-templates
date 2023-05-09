@@ -1,8 +1,8 @@
-module Components.$0.$0 exposing (
-    initModel,
-    updateModel,
-    viewModel
-)
+module Components.$0.$0 exposing
+    ( initModel
+    , updateModel
+    , viewModel
+    )
 
 {-| Component
 
@@ -14,10 +14,9 @@ This is a component model module. It should define init, update and view model.
 
 -}
 
-import Base exposing (GlobalData, Msg)
 import Canvas exposing (Renderable, empty)
 import Dict
-import Lib.Component.Base exposing (ComponentTMsg(..), ComponentTarget(..), Data, DefinedTypes(..))
+import Lib.Component.Base exposing (ComponentInitData(..), ComponentTMsg(..), ComponentTarget(..), Data, DefinedTypes(..), Env)
 
 
 {-| initModel
@@ -25,11 +24,16 @@ import Lib.Component.Base exposing (ComponentTMsg(..), ComponentTarget(..), Data
 Initialize the model. It should update the id.
 
 -}
-initModel : Int -> Int -> ComponentTMsg -> Data
-initModel _ id _ =
-    Dict.fromList
-        [ ( "id", CDInt id )
-        ]
+initModel : Env -> ComponentInitData -> Data
+initModel _ i =
+    case i of
+        ComponentID id _ ->
+            Dict.fromList
+                [ ( "id", CDInt id )
+                ]
+
+        _ ->
+            Dict.fromList []
 
 
 {-| updateModel
@@ -37,9 +41,9 @@ initModel _ id _ =
 Add your component logic here.
 
 -}
-updateModel : Msg -> GlobalData -> ComponentTMsg -> ( Data, Int ) -> ( Data, List ( ComponentTarget, ComponentTMsg ), GlobalData )
-updateModel _ gd _ ( d, _ ) =
-    ( d, [], gd )
+updateModel : Env -> ComponentTMsg -> Data -> ( Data, List ( ComponentTarget, ComponentTMsg ), Env )
+updateModel env _ d =
+    ( d, [], env )
 
 
 {-| viewModel
@@ -49,6 +53,6 @@ Change this to your own component view function.
 If there is no view function, return Nothing.
 
 -}
-viewModel : ( Data, Int ) -> GlobalData -> Renderable
+viewModel : Env -> Data -> Renderable
 viewModel _ _ =
     empty

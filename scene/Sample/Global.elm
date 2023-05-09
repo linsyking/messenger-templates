@@ -16,10 +16,9 @@ Don't modify this file.
 
 -}
 
-import Base exposing (GlobalData, Msg)
 import Canvas exposing (Renderable)
-import Lib.Scene.Base exposing (Scene, SceneMsg, SceneOutputMsg)
-import Scenes.Home.Export exposing (Data, nullData)
+import Lib.Scene.Base exposing (Env, Scene, SceneInitData, SceneOutputMsg)
+import Scenes.$0.Export exposing (Data, nullData)
 import Scenes.SceneSettings exposing (SceneDataTypes(..), SceneT)
 
 
@@ -47,21 +46,21 @@ sdtToData dt =
 sceneToST : Scene Data -> SceneT
 sceneToST sd =
     let
-        init : Int -> SceneMsg -> SceneDataTypes
+        init : Env -> SceneInitData -> SceneDataTypes
         init t tm =
             dataToSDT (sd.init t tm)
 
-        update : Msg -> GlobalData -> ( SceneDataTypes, Int ) -> ( SceneDataTypes, List SceneOutputMsg, GlobalData )
-        update msg gd ( dt, t ) =
+        update : Env -> SceneDataTypes -> ( SceneDataTypes, List SceneOutputMsg, Env )
+        update env sdt =
             let
-                ( sdt, som, newgd ) =
-                    sd.update msg gd ( sdtToData dt, t )
+                ( newm, som, newgd ) =
+                    sd.update env (sdtToData sdt)
             in
-            ( dataToSDT sdt, som, newgd )
+            ( dataToSDT newm, som, newgd )
 
-        view : ( SceneDataTypes, Int ) -> GlobalData -> Renderable
-        view ( dt, t ) vp =
-            sd.view ( sdtToData dt, t ) vp
+        view : Env -> SceneDataTypes -> Renderable
+        view env sdt =
+            sd.view env (sdtToData sdt)
     in
     { init = init
     , update = update

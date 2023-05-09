@@ -4,7 +4,7 @@ module Lib.Component.Base exposing
     , Component
     , Data
     , nullComponent
-    , ComponentTarget(..)
+    , ComponentInitData(..), ComponentTarget(..), Env
     )
 
 {-|
@@ -33,6 +33,7 @@ Gamecomponents have better speed when communicating with each other. (their mess
 import Base exposing (GlobalData, Msg)
 import Canvas exposing (Renderable, empty)
 import Dict exposing (Dict)
+import Messenger.GeneralModel exposing (GeneralModel)
 
 
 
@@ -51,12 +52,24 @@ Examples are [GameComponent](https://github.com/linsyking/Reweave/blob/master/sr
 
 -}
 type alias Component =
-    { name : String
-    , data : Data
-    , init : Int -> Int -> ComponentTMsg -> Data
-    , update : Msg -> GlobalData -> ComponentTMsg -> ( Data, Int ) -> ( Data, List ( ComponentTarget, ComponentTMsg ), GlobalData )
-    , view : ( Data, Int ) -> GlobalData -> Renderable
+    GeneralModel Data Env ComponentInitData ComponentTMsg ComponentTarget Renderable
+
+
+{-| Environment data
+-}
+type alias Env =
+    { msg : Msg
+    , t : Int
+    , globalData : GlobalData
     }
+
+
+{-| Data type used to initialize a component.
+-}
+type ComponentInitData
+    = ComponentID Int ComponentInitData
+    | ComponentMsg ComponentTMsg
+    | NullComponentInitData
 
 
 {-| nullComponent
@@ -65,12 +78,12 @@ nullComponent : Component
 nullComponent =
     { name = "NULL"
     , data = Dict.empty
-    , init = \_ _ _ -> Dict.empty
+    , init = \_ _ -> Dict.empty
     , update =
-        \_ gd _ _ ->
+        \env _ _ ->
             ( Dict.empty
             , []
-            , gd
+            , env
             )
     , view = \_ _ -> empty
     }

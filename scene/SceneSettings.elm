@@ -45,6 +45,6 @@ type alias SceneT =
 nullSceneT : SceneT
 nullSceneT =
     { init = \_ _ -> NullSceneData
-    , update = \_ g ( _, _ ) -> ( NullSceneData, [], g )
+    , update = \env m -> ( m, [], env )
     , view = \_ _ -> empty
     }
