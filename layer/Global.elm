@@ -15,7 +15,7 @@ module Scenes.$0.$1.Global exposing
 import Canvas exposing (Renderable)
 import Lib.Layer.Base exposing (Layer, LayerMsg, LayerTarget)
 import Messenger.GeneralModel exposing (GeneralModel)
-import Scenes.$0.$1.Common exposing (Env)
+import Scenes.$0.$1.Common exposing (EnvC)
 import Scenes.$0.$1.Export exposing (Data, nullData)
 import Scenes.$0.LayerBase exposing (CommonData, LayerInitData)
 import Scenes.$0.LayerSettings exposing (LayerDataType(..), LayerT)
@@ -45,11 +45,11 @@ ldtToData ldt =
 getLayerT : Layer Data CommonData LayerInitData -> LayerT
 getLayerT layer =
     let
-        init : Env -> LayerInitData -> LayerDataType
+        init : EnvC -> LayerInitData -> LayerDataType
         init env i =
             dataToLDT (layer.init env i)
 
-        update : Env -> LayerMsg -> LayerDataType -> ( LayerDataType, List ( LayerTarget, LayerMsg ), Env )
+        update : EnvC -> LayerMsg -> LayerDataType -> ( LayerDataType, List ( LayerTarget, LayerMsg ), EnvC )
         update env lm ldt =
             let
                 ( rldt, newmsg, newenv ) =
@@ -57,7 +57,7 @@ getLayerT layer =
             in
             ( dataToLDT rldt, newmsg, newenv )
 
-        view : Env -> LayerDataType -> Renderable
+        view : EnvC -> LayerDataType -> Renderable
         view env ldt =
             layer.view env (ldtToData ldt)
     in
