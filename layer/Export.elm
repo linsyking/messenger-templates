@@ -1,20 +1,20 @@
 module Scenes.$0.$1.Export exposing
     ( Data
     , nullData
-    , layer
+    , initLayer
     )
 
 {-| This is the doc for this module
 
 @docs Data
 @docs nullData
-@docs layer
+@docs initLayer
 
 -}
 
 import Array
 import Lib.Layer.Base exposing (Layer)
-import Scenes.$0.$1.Common exposing (Model)
+import Scenes.$0.$1.Common exposing (EnvC, Model)
 import Scenes.$0.$1.Model exposing (initModel, updateModel, viewModel)
 import Scenes.$0.LayerBase exposing (CommonData, LayerInitData)
 
@@ -33,13 +33,12 @@ nullData =
     }
 
 
-{-| layer
+{-| initLayer
 -}
-layer : Layer Data CommonData LayerInitData
-layer =
+initLayer : EnvC -> LayerInitData -> Layer Data CommonData
+initLayer env i =
     { name = "$1"
-    , data = nullData
-    , init = initModel
+    , data = initModel env i
     , update = updateModel
     , view = viewModel
     }

@@ -26,4 +26,4 @@ type LayerDataType
 {-| LayerT
 -}
 type alias LayerT =
-    Layer LayerDataType CommonData LayerInitData
+    Layer LayerDataType CommonData

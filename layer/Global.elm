@@ -1,13 +1,7 @@
-module Scenes.$0.$1.Global exposing
-    ( dataToLDT
-    , ldtToData
-    , getLayerT
-    )
+module Scenes.$0.$1.Global exposing (getLayerT)
 
 {-| This is the doc for this module
 
-@docs dataToLDT
-@docs ldtToData
 @docs getLayerT
 
 -}
@@ -17,19 +11,15 @@ import Lib.Layer.Base exposing (Layer, LayerMsg, LayerTarget)
 import Messenger.GeneralModel exposing (GeneralModel)
 import Scenes.$0.$1.Common exposing (EnvC)
 import Scenes.$0.$1.Export exposing (Data, nullData)
-import Scenes.$0.LayerBase exposing (CommonData, LayerInitData)
+import Scenes.$0.LayerBase exposing (CommonData)
 import Scenes.$0.LayerSettings exposing (LayerDataType(..), LayerT)
 
 
-{-| dataToLDT
--}
 dataToLDT : Data -> LayerDataType
 dataToLDT data =
     $1Data data
 
 
-{-| ldtToData
--}
 ldtToData : LayerDataType -> Data
 ldtToData ldt =
     case ldt of
@@ -45,10 +35,6 @@ ldtToData ldt =
 getLayerT : Layer Data CommonData LayerInitData -> LayerT
 getLayerT layer =
     let
-        init : EnvC -> LayerInitData -> LayerDataType
-        init env i =
-            dataToLDT (layer.init env i)
-
         update : EnvC -> LayerMsg -> LayerDataType -> ( LayerDataType, List ( LayerTarget, LayerMsg ), EnvC )
         update env lm ldt =
             let
@@ -61,4 +47,4 @@ getLayerT layer =
         view env ldt =
             layer.view env (ldtToData ldt)
     in
-    GeneralModel layer.name (dataToLDT layer.data) init update view
+    GeneralModel layer.name (dataToLDT layer.data) update view
