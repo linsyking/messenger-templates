@@ -20,7 +20,6 @@ initComponent : Env -> ComponentInitData -> Component
 initComponent env i =
     { name = "$0"
     , data = initModel env i
-    , init = initModel
     , update = updateModel
     , view = viewModel
     }

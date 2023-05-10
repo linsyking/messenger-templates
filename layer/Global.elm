@@ -32,7 +32,7 @@ ldtToData ldt =
 
 {-| getLayerT
 -}
-getLayerT : Layer Data CommonData LayerInitData -> LayerT
+getLayerT : Layer Data CommonData -> LayerT
 getLayerT layer =
     let
         update : EnvC -> LayerMsg -> LayerDataType -> ( LayerDataType, List ( LayerTarget, LayerMsg ), EnvC )
