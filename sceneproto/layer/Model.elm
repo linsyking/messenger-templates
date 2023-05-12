@@ -24,8 +24,7 @@ Add components here
 -}
 initModel : EnvC -> LayerInitData -> Model
 initModel _ _ =
-        _ ->
-            nullModel
+    nullModel
 
 
 {-| updateModel
