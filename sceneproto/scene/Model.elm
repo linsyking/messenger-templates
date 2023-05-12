@@ -19,9 +19,10 @@ import Lib.Audio.Base exposing (AudioOption(..))
 import Lib.Env.Env exposing (Env, EnvC, addCommonData, noCommonData)
 import Lib.Layer.Base exposing (LayerMsg(..))
 import Lib.Layer.LayerHandler exposing (updateLayer, viewLayer)
-import Lib.Scene.Base exposing (SceneInitData(..), SceneMsg(..), SceneOutputMsg(..))
+import Lib.Scene.Base exposing (SceneInitData(..), SceneOutputMsg(..))
 import SceneProtos.$0.Common exposing (Model)
-import SceneProtos.$0.LayerBase exposing (CommonData, LayerInitData(..), nullCommonData)
+import SceneProtos.$0.LayerBase exposing (CommonData, nullCommonData)
+import SceneProtos.CoreEngine.LayerInit exposing (LayerInitData(..))
 $1
 
 
@@ -56,7 +57,7 @@ updateModel : Env -> Model -> ( Model, List SceneOutputMsg, Env )
 updateModel env model =
     let
         ( newdata, msgs, newenv ) =
-            updateLayer (addCommonData model.commonData env) NullLayerMsg model.layers
+            updateLayer (addCommonData model.commonData env) model.layers
 
         nmodel =
             { model | commonData = newenv.commonData, layers = newdata }
