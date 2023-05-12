@@ -9,7 +9,7 @@ module Scenes.$0.Common exposing (Model, nullModel, EnvC)
 import Array exposing (Array)
 import Lib.Component.Base exposing (Component)
 import Lib.Env.Env as Env
-import Scenes.Home.LayerBase exposing (CommonData)
+import Scenes.$0.LayerBase exposing (CommonData)
 
 
 {-| Model
