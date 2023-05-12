@@ -1,13 +1,7 @@
-module SceneProtos.SimpleGame.GameLayer.Global exposing
-    ( dataToLDT
-    , ldtToData
-    , getLayerT
-    )
+module SceneProtos.$0.$1.Global exposing (getLayerT)
 
 {-| This is the doc for this module
 
-@docs dataToLDT
-@docs ldtToData
 @docs getLayerT
 
 -}
@@ -15,17 +9,17 @@ module SceneProtos.SimpleGame.GameLayer.Global exposing
 import Canvas exposing (Renderable)
 import Lib.Layer.Base exposing (Layer, LayerMsg, LayerTarget)
 import Messenger.GeneralModel exposing (GeneralModel)
-import SceneProtos.SimpleGame.GameLayer.Common exposing (EnvC)
-import SceneProtos.SimpleGame.GameLayer.Export exposing (Data, nullData)
-import SceneProtos.SimpleGame.LayerBase exposing (CommonData, LayerInitData)
-import SceneProtos.SimpleGame.LayerSettings exposing (LayerDataType(..), LayerT)
+import SceneProtos.$0.$1.Common exposing (EnvC, nullModel)
+import SceneProtos.$0.$1.Export exposing (Data)
+import SceneProtos.$0.LayerBase exposing (CommonData)
+import SceneProtos.$0.LayerSettings exposing (LayerDataType(..), LayerT)
 
 
 {-| dataToLDT
 -}
 dataToLDT : Data -> LayerDataType
 dataToLDT data =
-    GameLayerData data
+    $1Data data
 
 
 {-| ldtToData
@@ -33,22 +27,18 @@ dataToLDT data =
 ldtToData : LayerDataType -> Data
 ldtToData ldt =
     case ldt of
-        GameLayerData x ->
+        $1Data x ->
             x
 
         _ ->
-            nullData
+            nullModel
 
 
 {-| getLayerT
 -}
-getLayerT : Layer Data CommonData LayerInitData -> LayerT
+getLayerT : Layer Data CommonData -> LayerT
 getLayerT layer =
     let
-        init : EnvC -> LayerInitData -> LayerDataType
-        init env i =
-            dataToLDT (layer.init env i)
-
         update : EnvC -> LayerMsg -> LayerDataType -> ( LayerDataType, List ( LayerTarget, LayerMsg ), EnvC )
         update env lm ldt =
             let
@@ -61,4 +51,4 @@ getLayerT layer =
         view env ldt =
             layer.view env (ldtToData ldt)
     in
-    GeneralModel layer.name (dataToLDT layer.data) init update view
+    GeneralModel layer.name (dataToLDT layer.data) update view

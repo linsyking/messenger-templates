@@ -1,21 +1,20 @@
-module SceneProtos.SimpleGame.GameLayer.Export exposing
+module SceneProtos.$0.$1.Export exposing
     ( Data
-    , nullData
-    , layer
+    , initLayer
     )
 
 {-| This is the doc for this module
 
 @docs Data
-@docs nullData
-@docs layer
+@docs initLayer
 
 -}
 
 import Lib.Layer.Base exposing (Layer)
-import SceneProtos.SimpleGame.GameLayer.Common exposing (Model)
-import SceneProtos.SimpleGame.GameLayer.Model exposing (initModel, updateModel, viewModel)
-import SceneProtos.SimpleGame.LayerBase exposing (CommonData, LayerInitData)
+import SceneProtos.$0.$1.Common exposing (EnvC, Model)
+import SceneProtos.$0.$1.Model exposing (initModel, updateModel, viewModel)
+import SceneProtos.$0.LayerBase exposing (CommonData)
+import SceneProtos.$0.LayerInit exposing (LayerInitData)
 
 
 {-| Data
@@ -24,20 +23,12 @@ type alias Data =
     Model
 
 
-{-| nullData
+{-| initLayer
 -}
-nullData : Data
-nullData =
-    {}
-
-
-{-| layer
--}
-layer : Layer Data CommonData LayerInitData
-layer =
-    { name = "GameLayer"
-    , data = nullData
-    , init = initModel
+initLayer : EnvC -> LayerInitData -> Layer Data CommonData
+initLayer env i =
+    { name = "$1"
+    , data = initModel env i
     , update = updateModel
     , view = viewModel
     }

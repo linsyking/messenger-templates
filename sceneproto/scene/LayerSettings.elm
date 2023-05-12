@@ -12,7 +12,7 @@ module SceneProtos.$0.LayerSettings exposing
 -}
 
 import Lib.Layer.Base exposing (Layer)
-import SceneProtos.$0.LayerBase exposing (CommonData, LayerInitData)
+import SceneProtos.$0.LayerBase exposing (CommonData)
 $1
 
 
@@ -26,4 +26,4 @@ type LayerDataType
 {-| LayerT
 -}
 type alias LayerT =
-    Layer LayerDataType CommonData LayerInitData
+    Layer LayerDataType CommonData

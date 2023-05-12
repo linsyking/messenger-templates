@@ -1,4 +1,4 @@
-module SceneProtos.SimpleGame.GameLayer.Model exposing
+module SceneProtos.$0.$1.Model exposing
     ( initModel
     , updateModel
     , viewModel
@@ -12,11 +12,11 @@ module SceneProtos.SimpleGame.GameLayer.Model exposing
 
 -}
 
+import Array exposing (Array)
 import Canvas exposing (Renderable, empty)
-import Lib.Component.Base exposing (ComponentMsg(..))
 import Lib.Layer.Base exposing (LayerMsg(..), LayerTarget(..))
-import SceneProtos.SimpleGame.GameLayer.Common exposing (EnvC, Model)
-import SceneProtos.SimpleGame.LayerBase exposing (LayerInitData)
+import SceneProtos.$0.$1.Common exposing (EnvC, Model, nullModel)
+import SceneProtos.$0.LayerInit exposing (LayerInitData(..))
 
 
 {-| initModel
@@ -24,7 +24,8 @@ Add components here
 -}
 initModel : EnvC -> LayerInitData -> Model
 initModel _ _ =
-    {}
+        _ ->
+            nullModel
 
 
 {-| updateModel
@@ -47,5 +48,5 @@ If you have other elements than components, add them after viewComponent.
 
 -}
 viewModel : EnvC -> Model -> Renderable
-viewModel _ _ =
+viewModel env model =
     empty

@@ -1,14 +1,12 @@
 module SceneProtos.$0.LayerBase exposing
     ( CommonData
-    , LayerInitData(..), $0Init, nullCommonData
+    , nullCommonData
     )
 
 {-| This is the doc for this module
 
 @docs CommonData
 @docs initCommonData
-@docs LayerInitData
-@docs $0Init
 
 -}
 
@@ -22,19 +20,8 @@ type alias CommonData =
     {}
 
 
-{-| Null CommonData
+{-| Init CommonData
 -}
 nullCommonData : CommonData
 nullCommonData =
-    {}
-
-{-| Layer init data
--}
-type LayerInitData
-    = NullLayerInitData
-
-
-{-| Scene init data
--}
-type alias $0Init =
     {}
