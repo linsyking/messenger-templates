@@ -1,4 +1,4 @@
-module Scenes.$0.Common exposing (Model, nullModel, EnvC)
+module Scenes.$0.$1.Common exposing (Model, nullModel, EnvC)
 
 {-| This is the doc for this module
 
