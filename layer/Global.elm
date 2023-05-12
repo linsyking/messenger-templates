@@ -9,8 +9,8 @@ module Scenes.$0.$1.Global exposing (getLayerT)
 import Canvas exposing (Renderable)
 import Lib.Layer.Base exposing (Layer, LayerMsg, LayerTarget)
 import Messenger.GeneralModel exposing (GeneralModel)
-import Scenes.$0.$1.Common exposing (EnvC)
-import Scenes.$0.$1.Export exposing (Data, nullData)
+import Scenes.$0.$1.Common exposing (EnvC, nullModel)
+import Scenes.$0.$1.Export exposing (Data)
 import Scenes.$0.LayerBase exposing (CommonData)
 import Scenes.$0.LayerSettings exposing (LayerDataType(..), LayerT)
 
@@ -27,7 +27,7 @@ ldtToData ldt =
             x
 
         _ ->
-            nullData
+            nullModel
 
 
 {-| getLayerT

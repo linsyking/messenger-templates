@@ -13,7 +13,7 @@ module SceneProtos.$0.LayerBase exposing
 
 {-| CommonData
 
-Edit your own CommonData here!
+Edit your own CommonData here.
 
 -}
 type alias CommonData =

@@ -6,7 +6,6 @@ module SceneProtos.$0.LayerSettings exposing
 {-| This is the doc for this module
 
 @docs LayerDataType
-
 @docs LayerT
 
 -}

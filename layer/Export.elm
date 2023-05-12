@@ -1,18 +1,15 @@
 module Scenes.$0.$1.Export exposing
     ( Data
-    , nullData
     , initLayer
     )
 
 {-| This is the doc for this module
 
 @docs Data
-@docs nullData
 @docs initLayer
 
 -}
 
-import Array
 import Lib.Layer.Base exposing (Layer)
 import Scenes.$0.$1.Common exposing (EnvC, Model)
 import Scenes.$0.$1.Model exposing (initModel, updateModel, viewModel)
@@ -23,14 +20,6 @@ import Scenes.$0.LayerBase exposing (CommonData, LayerInitData)
 -}
 type alias Data =
     Model
-
-
-{-| nullData
--}
-nullData : Data
-nullData =
-    { components = Array.empty
-    }
 
 
 {-| initLayer
