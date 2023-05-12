@@ -12,7 +12,6 @@ module SceneProtos.$0.$1.Model exposing
 
 -}
 
-import Array exposing (Array)
 import Canvas exposing (Renderable, empty)
 import Lib.Layer.Base exposing (LayerMsg(..), LayerTarget(..))
 import SceneProtos.$0.$1.Common exposing (EnvC, Model, nullModel)
@@ -47,5 +46,5 @@ If you have other elements than components, add them after viewComponent.
 
 -}
 viewModel : EnvC -> Model -> Renderable
-viewModel env model =
+viewModel _ _ =
     empty

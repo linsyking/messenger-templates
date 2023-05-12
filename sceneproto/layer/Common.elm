@@ -6,7 +6,6 @@ module SceneProtos.$0.$1.Common exposing (Model, EnvC, nullModel)
 
 -}
 
-import Array exposing (Array)
 import Lib.Env.Env as Env
 import SceneProtos.$0.LayerBase exposing (CommonData)
 
