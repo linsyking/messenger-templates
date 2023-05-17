@@ -95,8 +95,6 @@ ADD your own localstorage info here.
 -}
 type alias LSInfo =
     { volume : Float
-    , maxScore: Int
-    , lines: Int
     }
 
 
