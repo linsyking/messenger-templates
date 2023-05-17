@@ -33,6 +33,7 @@ import Canvas exposing (Renderable, empty)
 import Dict exposing (Dict)
 import Lib.Env.Env exposing (Env)
 import Messenger.GeneralModel exposing (GeneralModel)
+import Color exposing (Color)
 
 
 
@@ -144,6 +145,8 @@ type DefinedTypes
     | CDFloat Float
     | CDString String
     | CDComponent Component
+    | CDComponentMsg ComponentMsg
     | CDComponentTarget ComponentTarget
+    | CDColor Color
     | CDListDT (List DefinedTypes)
     | CDDictDT (Dict String DefinedTypes)

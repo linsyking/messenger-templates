@@ -49,6 +49,7 @@ type Msg
     | PlaySoundGotTime String AudioOption Audio.Source Time.Posix
     | TextureLoaded String (Maybe Texture)
     | MouseDown Int ( Float, Float )
+    | MouseUp ( Float, Float )
     | MouseMove ( Int, Int )
     | UnknownMsg
 
@@ -94,6 +95,8 @@ ADD your own localstorage info here.
 -}
 type alias LSInfo =
     { volume : Float
+    , maxScore: Int
+    , lines: Int
     }
 
 
