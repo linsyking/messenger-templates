@@ -12,7 +12,6 @@ module Scenes.$0.$1.Model exposing
 
 -}
 
-import Array
 import Canvas exposing (Renderable)
 import Lib.Component.Base exposing (ComponentMsg(..))
 import Lib.Component.ComponentHandler exposing (updateComponents, viewComponent)
@@ -27,7 +26,7 @@ Add components here
 -}
 initModel : EnvC -> LayerInitData -> Model
 initModel _ _ =
-    { components = Array.empty
+    { components = []
     }
 
 
