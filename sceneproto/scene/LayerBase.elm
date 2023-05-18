@@ -3,7 +3,7 @@ module SceneProtos.$0.LayerBase exposing
     , nullCommonData
     )
 
-{-| This is the doc for this module
+{-| Layer Base
 
 @docs CommonData
 @docs initCommonData

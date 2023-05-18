@@ -1,5 +1,11 @@
 module Scenes.$0.Export exposing (game)
 
+{-| Export module
+
+@docs game
+
+-}
+
 import Lib.Env.Env exposing (Env)
 import Lib.Scene.Base exposing (SceneTMsg)
 import SceneProtos.$1.LayerInit exposing ($1Init)
