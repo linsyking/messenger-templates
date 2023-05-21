@@ -12,9 +12,7 @@ import Scenes.$0.LayerBase exposing (CommonData)
 
 
 {-| Model
-
 Add your own data here.
-
 -}
 type alias Model =
     { components : List Component
