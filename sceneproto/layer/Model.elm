@@ -4,7 +4,7 @@ module SceneProtos.$0.$1.Model exposing
     , viewModel
     )
 
-{-| This is the doc for this module
+{-| Model module
 
 @docs initModel
 @docs updateModel

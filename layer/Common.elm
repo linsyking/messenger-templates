@@ -1,6 +1,6 @@
 module Scenes.$0.$1.Common exposing (Model, nullModel, EnvC)
 
-{-| This is the doc for this module
+{-| Common module
 
 @docs Model, nullModel, EnvC
 
@@ -12,6 +12,9 @@ import Scenes.$0.LayerBase exposing (CommonData)
 
 
 {-| Model
+
+Add your own data here.
+
 -}
 type alias Model =
     { components : List Component

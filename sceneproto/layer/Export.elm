@@ -3,7 +3,9 @@ module SceneProtos.$0.$1.Export exposing
     , initLayer
     )
 
-{-| This is the doc for this module
+{-| Export module
+
+Don't modify this file.
 
 @docs Data
 @docs initLayer

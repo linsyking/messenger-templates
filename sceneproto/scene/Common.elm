@@ -1,6 +1,8 @@
 module SceneProtos.$0.Common exposing (Model, nullModel)
 
-{-| This is the doc for this module
+{-| Common module
+
+Normally you don't need to change this.
 
 @docs Model, nullModel
 

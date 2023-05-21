@@ -3,7 +3,9 @@ module SceneProtos.$0.Export exposing
     , genScene
     )
 
-{-| This is the doc for this module
+{-| Export module
+
+Normally you don't need to change this file.
 
 @docs Data
 @docs genScene
