@@ -22,7 +22,7 @@ import Lib.Layer.LayerHandler exposing (updateLayer, viewLayer)
 import Lib.Scene.Base exposing (SceneInitData(..), SceneOutputMsg(..))
 import Scenes.$0.Common exposing (Model)
 import Scenes.$0.LayerBase exposing (CommonData, nullCommonData)
-import Scenes.$0.LayerInit exposing (initCommonData, nullHomeInit)
+import Scenes.$0.LayerInit exposing (initCommonData, null$0Init)
 $1
 
 

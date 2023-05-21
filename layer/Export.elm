@@ -17,7 +17,7 @@ import Lib.Layer.Base exposing (Layer)
 import Scenes.$0.$1.Common exposing (EnvC, Model)
 import Scenes.$0.$1.Model exposing (initModel, updateModel, viewModel)
 import Scenes.$0.LayerBase exposing (CommonData)
-import Scenes.$0.LayerInit exposing (HomeInit, LayerInitData(..))
+import Scenes.$0.LayerInit exposing ($0Init, LayerInitData(..))
 
 
 {-| Data

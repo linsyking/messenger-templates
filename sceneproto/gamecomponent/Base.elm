@@ -11,9 +11,6 @@ import Dict exposing (Dict)
 import Lib.Component.Base exposing (DefinedTypes)
 import Lib.Env.Env exposing (EnvC)
 import Messenger.GeneralModel exposing (GeneralModel)
-import SceneProtos.$0.GameComponents.$1.Base exposing ($1Init)
-import SceneProtos.$0.GameComponents.Enemy.Base exposing (EnemyInit)
-import SceneProtos.$0.GameComponents.Ship.Base exposing (ShipInit)
 import SceneProtos.$0.LayerBase exposing (CommonData)
 
 

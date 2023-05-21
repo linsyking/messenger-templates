@@ -40,7 +40,7 @@ null$0Init =
 
 {-| Initialize common data
 -}
-initCommonData : Env -> HomeInit -> CommonData
+initCommonData : Env -> $0Init -> CommonData
 initCommonData _ _ =
     nullCommonData
 
