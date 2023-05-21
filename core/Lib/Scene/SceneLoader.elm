@@ -5,7 +5,7 @@ module Lib.Scene.SceneLoader exposing
     , getCurrentScene
     )
 
-{-| This is the doc for this module
+{-| Scene Loader
 
 @docs getScene
 @docs loadScene

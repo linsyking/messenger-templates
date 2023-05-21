@@ -1,6 +1,6 @@
 module SceneProtos.$0.LayerInit exposing (LayerInitData(..), $0Init, null$0Init, initCommonData)
 
-{-| This is the doc for this module
+{-| LayerInit
 
 @docs LayerInitData, null$0Init
 @docs $0Init

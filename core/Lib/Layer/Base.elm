@@ -4,7 +4,7 @@ module Lib.Layer.Base exposing
     , Layer
     )
 
-{-| This is the doc for this module
+{-| Layer Base
 
 Layer plays a very important role in the game framework.
 

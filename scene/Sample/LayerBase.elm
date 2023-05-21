@@ -1,6 +1,6 @@
 module Scenes.$0.LayerBase exposing (CommonData, nullCommonData)
 
-{-| This is the doc for this module
+{-| LayerBase module
 
 @docs CommonData, nullCommonData
 

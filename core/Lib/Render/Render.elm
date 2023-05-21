@@ -5,7 +5,7 @@ module Lib.Render.Render exposing
     , renderSpriteRawPos
     )
 
-{-| This is the doc for this module
+{-| Render module
 
 @docs renderSprite
 @docs renderSpriteWithRev

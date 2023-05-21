@@ -5,7 +5,7 @@ module Base exposing
     , LSInfo
     )
 
-{-| This is the doc for this module
+{-| Base module
 
 WARNING: This file should have no dependencies
 
