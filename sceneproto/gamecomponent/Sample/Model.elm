@@ -1,13 +1,16 @@
-module SceneProtos.$0.GameComponents.$1.Model exposing
-    ( initModel
-    , updateModel
-    , viewModel
-    )
+module SceneProtos.$0.GameComponents.$1.Model exposing (initModel, updateModel, viewModel)
 
-import Canvas exposing (empty)
-import Dict
+{-|
+
+
+# Model for this GameComponent
+
+@docs initModel, updateModel, viewModel
+
+-}
+import Canvas exposing (Renderable, empty)
 import Lib.Env.Env exposing (Env, EnvC)
-import SceneProtos.$0.GameComponent.Base exposing (Data, GameComponentInitData(..))
+import SceneProtos.$0.GameComponent.Base exposing (Data, GameComponentInitData(..), GameComponentMsg, GameComponentTarget, nullData)
 import SceneProtos.$0.LayerBase exposing (CommonData)
 
 
@@ -19,17 +22,12 @@ Initialize the model. It should update the id.
 initModel : Env -> GameComponentInitData -> Data
 initModel _ initData =
     case initData of
-        GCIdData id (GC$1InitData _) ->
-            { uid = id
-            , alive = True
-            , extra = Dict.empty
-            }
+        GCIdData _ (GCButInitData _) ->
+            -- Change this to initialize your GC
+            nullData
 
         _ ->
-            { uid = 0
-            , alive = True
-            , extra = Dict.empty
-            }
+            nullData
 
 
 {-| updateModel
