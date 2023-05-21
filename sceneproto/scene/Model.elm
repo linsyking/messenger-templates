@@ -21,7 +21,7 @@ import Lib.Layer.LayerHandler exposing (updateLayer, viewLayer)
 import Lib.Scene.Base exposing (SceneInitData(..), SceneOutputMsg(..))
 import SceneProtos.$0.Common exposing (Model)
 import SceneProtos.$0.LayerBase exposing (CommonData, nullCommonData)
-import SceneProtos.$0.LayerInit exposing (LayerInitData(..), initCommonData, nullCoreEngineInit)
+import SceneProtos.$0.LayerInit exposing (LayerInitData(..), initCommonData, null$0Init)
 $1
 
 
