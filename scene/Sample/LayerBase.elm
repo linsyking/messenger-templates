@@ -1,12 +1,8 @@
-module Scenes.$0.LayerBase exposing
-    ( CommonData
-    , LayerInitData(..), nullCommonData
-    )
+module Scenes.$0.LayerBase exposing (CommonData, nullCommonData)
 
 {-| This is the doc for this module
 
-@docs CommonData
-@docs initCommonData
+@docs CommonData, nullCommonData
 
 -}
 
@@ -23,7 +19,3 @@ type alias CommonData =
 nullCommonData : CommonData
 nullCommonData =
     {}
-
-
-type LayerInitData
-    = NullLayerInitData

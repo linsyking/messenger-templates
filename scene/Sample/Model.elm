@@ -21,18 +21,28 @@ import Lib.Layer.Base exposing (LayerMsg(..))
 import Lib.Layer.LayerHandler exposing (updateLayer, viewLayer)
 import Lib.Scene.Base exposing (SceneInitData(..), SceneOutputMsg(..))
 import Scenes.$0.Common exposing (Model)
-import Scenes.$0.LayerBase exposing (CommonData, LayerInitData(..), nullCommonData)
+import Scenes.$0.LayerBase exposing (CommonData, nullCommonData)
+import Scenes.$0.LayerInit exposing (initCommonData, nullHomeInit)
 $1
 
 
 {-| Initialize the model
 -}
 initModel : Env -> SceneInitData -> Model
-initModel env _ =
-    { commonData = nullCommonData
+initModel env init =
+    let
+        layerInitData =
+            case init of
+                $0InitData x ->
+                    x
+
+                _ ->
+                    null$0Init
+    in
+    { commonData = initCommonData env layerInitData
     , layers =
         [
-            $2
+          $2
         ]
     }
 
