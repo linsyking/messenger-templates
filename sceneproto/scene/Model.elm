@@ -15,22 +15,30 @@ module SceneProtos.$0.Model exposing
 -}
 
 import Canvas exposing (Renderable)
-import Lib.Audio.Base exposing (AudioOption(..))
 import Lib.Env.Env exposing (Env, EnvC, addCommonData, noCommonData)
 import Lib.Layer.Base exposing (LayerMsg(..))
 import Lib.Layer.LayerHandler exposing (updateLayer, viewLayer)
 import Lib.Scene.Base exposing (SceneInitData(..), SceneOutputMsg(..))
 import SceneProtos.$0.Common exposing (Model)
 import SceneProtos.$0.LayerBase exposing (CommonData, nullCommonData)
-import SceneProtos.CoreEngine.LayerInit exposing (LayerInitData(..))
+import SceneProtos.$0.LayerInit exposing (LayerInitData(..), initCommonData, nullCoreEngineInit)
 $1
 
 
 {-| Initialize the model
 -}
 initModel : Env -> SceneInitData -> Model
-initModel env _ =
-    { commonData = nullCommonData
+initModel env init =
+    let
+        layerInitData =
+            case init of
+                $0InitData x ->
+                    x
+
+                _ ->
+                    null$0Init
+    in
+    { commonData = initCommonData env layerInitData
     , layers =
         [
             $2

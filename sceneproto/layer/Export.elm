@@ -5,18 +5,17 @@ module SceneProtos.$0.$1.Export exposing
 
 {-| Export module
 
-Don't modify this file.
-
 @docs Data
 @docs initLayer
 
 -}
 
+import Lib.Env.Env exposing (Env)
 import Lib.Layer.Base exposing (Layer)
 import SceneProtos.$0.$1.Common exposing (EnvC, Model)
 import SceneProtos.$0.$1.Model exposing (initModel, updateModel, viewModel)
 import SceneProtos.$0.LayerBase exposing (CommonData)
-import SceneProtos.$0.LayerInit exposing (LayerInitData)
+import SceneProtos.$0.LayerInit exposing (CoreEngineInit, LayerInitData(..))
 
 
 {-| Data
@@ -34,3 +33,13 @@ initLayer env i =
     , update = updateModel
     , view = viewModel
     }
+
+
+{-| Initialize from the scene
+
+Please change this to initialize your layer.
+
+-}
+initFromScene : Env -> CoreEngineInit -> LayerInitData
+initFromScene _ _ =
+    NullLayerInitData
