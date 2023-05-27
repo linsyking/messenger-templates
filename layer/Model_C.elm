@@ -17,7 +17,7 @@ import Lib.Component.Base exposing (ComponentMsg(..))
 import Lib.Component.ComponentHandler exposing (updateComponents, viewComponent)
 import Lib.Env.Env exposing (addCommonData, noCommonData)
 import Lib.Layer.Base exposing (LayerMsg(..), LayerTarget(..))
-import Scenes.$0.$1.Common exposing (EnvC, Model)
+import Scenes.$0.$1.Common exposing (EnvC, Model, updateComponentsByHandler)
 import Scenes.$0.LayerInit exposing (LayerInitData)
 
 
@@ -45,23 +45,7 @@ Add your logic to handle msg and LayerMsg here
 -}
 updateModel : EnvC -> LayerMsg -> Model -> ( Model, List ( LayerTarget, LayerMsg ), EnvC )
 updateModel env _ model =
-    let
-        components =
-            model.components
-
-        ( newComponents, newMsg, newEnv ) =
-            updateComponents (noCommonData env) components
-    in
-    List.foldl
-        (\cTMsg ( m, cmsg, cenv ) ->
-            let
-                ( nm, nmsg, nenv ) =
-                    handleComponentMsg cenv cTMsg m
-            in
-            ( nm, nmsg ++ cmsg, nenv )
-        )
-        ( { model | components = newComponents }, [], addCommonData env.commonData newEnv )
-        newMsg
+    updateComponentsByHandler env model handleComponentMsg
 
 
 {-| viewModel
