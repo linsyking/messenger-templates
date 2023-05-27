@@ -57,7 +57,7 @@ updateSceneStartTime m =
             m.currentGlobalData
 
         ngd =
-            { ogd | scenestarttime = ogd.scenestarttime + 1 }
+            { ogd | sceneStartTime = ogd.sceneStartTime + 1 }
     in
     { m | currentGlobalData = ngd }
 
@@ -72,7 +72,7 @@ resetSceneStartTime m =
             m.currentGlobalData
 
         ngd =
-            { ogd | scenestarttime = 0 }
+            { ogd | sceneStartTime = 0 }
     in
     { m | currentGlobalData = ngd }
 
@@ -93,10 +93,10 @@ initGlobalData =
     , startTop = 0
     , audioVolume = 0.5
     , sprites = Dict.empty
-    , scenestarttime = 0
+    , sceneStartTime = 0
     , mousePos = ( 0, 0 )
     , extraHTML = Nothing
-    , localstorage = decodeLSInfo ""
+    , localStorage = decodeLSInfo ""
     }
 
 

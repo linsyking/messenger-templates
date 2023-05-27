@@ -79,7 +79,7 @@ init flags =
 
         -- Update volume in globaldata
         newgd =
-            { oldgd | localstorage = ls, audioVolume = ls.volume, browserViewPort = ( flags.windowWidth, flags.windowHeight ), realWidth = gw, realHeight = gh, startLeft = fl, startTop = ft }
+            { oldgd | localStorage = ls, audioVolume = ls.volume, browserViewPort = ( flags.windowWidth, flags.windowHeight ), realWidth = gw, realHeight = gh, startLeft = fl, startTop = ft }
     in
     ( { ms | currentGlobalData = newgd }, Cmd.none, Audio.cmdNone )
 
@@ -117,7 +117,7 @@ gameUpdate msg model =
 
             ( newmodel, cmds, audiocmds ) =
                 if List.isEmpty som then
-                    ( updateSceneStartTime newModel, [ sendInfo (encodeLSInfo timeUpdatedModel.currentGlobalData.localstorage) ], [] )
+                    ( updateSceneStartTime newModel, [ sendInfo (encodeLSInfo timeUpdatedModel.currentGlobalData.localStorage) ], [] )
 
                 else
                     List.foldl
@@ -127,7 +127,7 @@ gameUpdate msg model =
                                     --- Load new scene
                                     ( loadSceneByName msg lastModel s tm
                                         |> resetSceneStartTime
-                                    , lastCmds ++ [ sendInfo (encodeLSInfo lastModel.currentGlobalData.localstorage) ]
+                                    , lastCmds ++ [ sendInfo (encodeLSInfo lastModel.currentGlobalData.localStorage) ]
                                     , lastAudioCmds
                                     )
 

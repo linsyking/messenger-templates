@@ -79,10 +79,10 @@ type alias GlobalData =
     , startTop : Float
     , audioVolume : Float
     , sprites : Dict String Texture
-    , scenestarttime : Int
+    , sceneStartTime : Int
     , mousePos : ( Float, Float )
     , extraHTML : Maybe (Html Msg)
-    , localstorage : LSInfo
+    , localStorage : LSInfo
     }
 
 
