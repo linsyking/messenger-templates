@@ -1,0 +1,43 @@
+
+name: build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.7"
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install elm-messenger
+        npm i -g elm elm-format
+        messenger init test
+    - name: Test run
+      working-directory: ./test
+      run: |
+        messenger scene H
+        messenger layer H J
+        make
+        messenger layer H K
+        make
+        messenger component K
+        make
+        
