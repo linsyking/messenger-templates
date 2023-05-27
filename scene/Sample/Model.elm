@@ -53,8 +53,16 @@ Usually you are adding logic here.
 
 -}
 handleLayerMsg : EnvC CommonData -> LayerMsg -> Model -> ( Model, List SceneOutputMsg, EnvC CommonData )
-handleLayerMsg env _ model =
-    ( model, [], env )
+handleLayerMsg env lmsg model =
+    case lmsg of
+        LayerSoundMsg name path opt ->
+            ( model, [ SOMPlayAudio name path opt ], env )
+
+        LayerStopSoundMsg name ->
+            ( model, [ SOMStopAudio name ], env )
+
+        _ ->
+            ( model, [], env )
 
 
 {-| updateModel

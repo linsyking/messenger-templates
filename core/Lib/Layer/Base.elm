@@ -39,6 +39,8 @@ type alias Layer a b =
 
 Add your own layer messages here.
 
+LayerSoundMsg name path option
+
 -}
 type LayerMsg
     = LayerStringMsg String
