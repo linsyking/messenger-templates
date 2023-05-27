@@ -31,15 +31,15 @@ jobs:
         npm i -g elm elm-format
         elm --help
         elm-format --help
-        printrf "\n" | messenger init test
+        printf "\n" | messenger init test
     - name: Test run
       working-directory: ./test
       run: |
-        printrf "\n" | messenger scene H
-        printrf "\n" | messenger layer H J
+        printf "\n" | messenger scene H
+        printf "\n" | messenger layer H J
         make
-        printrf "\n" | messenger layer H K
+        printf "\n" | messenger layer H K
         make
-        printrf "\n" | messenger component K
+        printf "\n" | messenger component K
         make
         
