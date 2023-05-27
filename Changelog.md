@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1
+
+### Changes
+
+- Change `core` to `src`
+
 ## 0.2.0
 
 ### Features
