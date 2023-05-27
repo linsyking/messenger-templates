@@ -4,7 +4,9 @@ module MainConfig exposing
     , background, plHeight, plWidth
     )
 
-{-| This module is used for configuring the parameters of the game framework.
+{-| MainConfig
+
+This module is used for configuring the parameters of the game framework.
 
 @docs initScene, initSceneSettings
 @docs timeInterval
