@@ -2,9 +2,19 @@
 
 ## 0.2.1
 
+### Features
+
+- Split Render Lib to different parts: Sprite, Text and Shapes
+- Add more Text options like baseline
+- Merge `widthToReal` and `heightToReal` to `lengthToReal`
+
 ### Changes
 
 - Change `core` to `src`
+
+### Fix
+
+- Text positioning
 
 ## 0.2.0
 
