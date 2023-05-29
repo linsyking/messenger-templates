@@ -1,11 +1,24 @@
 module Lib.Coordinate.HTML exposing (genAttribute)
 
+{-|
+
+
+# HTML Coordinate Lib
+
+This is only useful when you use extraHTML.
+
+@docs genAttribute
+
+-}
+
 import Base exposing (GlobalData)
 import Html exposing (Attribute)
 import Html.Attributes exposing (style)
-import Lib.Coordinate.Coordinates exposing (fixedPosToReal, widthToReal, heightToReal)
+import Lib.Coordinate.Coordinates exposing (fixedPosToReal, lengthToReal)
 
 
+{-| Generate HTML Attributes that has the correct position
+-}
 genAttribute : GlobalData -> ( Int, Int ) -> ( Int, Int ) -> List (Attribute msg)
 genAttribute gd ( x, y ) ( w, h ) =
     let
@@ -13,7 +26,7 @@ genAttribute gd ( x, y ) ( w, h ) =
             fixedPosToReal gd ( x, y )
 
         ( rw, rh ) =
-            ( widthToReal gd w, heightToReal gd h )
+            ( lengthToReal gd w, lengthToReal gd h )
     in
     [ style "position" "fixed"
     , style "left" (String.fromFloat rx ++ "px")
