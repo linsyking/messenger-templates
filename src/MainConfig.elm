@@ -16,8 +16,6 @@ This module is used for configuring the parameters of the game framework.
 
 import Base exposing (GlobalData)
 import Canvas exposing (Renderable)
-import Canvas.Settings exposing (fill)
-import Color
 import Lib.Scene.Base exposing (SceneInitData(..))
 
 
@@ -67,9 +65,15 @@ plWidth =
 
 This renderable will be rendered below all other renderables.
 
-Default is a white rectangle. You can change the background color to other color when debugging.
+Default is clear function that cleans the background.
+
+You can change the background color to other color when debugging.
+
+Change color by using this:
+
+Canvas.shapes [ fill Color.blue ][ Canvas.rect ( 0, 0 ) (toFloat gd.realWidth) (toFloat gd.realHeight) ]
 
 -}
 background : GlobalData -> Renderable
 background gd =
-    Canvas.shapes [ fill Color.white ] [ Canvas.rect ( 0, 0 ) (toFloat gd.realWidth) (toFloat gd.realHeight) ]
+    Canvas.clear ( 0, 0 ) (toFloat gd.realWidth) (toFloat gd.realHeight)

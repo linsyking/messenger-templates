@@ -1,8 +1,8 @@
 module Lib.Coordinate.Coordinates exposing
     ( fixedPosToReal
     , posToReal
-    , widthToReal
-    , heightToReal
+    , lengthToReal
+    , fromRealLength
     , maxHandW
     , getStartPoint
     , judgeMouse
@@ -20,8 +20,8 @@ This module is very important because it can calculate the correct position of t
 
 @docs fixedPosToReal
 @docs posToReal
-@docs widthToReal
-@docs heightToReal
+@docs lengthToReal
+@docs fromRealLength
 @docs maxHandW
 @docs getStartPoint
 @docs judgeMouse
@@ -81,8 +81,8 @@ posToReal gd ( x, y ) =
 {-| widthToReal
 Use this if you want to draw something based on the length.
 -}
-widthToReal : GlobalData -> Int -> Float
-widthToReal gd x =
+lengthToReal : GlobalData -> Int -> Float
+lengthToReal gd x =
     let
         realWidth =
             gd.realWidth
@@ -90,16 +90,15 @@ widthToReal gd x =
     toFloat realWidth * (toFloat x / toFloat plWidth)
 
 
-{-| heightToReal
-Theoretically this function is identical to widthToReal, but if possible you can use this to draw something based on the height (like rectangle).
+{-| The inverse function of widthToReal.
 -}
-heightToReal : GlobalData -> Int -> Float
-heightToReal gd x =
+fromRealLength : GlobalData -> Float -> Int
+fromRealLength gd x =
     let
-        realHeight =
-            gd.realHeight
+        realWidth =
+            gd.realWidth
     in
-    toFloat realHeight * (toFloat x / toFloat plHeight)
+    floor (toFloat plWidth * (x / toFloat realWidth))
 
 
 {-| maxHandW
@@ -141,10 +140,10 @@ judgeMouse gd ( mx, my ) ( x, y ) ( w, h ) =
             posToReal gd ( x, y )
 
         rw =
-            widthToReal gd w
+            lengthToReal gd w
 
         rh =
-            heightToReal gd h
+            lengthToReal gd h
 
         mpx =
             mx - gd.startLeft

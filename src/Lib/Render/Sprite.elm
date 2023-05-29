@@ -1,27 +1,20 @@
-module Lib.Render.Render exposing
-    ( renderSprite
-    , renderSpriteWithRev
-    , renderText, renderTextWithColor, renderTextWithColorAlign
-    , renderSpriteRawPos
-    )
+module Lib.Render.Sprite exposing (renderSprite, renderSpriteWithRev, renderSpriteRawPos)
 
-{-| Render module
+{-|
 
-@docs renderSprite
-@docs renderSpriteWithRev
-@docs renderText, renderTextWithColor, renderTextWithColorAlign
-@docs renderSpriteRawPos
+
+# Sprite Rendering
+
+@docs renderSprite, renderSpriteWithRev, renderSpriteRawPos
 
 -}
 
 import Base exposing (GlobalData)
 import Canvas exposing (Renderable, text, texture)
-import Canvas.Settings exposing (Setting, fill)
+import Canvas.Settings exposing (Setting)
 import Canvas.Settings.Advanced exposing (scale, transform, translate)
-import Canvas.Settings.Text exposing (TextAlign(..), align, font)
 import Canvas.Texture exposing (dimensions)
-import Color exposing (Color)
-import Lib.Coordinate.Coordinates exposing (heightToReal, posToReal, widthToReal)
+import Lib.Coordinate.Coordinates exposing (lengthToReal, posToReal)
 import Lib.Resources.Base exposing (igetSprite)
 
 
@@ -43,10 +36,10 @@ renderSprite gd ls p ( w, h ) name =
                     dimensions t
 
                 rw =
-                    widthToReal gd w
+                    lengthToReal gd w
 
                 rh =
-                    heightToReal gd h
+                    lengthToReal gd h
 
                 text_width =
                     text_dim.width
@@ -125,10 +118,10 @@ renderSpriteRawPos gd ls p ( w, h ) name =
                     dimensions t
 
                 rw =
-                    widthToReal gd w
+                    lengthToReal gd w
 
                 rh =
-                    heightToReal gd h
+                    lengthToReal gd h
 
                 text_width =
                     text_dim.width
@@ -213,10 +206,10 @@ renderSpriteWithRev rev gd ls p ( w, h ) name =
                         dimensions t
 
                     rw =
-                        widthToReal gd w
+                        lengthToReal gd w
 
                     rh =
-                        heightToReal gd h
+                        lengthToReal gd h
 
                     text_width =
                         text_dim.width
@@ -278,68 +271,3 @@ renderSpriteWithRev rev gd ls p ( w, h ) name =
 
             Nothing ->
                 text [] (posToReal gd p) "Wrong Sprite"
-
-
-{-| renderText
-
-Render texts.
-
--}
-renderText : GlobalData -> Int -> String -> String -> ( Int, Int ) -> Renderable
-renderText gd size s ft ( x, y ) =
-    let
-        rx =
-            heightToReal gd size
-
-        ( dsx, dsy ) =
-            posToReal gd ( x, y )
-    in
-    text
-        [ font { size = floor rx, family = ft }
-        , align Start
-        , fill Color.black
-        ]
-        ( dsx, dsy + rx - 1 )
-        s
-
-
-{-| renderTextWithColor
-Render colorful texts.
--}
-renderTextWithColor : GlobalData -> Int -> String -> String -> Color -> ( Int, Int ) -> Renderable
-renderTextWithColor gd size s ft col ( x, y ) =
-    let
-        rx =
-            heightToReal gd size
-
-        ( dsx, dsy ) =
-            posToReal gd ( x, y )
-    in
-    text
-        [ font { size = floor rx, family = ft }
-        , align Start
-        , fill col
-        ]
-        ( dsx, dsy + rx - 1 )
-        s
-
-
-{-| renderTextWithColorAlign
-Render texts with color and align.
--}
-renderTextWithColorAlign : GlobalData -> Int -> String -> String -> Color -> TextAlign -> ( Int, Int ) -> Renderable
-renderTextWithColorAlign gd size s ft col al ( x, y ) =
-    let
-        rx =
-            heightToReal gd size
-
-        ( dsx, dsy ) =
-            posToReal gd ( x, y )
-    in
-    text
-        [ font { size = floor rx, family = ft }
-        , align al
-        , fill col
-        ]
-        ( dsx, dsy + rx - 1 )
-        s
