@@ -1,6 +1,6 @@
 module SceneProtos.$0.$1.Export exposing
     ( Data
-    , initLayer, initFromScene
+    , initLayer
     )
 
 {-| Export module
@@ -10,12 +10,11 @@ module SceneProtos.$0.$1.Export exposing
 
 -}
 
-import Lib.Env.Env exposing (Env)
 import Lib.Layer.Base exposing (Layer)
 import SceneProtos.$0.$1.Common exposing (EnvC, Model)
 import SceneProtos.$0.$1.Model exposing (initModel, updateModel, viewModel)
 import SceneProtos.$0.LayerBase exposing (CommonData)
-import SceneProtos.$0.LayerInit exposing ($0Init, LayerInitData(..))
+import SceneProtos.$0.LayerInit exposing ($0Init)
 
 
 {-| Data
@@ -26,7 +25,7 @@ type alias Data =
 
 {-| initLayer
 -}
-initLayer : EnvC -> LayerInitData -> Layer Data CommonData
+initLayer : EnvC -> $0Init -> Layer Data CommonData
 initLayer env i =
     { name = "$1"
     , data = initModel env i
@@ -34,12 +33,3 @@ initLayer env i =
     , view = viewModel
     }
 
-
-{-| Initialize from the scene
-
-Please change this to initialize your layer.
-
--}
-initFromScene : Env -> $0Init -> LayerInitData
-initFromScene _ _ =
-    NullLayerInitData

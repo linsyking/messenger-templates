@@ -1,8 +1,8 @@
-module SceneProtos.$0.LayerInit exposing (LayerInitData(..), $0Init, null$0Init, initCommonData)
+module SceneProtos.$0.LayerInit exposing ($0Init, null$0Init, initCommonData)
 
 {-| LayerInit
 
-@docs LayerInitData, null$0Init
+@docs null$0Init
 @docs $0Init
 @docs initCommonData
 
@@ -10,15 +10,6 @@ module SceneProtos.$0.LayerInit exposing (LayerInitData(..), $0Init, null$0Init,
 
 import Lib.Env.Env exposing (Env)
 import SceneProtos.$0.LayerBase exposing (CommonData, nullCommonData)
-
-
-{-| LayerInitData
-
-Edit your own LayerInitData here.
-
--}
-type LayerInitData
-    = NullLayerInitData
 
 
 {-| Init Data
