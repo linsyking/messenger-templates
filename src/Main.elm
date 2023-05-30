@@ -62,7 +62,7 @@ init : Flags -> ( Model, Cmd Msg, AudioCmd Msg )
 init flags =
     let
         ms =
-            loadSceneByName UnknownMsg initModel initScene initSceneSettings
+            loadSceneByName NullMsg initModel initScene initSceneSettings
 
         oldgd =
             ms.currentGlobalData
@@ -346,7 +346,7 @@ view _ model =
                 , style "position" "fixed"
                 ]
                 [ MainConfig.background model.currentGlobalData
-                , (getCurrentScene model).view { msg = UnknownMsg, t = model.time, globalData = model.currentGlobalData } model.currentData
+                , (getCurrentScene model).view { msg = NullMsg, t = model.time, globalData = model.currentGlobalData } model.currentData
                 ]
     in
     Html.div []

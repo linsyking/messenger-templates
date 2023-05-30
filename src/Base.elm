@@ -53,7 +53,7 @@ type Msg
     | MouseUp ( Int, Int )
     | MouseMove ( Float, Float )
     | Prompt String String
-    | UnknownMsg
+    | NullMsg
 
 
 {-| GlobalData

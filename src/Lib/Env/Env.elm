@@ -67,11 +67,11 @@ addCommonData commonData env =
 -}
 cleanEnv : Env -> Env
 cleanEnv env =
-    { env | msg = UnknownMsg }
+    { env | msg = NullMsg }
 
 
 {-| Clean the environment with commonData
 -}
 cleanEnvC : EnvC b -> EnvC b
 cleanEnvC env =
-    { env | msg = UnknownMsg }
+    { env | msg = NullMsg }
