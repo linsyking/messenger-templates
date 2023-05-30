@@ -3,6 +3,7 @@ module Lib.Resources.Base exposing
     , saveSprite
     , igetSprite
     , allTexture
+    , getResourcePath
     )
 
 {-|
@@ -24,6 +25,7 @@ After the resources are loaded, we can get those data from globaldata.sprites.
 @docs saveSprite
 @docs igetSprite
 @docs allTexture
+@docs getResourcePath
 
 -}
 
