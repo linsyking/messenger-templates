@@ -1,12 +1,12 @@
 module Scenes.$0.LayerInit exposing
-    ( LayerInitData(..), null$0Init
+    ( null$0Init
     , $0Init
     , initCommonData
     )
 
 {-| LayerInit
 
-@docs LayerInitData, null$0Init
+@docs null$0Init
 @docs $0Init
 @docs initCommonData
 
@@ -14,15 +14,6 @@ module Scenes.$0.LayerInit exposing
 
 import Lib.Env.Env exposing (Env)
 import Scenes.$0.LayerBase exposing (CommonData, nullCommonData)
-
-
-{-| LayerInitData
-
-Edit your own LayerInitData here.
-
--}
-type LayerInitData
-    = NullLayerInitData
 
 
 {-| Init Data

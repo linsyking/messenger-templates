@@ -18,13 +18,13 @@ import Lib.Component.ComponentHandler exposing (updateComponents, viewComponent)
 import Lib.Env.Env exposing (addCommonData, noCommonData)
 import Lib.Layer.Base exposing (LayerMsg(..), LayerTarget(..))
 import Scenes.$0.$1.Common exposing (EnvC, Model, updateComponentsByHandler)
-import Scenes.$0.LayerInit exposing (LayerInitData)
+import Scenes.$0.LayerInit exposing ($0Init)
 
 
 {-| initModel
 Add components here
 -}
-initModel : EnvC -> LayerInitData -> Model
+initModel : EnvC -> $0Init -> Model
 initModel _ _ =
     { components = []
     }
