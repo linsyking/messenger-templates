@@ -8,7 +8,7 @@ module Main exposing (main)
 
 import Audio exposing (AudioCmd, AudioData)
 import Base exposing (Flags, Msg(..))
-import Browser.Events exposing (onKeyDown, onKeyUp, onMouseDown, onMouseMove, onResize)
+import Browser.Events exposing (onKeyDown, onKeyUp, onMouseDown, onMouseMove, onMouseUp, onResize)
 import Canvas
 import Common exposing (Model, audio, initGlobalData, resetSceneStartTime, updateSceneStartTime)
 import Dict
@@ -22,12 +22,11 @@ import Lib.LocalStorage.LocalStorage exposing (decodeLSInfo, encodeLSInfo, sendI
 import Lib.Resources.Base exposing (allTexture, getTexture, saveSprite)
 import Lib.Scene.Base exposing (SceneInitData(..), SceneOutputMsg(..))
 import Lib.Scene.SceneLoader exposing (getCurrentScene, loadSceneByName)
-import Lib.Tools.Browser exposing (alert)
-import MainConfig exposing (initScene, initSceneSettings, timeInterval)
+import Lib.Tools.Browser exposing (alert, prompt, promptReceiver)
+import MainConfig exposing (debug, initScene, initSceneSettings, timeInterval)
 import Scenes.SceneSettings exposing (SceneDataTypes(..), nullSceneT)
 import Task
 import Time
-import Browser.Events exposing (onMouseUp)
 
 
 {-| initModel
@@ -149,6 +148,9 @@ gameUpdate msg model =
 
                                 SOMAlert text ->
                                     ( lastModel, lastCmds ++ [ alert text ], lastAudioCmds )
+
+                                SOMPrompt name title ->
+                                    ( lastModel, lastCmds ++ [ prompt { name = name, title = title } ], lastAudioCmds )
                         )
                         ( newModel, [], [] )
                         som
@@ -220,6 +222,48 @@ update _ msg model =
             in
             ( { model | currentGlobalData = { curgd | mousePos = mp } }, Cmd.none, Audio.cmdNone )
 
+        KeyDown 112 ->
+            if debug then
+                -- F1
+                ( model, prompt { name = "load", title = "Enter the scene you want to load" }, Audio.cmdNone )
+
+            else
+                gameUpdate msg model
+
+        KeyDown 113 ->
+            if debug then
+                -- F2
+                ( model, prompt { name = "setVolume", title = "Set volume (0-1)" }, Audio.cmdNone )
+
+            else
+                gameUpdate msg model
+
+        Prompt "load" result ->
+            ( loadSceneByName msg model result NullSceneInitData
+                |> resetSceneStartTime
+            , Cmd.none
+            , Audio.cmdNone
+            )
+
+        Prompt "setVolume" result ->
+            let
+                vol =
+                    String.toFloat result
+            in
+            case vol of
+                Just v ->
+                    let
+                        gd =
+                            model.currentGlobalData
+
+                        newGd =
+                            { gd | audioVolume = v }
+                    in
+                    ( { model | currentGlobalData = newGd }, Cmd.none, Audio.cmdNone )
+
+                Nothing ->
+                    ( model, Cmd.none, Audio.cmdNone )
+
         _ ->
             gameUpdate msg model
 
@@ -242,6 +286,7 @@ subscriptions _ _ =
         , onMouseDown (Decode.map3 (\b x y -> MouseDown b ( x, y )) (Decode.field "button" Decode.int) (Decode.field "clientX" Decode.float) (Decode.field "clientY" Decode.float))
         , onMouseUp (Decode.map2 (\x y -> MouseUp ( x, y )) (Decode.field "clientX" Decode.float) (Decode.field "clientY" Decode.float))
         , onMouseMove (Decode.map2 (\x y -> MouseMove ( x, y )) (Decode.field "clientX" Decode.int) (Decode.field "clientY" Decode.int))
+        , promptReceiver (\p -> Prompt p.name p.result)
         ]
 
 

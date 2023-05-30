@@ -2,6 +2,7 @@ module MainConfig exposing
     ( initScene, initSceneSettings
     , timeInterval
     , background, plHeight, plWidth
+    , debug
     )
 
 {-| MainConfig
@@ -11,6 +12,7 @@ This module is used for configuring the parameters of the game framework.
 @docs initScene, initSceneSettings
 @docs timeInterval
 @docs background, plHeight, plWidth
+@docs debug
 
 -}
 
@@ -59,6 +61,13 @@ plHeight =
 plWidth : Int
 plWidth =
     1920
+
+
+{-| Debug flag
+-}
+debug : Bool
+debug =
+    True
 
 
 {-| The background of the game.

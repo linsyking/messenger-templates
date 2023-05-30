@@ -51,6 +51,7 @@ type Msg
     | MouseDown Int ( Float, Float )
     | MouseUp ( Float, Float )
     | MouseMove ( Int, Int )
+    | Prompt String String
     | UnknownMsg
 
 

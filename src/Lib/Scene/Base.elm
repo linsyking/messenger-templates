@@ -64,10 +64,11 @@ Add your own messages here if you want to do more things.
 -}
 type SceneOutputMsg
     = SOMChangeScene ( SceneInitData, String )
-    | SOMPlayAudio String String AudioOption
+    | SOMPlayAudio String String AudioOption -- audio name, audio url, audio option
     | SOMAlert String
     | SOMStopAudio String
     | SOMSetVolume Float
+    | SOMPrompt String String -- name, title
 
 
 {-| This datatype is used in Scene definition.
