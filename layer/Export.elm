@@ -14,7 +14,6 @@ Although this will not be updated, usually you don't need to change this file.
 
 -}
 
-import Lib.Env.Env exposing (Env)
 import Lib.Layer.Base exposing (Layer)
 import Scenes.$0.$1.Common exposing (EnvC, Model)
 import Scenes.$0.$1.Model exposing (initModel, updateModel, viewModel)
