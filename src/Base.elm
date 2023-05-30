@@ -43,7 +43,6 @@ type Msg
     = Tick Time.Posix
     | KeyDown Int
     | KeyUp Int
-    | StringMessage String
     | NewWindowSize ( Int, Int )
     | SoundLoaded String AudioOption (Result Audio.LoadError Audio.Source)
     | PlaySoundGotTime String AudioOption Audio.Source Time.Posix
