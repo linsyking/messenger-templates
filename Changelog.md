@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.2
+
+### Changes
+
+- Directly use Scene Init Data to initialize layer
+
 ## 0.2.1
 
 ### Features
