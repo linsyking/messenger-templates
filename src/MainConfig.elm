@@ -67,7 +67,7 @@ plWidth =
 -}
 debug : Bool
 debug =
-    True
+    False
 
 
 {-| The background of the game.

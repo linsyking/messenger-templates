@@ -1,5 +1,5 @@
 module Lib.Scene.SceneLoader exposing
-    ( getScene
+    ( getScene, existScene
     , loadScene
     , loadSceneByName
     , getCurrentScene
@@ -7,7 +7,7 @@ module Lib.Scene.SceneLoader exposing
 
 {-| Scene Loader
 
-@docs getScene
+@docs getScene, existScene
 @docs loadScene
 @docs loadSceneByName
 @docs getCurrentScene
@@ -20,6 +20,25 @@ import Lib.Scene.Base exposing (SceneInitData)
 import List exposing (head)
 import Scenes.AllScenes exposing (allScenes)
 import Scenes.SceneSettings exposing (SceneT, nullSceneT)
+
+
+{-| Query whether a scene exists
+-}
+existScene : String -> Bool
+existScene i =
+    let
+        scenes =
+            allScenes
+
+        tests =
+            List.filter (\( x, _ ) -> x == i) scenes
+    in
+    case List.head tests of
+        Just _ ->
+            True
+
+        Nothing ->
+            False
 
 
 {-| getScene

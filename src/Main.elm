@@ -21,7 +21,7 @@ import Lib.Layer.Base exposing (LayerMsg(..))
 import Lib.LocalStorage.LocalStorage exposing (decodeLSInfo, encodeLSInfo, sendInfo)
 import Lib.Resources.Base exposing (allTexture, getTexture, saveSprite)
 import Lib.Scene.Base exposing (SceneInitData(..), SceneOutputMsg(..))
-import Lib.Scene.SceneLoader exposing (getCurrentScene, loadSceneByName)
+import Lib.Scene.SceneLoader exposing (existScene, getCurrentScene, loadSceneByName)
 import Lib.Tools.Browser exposing (alert, prompt, promptReceiver)
 import MainConfig exposing (debug, initScene, initSceneSettings, timeInterval)
 import Scenes.SceneSettings exposing (SceneDataTypes(..), nullSceneT)
@@ -239,11 +239,15 @@ update _ msg model =
                 gameUpdate msg model
 
         Prompt "load" result ->
-            ( loadSceneByName msg model result NullSceneInitData
-                |> resetSceneStartTime
-            , Cmd.none
-            , Audio.cmdNone
-            )
+            if existScene result then
+                ( loadSceneByName msg model result NullSceneInitData
+                    |> resetSceneStartTime
+                , Cmd.none
+                , Audio.cmdNone
+                )
+
+            else
+                ( model, alert "Scene not found!", Audio.cmdNone )
 
         Prompt "setVolume" result ->
             let
