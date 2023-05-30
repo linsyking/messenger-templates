@@ -21,8 +21,8 @@ import Base exposing (GlobalData, Msg(..))
 import Dict
 import Lib.Audio.Audio exposing (getAudio)
 import Lib.Audio.Base exposing (AudioRepo)
-import Scenes.SceneSettings exposing (SceneDataTypes, SceneT)
 import Lib.LocalStorage.LocalStorage exposing (decodeLSInfo)
+import Scenes.SceneSettings exposing (SceneDataTypes, SceneT)
 
 
 {-| Model
@@ -91,12 +91,12 @@ initGlobalData =
     , realWidth = 1280
     , startLeft = 0
     , startTop = 0
-    , audioVolume = 0.5
     , sprites = Dict.empty
     , sceneStartTime = 0
     , mousePos = ( 0, 0 )
     , extraHTML = Nothing
     , localStorage = decodeLSInfo ""
+    , lastLocalStorage = decodeLSInfo ""
     }
 
 
@@ -108,4 +108,4 @@ The audio argument needed in the main model.
 audio : AudioData -> Model -> Audio
 audio ad model =
     Audio.group (getAudio ad model.audiorepo)
-        |> Audio.scaleVolume model.currentGlobalData.audioVolume
+        |> Audio.scaleVolume model.currentGlobalData.localStorage.volume

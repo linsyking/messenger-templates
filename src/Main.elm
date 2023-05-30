@@ -78,7 +78,7 @@ init flags =
 
         -- Update volume in globaldata
         newgd =
-            { oldgd | localStorage = ls, audioVolume = ls.volume, browserViewPort = ( flags.windowWidth, flags.windowHeight ), realWidth = gw, realHeight = gh, startLeft = fl, startTop = ft }
+            { oldgd | localStorage = ls, browserViewPort = ( flags.windowWidth, flags.windowHeight ), realWidth = gw, realHeight = gh, startLeft = fl, startTop = ft }
     in
     ( { ms | currentGlobalData = newgd }, Cmd.none, Audio.cmdNone )
 
@@ -96,66 +96,80 @@ gameUpdate msg model =
 
     else
         let
+            oldLocalStorage =
+                model.currentGlobalData.localStorage
+
             ( sdt, som, newenv ) =
                 (getCurrentScene model).update { msg = msg, globalData = model.currentGlobalData, t = model.time } model.currentData
 
-            newgd =
+            newGD1 =
                 newenv.globalData
+
+            newGD2 =
+                { newGD1 | lastLocalStorage = oldLocalStorage }
 
             timeUpdatedModel =
                 case msg of
                     Tick _ ->
                         -- Tick event needs to update time
-                        { model | time = model.time + 1, currentGlobalData = newgd }
+                        { model | time = model.time + 1, currentGlobalData = newGD2 }
 
                     _ ->
-                        { model | currentGlobalData = newgd }
+                        { model | currentGlobalData = newGD2 }
 
             newModel =
-                { timeUpdatedModel | currentData = sdt }
+                updateSceneStartTime { timeUpdatedModel | currentData = sdt }
 
             ( newmodel, cmds, audiocmds ) =
-                if List.isEmpty som then
-                    ( updateSceneStartTime newModel, [ sendInfo (encodeLSInfo timeUpdatedModel.currentGlobalData.localStorage) ], [] )
+                List.foldl
+                    (\singleSOM ( lastModel, lastCmds, lastAudioCmds ) ->
+                        case singleSOM of
+                            SOMChangeScene ( tm, s ) ->
+                                --- Load new scene
+                                ( loadSceneByName msg lastModel s tm
+                                    |> resetSceneStartTime
+                                , lastCmds
+                                , lastAudioCmds
+                                )
 
-                else
-                    List.foldl
-                        (\singleSOM ( lastModel, lastCmds, lastAudioCmds ) ->
-                            case singleSOM of
-                                SOMChangeScene ( tm, s ) ->
-                                    --- Load new scene
-                                    ( loadSceneByName msg lastModel s tm
-                                        |> resetSceneStartTime
-                                    , lastCmds ++ [ sendInfo (encodeLSInfo lastModel.currentGlobalData.localStorage) ]
-                                    , lastAudioCmds
-                                    )
+                            SOMPlayAudio name path opt ->
+                                ( lastModel, lastCmds, lastAudioCmds ++ [ Audio.loadAudio (SoundLoaded name opt) path ] )
 
-                                SOMPlayAudio name path opt ->
-                                    ( lastModel, lastCmds, lastAudioCmds ++ [ Audio.loadAudio (SoundLoaded name opt) path ] )
+                            SOMSetVolume s ->
+                                let
+                                    oldgd =
+                                        lastModel.currentGlobalData
 
-                                SOMSetVolume s ->
-                                    let
-                                        oldgd =
-                                            lastModel.currentGlobalData
+                                    oldLS =
+                                        oldgd.localStorage
 
-                                        newgd2 =
-                                            { oldgd | audioVolume = s }
-                                    in
-                                    ( { lastModel | currentGlobalData = newgd2 }, lastCmds, lastAudioCmds )
+                                    newgd2 =
+                                        { oldgd | localStorage = { oldLS | volume = s } }
+                                in
+                                ( { lastModel | currentGlobalData = newgd2 }, lastCmds, lastAudioCmds )
 
-                                SOMStopAudio name ->
-                                    ( { lastModel | audiorepo = stopAudio lastModel.audiorepo name }, lastCmds, lastAudioCmds )
+                            SOMStopAudio name ->
+                                ( { lastModel | audiorepo = stopAudio lastModel.audiorepo name }, lastCmds, lastAudioCmds )
 
-                                SOMAlert text ->
-                                    ( lastModel, lastCmds ++ [ alert text ], lastAudioCmds )
+                            SOMAlert text ->
+                                ( lastModel, lastCmds ++ [ alert text ], lastAudioCmds )
 
-                                SOMPrompt name title ->
-                                    ( lastModel, lastCmds ++ [ prompt { name = name, title = title } ], lastAudioCmds )
-                        )
-                        ( newModel, [], [] )
-                        som
+                            SOMPrompt name title ->
+                                ( lastModel, lastCmds ++ [ prompt { name = name, title = title } ], lastAudioCmds )
+                    )
+                    ( newModel, [], [] )
+                    som
         in
-        ( newmodel, Cmd.batch cmds, Audio.cmdBatch audiocmds )
+        ( newmodel
+        , Cmd.batch <|
+            if newmodel.currentGlobalData.localStorage /= model.currentGlobalData.lastLocalStorage then
+                -- Save local storage
+                sendInfo (encodeLSInfo newmodel.currentGlobalData.localStorage) :: cmds
+
+            else
+                cmds
+        , Audio.cmdBatch audiocmds
+        )
 
 
 {-| update
@@ -274,13 +288,16 @@ update _ msg model =
                         gd =
                             model.currentGlobalData
 
+                        ls =
+                            gd.localStorage
+
                         newGd =
-                            { gd | audioVolume = v }
+                            { gd | localStorage = { ls | volume = v } }
                     in
                     ( { model | currentGlobalData = newGd }, Cmd.none, Audio.cmdNone )
 
                 Nothing ->
-                    ( model, Cmd.none, Audio.cmdNone )
+                    ( model, alert "Not a number", Audio.cmdNone )
 
         _ ->
             gameUpdate msg model

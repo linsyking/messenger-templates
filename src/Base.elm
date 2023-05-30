@@ -79,12 +79,12 @@ type alias GlobalData =
     , realHeight : Int
     , startLeft : Float
     , startTop : Float
-    , audioVolume : Float
     , sprites : Dict String Texture
     , sceneStartTime : Int
     , mousePos : ( Int, Int )
     , extraHTML : Maybe (Html Msg)
     , localStorage : LSInfo
+    , lastLocalStorage : LSInfo
     }
 
 
