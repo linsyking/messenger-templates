@@ -15,7 +15,7 @@ Normally you don't need to change this file.
 import Lib.Env.Env exposing (Env)
 import Lib.Scene.Base exposing (Scene, SceneInitData(..), SceneTMsg(..))
 import SceneProtos.$0.Common exposing (Model, initModel)
-import SceneProtos.$0.LayerInit exposing ($0Init)
+import SceneProtos.$0.SceneInit exposing ($0Init)
 import SceneProtos.$0.Model exposing (updateModel, viewModel)
 
 

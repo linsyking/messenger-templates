@@ -14,7 +14,7 @@ import Lib.Layer.Base exposing (Layer)
 import SceneProtos.$0.$1.Common exposing (EnvC, Model)
 import SceneProtos.$0.$1.Model exposing (initModel, updateModel, viewModel)
 import SceneProtos.$0.LayerBase exposing (CommonData)
-import SceneProtos.$0.LayerInit exposing ($0Init)
+import SceneProtos.$0.SceneInit exposing ($0Init)
 
 
 {-| Data

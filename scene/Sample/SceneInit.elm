@@ -1,10 +1,10 @@
-module Scenes.$0.LayerInit exposing
+module Scenes.$0.SceneInit exposing
     ( null$0Init
     , $0Init
     , initCommonData
     )
 
-{-| LayerInit
+{-| SceneInit
 
 @docs null$0Init
 @docs $0Init

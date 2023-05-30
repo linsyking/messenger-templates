@@ -12,7 +12,7 @@ import Lib.Env.Env exposing (Env, addCommonData)
 import Lib.Scene.Base exposing (LayerPacker, SceneInitData(..))
 import Scenes.$0.LayerBase exposing (CommonData, nullCommonData)
 import Scenes.$0.LayerSettings exposing (LayerT)
-import Scenes.$0.LayerInit exposing (initCommonData, null$0Init)
+import Scenes.$0.SceneInit exposing (initCommonData, null$0Init)
 $1
 
 

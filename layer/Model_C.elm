@@ -18,7 +18,7 @@ import Lib.Component.ComponentHandler exposing (updateComponents, viewComponent)
 import Lib.Env.Env exposing (addCommonData, noCommonData)
 import Lib.Layer.Base exposing (LayerMsg(..), LayerTarget(..))
 import Scenes.$0.$1.Common exposing (EnvC, Model, updateComponentsByHandler)
-import Scenes.$0.LayerInit exposing ($0Init)
+import Scenes.$0.SceneInit exposing ($0Init)
 
 
 {-| initModel

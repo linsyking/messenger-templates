@@ -15,7 +15,7 @@ module SceneProtos.$0.$1.Model exposing
 import Canvas exposing (Renderable, empty)
 import Lib.Layer.Base exposing (LayerMsg(..), LayerTarget(..))
 import SceneProtos.$0.$1.Common exposing (EnvC, Model, nullModel)
-import SceneProtos.$0.LayerInit exposing ($0Init)
+import SceneProtos.$0.SceneInit exposing ($0Init)
 
 
 {-| initModel
