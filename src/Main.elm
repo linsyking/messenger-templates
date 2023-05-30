@@ -16,7 +16,7 @@ import Html exposing (Html)
 import Html.Attributes exposing (style)
 import Json.Decode as Decode
 import Lib.Audio.Audio exposing (audioPortFromJS, audioPortToJS, loadAudio, stopAudio)
-import Lib.Coordinate.Coordinates exposing (fromMouseToReal, getStartPoint, maxHandW)
+import Lib.Coordinate.Coordinates exposing (fromMouseToVirtual, getStartPoint, maxHandW)
 import Lib.Layer.Base exposing (LayerMsg(..))
 import Lib.LocalStorage.LocalStorage exposing (decodeLSInfo, encodeLSInfo, sendInfo)
 import Lib.Resources.Base exposing (allTexture, getTexture, saveSprite)
@@ -218,9 +218,23 @@ update _ msg model =
                     model.currentGlobalData
 
                 mp =
-                    fromMouseToReal curgd ( toFloat px, toFloat py )
+                    fromMouseToVirtual curgd ( px, py )
             in
             ( { model | currentGlobalData = { curgd | mousePos = mp } }, Cmd.none, Audio.cmdNone )
+
+        RealMouseDown e pos ->
+            let
+                vp =
+                    fromMouseToVirtual model.currentGlobalData pos
+            in
+            gameUpdate (MouseDown e vp) model
+
+        RealMouseUp pos ->
+            let
+                vp =
+                    fromMouseToVirtual model.currentGlobalData pos
+            in
+            gameUpdate (MouseUp vp) model
 
         KeyDown 112 ->
             if debug then
@@ -287,9 +301,9 @@ subscriptions _ _ =
         , onKeyDown (Decode.map (\x -> KeyDown x) (Decode.field "keyCode" Decode.int))
         , onKeyUp (Decode.map (\x -> KeyUp x) (Decode.field "keyCode" Decode.int))
         , onResize (\w h -> NewWindowSize ( w, h ))
-        , onMouseDown (Decode.map3 (\b x y -> MouseDown b ( x, y )) (Decode.field "button" Decode.int) (Decode.field "clientX" Decode.float) (Decode.field "clientY" Decode.float))
-        , onMouseUp (Decode.map2 (\x y -> MouseUp ( x, y )) (Decode.field "clientX" Decode.float) (Decode.field "clientY" Decode.float))
-        , onMouseMove (Decode.map2 (\x y -> MouseMove ( x, y )) (Decode.field "clientX" Decode.int) (Decode.field "clientY" Decode.int))
+        , onMouseDown (Decode.map3 (\b x y -> RealMouseDown b ( x, y )) (Decode.field "button" Decode.int) (Decode.field "clientX" Decode.float) (Decode.field "clientY" Decode.float))
+        , onMouseUp (Decode.map2 (\x y -> RealMouseUp ( x, y )) (Decode.field "clientX" Decode.float) (Decode.field "clientY" Decode.float))
+        , onMouseMove (Decode.map2 (\x y -> MouseMove ( x, y )) (Decode.field "clientX" Decode.float) (Decode.field "clientY" Decode.float))
         , promptReceiver (\p -> Prompt p.name p.result)
         ]
 

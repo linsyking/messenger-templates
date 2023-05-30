@@ -47,9 +47,11 @@ type Msg
     | SoundLoaded String AudioOption (Result Audio.LoadError Audio.Source)
     | PlaySoundGotTime String AudioOption Audio.Source Time.Posix
     | TextureLoaded String (Maybe Texture)
-    | MouseDown Int ( Float, Float )
-    | MouseUp ( Float, Float )
-    | MouseMove ( Int, Int )
+    | RealMouseDown Int ( Float, Float )
+    | MouseDown Int ( Int, Int )
+    | RealMouseUp ( Float, Float )
+    | MouseUp ( Int, Int )
+    | MouseMove ( Float, Float )
     | Prompt String String
     | UnknownMsg
 
@@ -80,7 +82,7 @@ type alias GlobalData =
     , audioVolume : Float
     , sprites : Dict String Texture
     , sceneStartTime : Int
-    , mousePos : ( Float, Float )
+    , mousePos : ( Int, Int )
     , extraHTML : Maybe (Html Msg)
     , localStorage : LSInfo
     }
