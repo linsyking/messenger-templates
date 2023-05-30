@@ -49,6 +49,7 @@ type LayerMsg
     | LayerStringDataMsg String LayerMsg
     | LayerSoundMsg String String AudioOption
     | LayerStopSoundMsg String
+    | LayerChangeSceneMsg String
     | NullLayerMsg
 
 
