@@ -44,6 +44,8 @@ jobs:
         make
         printf "\n" | messenger component K
         make
+        printf "\n" | messenger component S -d K
+        make
         printf "\n" | messenger sceneproto Core
         make
         printf "\n" | messenger protolayer Core GameLayer
