@@ -1,4 +1,4 @@
-module Components.$0.$0 exposing
+module Components.$0.$1 exposing
     ( initModel
     , updateModel
     , viewModel

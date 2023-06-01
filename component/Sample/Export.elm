@@ -8,7 +8,7 @@ Write a description here for how to use your component.
 
 -}
 
-import Components.$0.$0 exposing (initModel, updateModel, viewModel)
+import Components.$0.$1 exposing (initModel, updateModel, viewModel)
 import Lib.Component.Base exposing (Component, ComponentInitData, ComponentMsg(..))
 import Lib.Env.Env exposing (Env)
 
@@ -18,7 +18,7 @@ Write a description here for how to initialize your component.
 -}
 initComponent : Env -> ComponentInitData -> Component
 initComponent env i =
-    { name = "$0"
+    { name = "$1"
     , data = initModel env i
     , update = updateModel
     , view = viewModel
