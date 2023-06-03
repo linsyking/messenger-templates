@@ -9,7 +9,7 @@ Write a description here for how to use your component.
 -}
 
 import Components.$0.$1 exposing (initModel, updateModel, viewModel)
-import Lib.Component.Base exposing (Component, ComponentInitData, ComponentMsg(..))
+import Lib.Component.Base exposing (Component, ComponentInitData)
 import Lib.Env.Env exposing (Env)
 
 
