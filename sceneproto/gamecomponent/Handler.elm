@@ -11,7 +11,6 @@ module SceneProtos.$0.GameComponent.Handler exposing
 
 -}
 
-import Base exposing (Msg(..))
 import Canvas exposing (Renderable, group)
 import Lib.Env.Env exposing (EnvC, cleanEnvC)
 import Messenger.GeneralModel exposing (viewModelList)
@@ -88,4 +87,8 @@ updateGC env xs =
 -}
 viewGC : EnvC CommonData -> List GameComponent -> Renderable
 viewGC env xs =
-    group [] <| viewModelList env xs
+    group [] <|
+        List.map (\( a, _ ) -> a) <|
+            List.sortBy (\( _, a ) -> a) <|
+                List.concat <|
+                    viewModelList env xs

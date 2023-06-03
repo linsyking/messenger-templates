@@ -31,7 +31,7 @@ import SceneProtos.$0.LayerBase exposing (CommonData)
 {-| GameComponent Definition
 -}
 type alias GameComponent =
-    GeneralModel Data (EnvC CommonData) GameComponentMsg GameComponentTarget Renderable
+    GeneralModel Data (EnvC CommonData) GameComponentMsg GameComponentTarget (List ( Renderable, Int ))
 
 
 {-| GameComponent Target
