@@ -7,7 +7,6 @@ module SceneProtos.$0.GameComponent.Handler exposing
 
 @docs update, match, super, recBody
 @docs updateGC, viewGC
-@docs removeDead
 
 -}
 
