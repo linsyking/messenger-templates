@@ -52,5 +52,7 @@ jobs:
         make
         printf "\n" | messenger level Core L1
         make
+        printf "\n" | messenger level Core level2
+        make
         printf "\n" | messenger protolayer core l2
         make
