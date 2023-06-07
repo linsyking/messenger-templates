@@ -62,10 +62,7 @@ init : Flags -> ( Model, Cmd Msg, AudioCmd Msg )
 init flags =
     let
         ms =
-            loadSceneByName NullMsg initModel initScene initSceneSettings
-
-        oldgd =
-            ms.currentGlobalData
+            loadSceneByName NullMsg { initModel | currentGlobalData = newgd } initScene initSceneSettings
 
         ( gw, gh ) =
             maxHandW ( flags.windowWidth, flags.windowHeight )
@@ -78,7 +75,7 @@ init flags =
 
         -- Update volume in globaldata
         newgd =
-            { oldgd | localStorage = ls, browserViewPort = ( flags.windowWidth, flags.windowHeight ), realWidth = gw, realHeight = gh, startLeft = fl, startTop = ft }
+            { initGlobalData | localStorage = ls, browserViewPort = ( flags.windowWidth, flags.windowHeight ), realWidth = gw, realHeight = gh, startLeft = fl, startTop = ft }
     in
     ( { ms | currentGlobalData = newgd }, Cmd.none, Audio.cmdNone )
 
