@@ -73,9 +73,8 @@ init flags =
         ls =
             decodeLSInfo flags.info
 
-        -- Update volume in globaldata
         newgd =
-            { initGlobalData | localStorage = ls, browserViewPort = ( flags.windowWidth, flags.windowHeight ), realWidth = gw, realHeight = gh, startLeft = fl, startTop = ft }
+            { initGlobalData | currentTimeStamp = Time.millisToPosix flags.timeStamp, localStorage = ls, browserViewPort = ( flags.windowWidth, flags.windowHeight ), realWidth = gw, realHeight = gh, startLeft = fl, startTop = ft }
     in
     ( { ms | currentGlobalData = newgd }, Cmd.none, Audio.cmdNone )
 
@@ -176,17 +175,18 @@ You may want to change `gameUpdate` rather than this function.
 -}
 update : AudioData -> Msg -> Model -> ( Model, Cmd Msg, AudioCmd Msg )
 update _ msg model =
+    let
+        gd =
+            model.currentGlobalData
+    in
     case msg of
         TextureLoaded name Nothing ->
             ( model, alert ("Failed to load sprite " ++ name), Audio.cmdNone )
 
         TextureLoaded name (Just t) ->
             let
-                oldgd =
-                    model.currentGlobalData
-
                 newgd =
-                    { oldgd | sprites = saveSprite model.currentGlobalData.sprites name t }
+                    { gd | sprites = saveSprite model.currentGlobalData.sprites name t }
             in
             ( { model | currentGlobalData = newgd }, Cmd.none, Audio.cmdNone )
 
@@ -209,9 +209,6 @@ update _ msg model =
 
         NewWindowSize t ->
             let
-                oldgd =
-                    model.currentGlobalData
-
                 ( gw, gh ) =
                     maxHandW t
 
@@ -219,19 +216,16 @@ update _ msg model =
                     getStartPoint t
 
                 newgd =
-                    { oldgd | browserViewPort = t, realWidth = gw, realHeight = gh, startLeft = fl, startTop = ft }
+                    { gd | browserViewPort = t, realWidth = gw, realHeight = gh, startLeft = fl, startTop = ft }
             in
             ( { model | currentGlobalData = newgd }, Cmd.none, Audio.cmdNone )
 
         MouseMove ( px, py ) ->
             let
-                curgd =
-                    model.currentGlobalData
-
                 mp =
-                    fromMouseToVirtual curgd ( px, py )
+                    fromMouseToVirtual gd ( px, py )
             in
-            ( { model | currentGlobalData = { curgd | mousePos = mp } }, Cmd.none, Audio.cmdNone )
+            ( { model | currentGlobalData = { gd | mousePos = mp } }, Cmd.none, Audio.cmdNone )
 
         RealMouseDown e pos ->
             let
@@ -282,9 +276,6 @@ update _ msg model =
             case vol of
                 Just v ->
                     let
-                        gd =
-                            model.currentGlobalData
-
                         ls =
                             gd.localStorage
 
@@ -295,6 +286,13 @@ update _ msg model =
 
                 Nothing ->
                     ( model, alert "Not a number", Audio.cmdNone )
+
+        Tick x ->
+            let
+                newGD =
+                    { gd | currentTimeStamp = x }
+            in
+            gameUpdate msg { model | currentGlobalData = newGD }
 
         _ ->
             gameUpdate msg model

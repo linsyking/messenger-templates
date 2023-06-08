@@ -23,6 +23,7 @@ import Lib.Audio.Audio exposing (getAudio)
 import Lib.Audio.Base exposing (AudioRepo)
 import Lib.LocalStorage.LocalStorage exposing (decodeLSInfo)
 import Scenes.SceneSettings exposing (SceneDataTypes, SceneT)
+import Time
 
 
 {-| Model
@@ -97,6 +98,7 @@ initGlobalData =
     , extraHTML = Nothing
     , localStorage = decodeLSInfo ""
     , lastLocalStorage = decodeLSInfo ""
+    , currentTimeStamp = Time.millisToPosix 0
     }
 
 

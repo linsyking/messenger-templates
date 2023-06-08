@@ -81,6 +81,7 @@ type alias GlobalData =
     , startTop : Float
     , sprites : Dict String Texture
     , sceneStartTime : Int
+    , currentTimeStamp : Time.Posix
     , mousePos : ( Int, Int )
     , extraHTML : Maybe (Html Msg)
     , localStorage : LSInfo
@@ -110,5 +111,6 @@ Get info from js script
 type alias Flags =
     { windowWidth : Int
     , windowHeight : Int
+    , timeStamp : Int
     , info : String
     }
