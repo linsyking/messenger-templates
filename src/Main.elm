@@ -10,6 +10,7 @@ import Audio exposing (AudioCmd, AudioData)
 import Base exposing (Flags, Msg(..))
 import Browser.Events exposing (onKeyDown, onKeyUp, onMouseDown, onMouseMove, onMouseUp, onResize)
 import Canvas
+import Canvas.Texture
 import Common exposing (Model, audio, initGlobalData, resetSceneStartTime, updateSceneStartTime)
 import Dict
 import Html exposing (Html)
@@ -20,6 +21,7 @@ import Lib.Coordinate.Coordinates exposing (fromMouseToVirtual, getStartPoint, m
 import Lib.Layer.Base exposing (LayerMsg(..))
 import Lib.LocalStorage.LocalStorage exposing (decodeLSInfo, encodeLSInfo, sendInfo)
 import Lib.Resources.Base exposing (allTexture, getTexture, saveSprite)
+import Lib.Resources.SpriteSheets exposing (allSpriteSheets)
 import Lib.Scene.Base exposing (SceneInitData(..), SceneOutputMsg(..))
 import Lib.Scene.SceneLoader exposing (existScene, getCurrentScene, loadSceneByName)
 import Lib.Tools.Browser exposing (alert, prompt, promptReceiver)
@@ -186,7 +188,28 @@ update _ msg model =
         TextureLoaded name (Just t) ->
             let
                 newgd =
-                    { gd | sprites = saveSprite model.currentGlobalData.sprites name t }
+                    case Dict.get name allSpriteSheets of
+                        Just sprites ->
+                            -- Save all sprites in the spritesheet
+                            List.foldl
+                                (\( n, s ) lastgd ->
+                                    let
+                                        ( x, y ) =
+                                            s.realStartPoint
+
+                                        ( w, h ) =
+                                            s.realSize
+
+                                        newTexture =
+                                            Canvas.Texture.sprite { x = x, y = y, width = w, height = h } t
+                                    in
+                                    { lastgd | sprites = saveSprite lastgd.sprites (name ++ "." ++ n) newTexture }
+                                )
+                                gd
+                                sprites
+
+                        Nothing ->
+                            { gd | sprites = saveSprite gd.sprites name t }
             in
             ( { model | currentGlobalData = newgd }, Cmd.none, Audio.cmdNone )
 
