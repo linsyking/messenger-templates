@@ -47,9 +47,7 @@ type Msg
     | SoundLoaded String AudioOption (Result Audio.LoadError Audio.Source)
     | PlaySoundGotTime String AudioOption Audio.Source Time.Posix
     | TextureLoaded String (Maybe Texture)
-    | RealMouseDown Int ( Float, Float )
     | MouseDown Int ( Float, Float )
-    | RealMouseUp ( Float, Float )
     | MouseUp ( Float, Float )
     | MouseMove ( Float, Float )
     | Prompt String String

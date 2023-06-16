@@ -251,19 +251,11 @@ update _ msg model =
             in
             ( { model | currentGlobalData = { gd | mousePos = mp } }, Cmd.none, Audio.cmdNone )
 
-        RealMouseDown e pos ->
-            let
-                vp =
-                    fromMouseToVirtual model.currentGlobalData pos
-            in
-            gameUpdate (MouseDown e vp) model
+        MouseDown e pos ->
+            gameUpdate (MouseDown e <| fromMouseToVirtual model.currentGlobalData pos) model
 
-        RealMouseUp pos ->
-            let
-                vp =
-                    fromMouseToVirtual model.currentGlobalData pos
-            in
-            gameUpdate (MouseUp vp) model
+        MouseUp pos ->
+            gameUpdate (MouseUp <| fromMouseToVirtual model.currentGlobalData pos) model
 
         KeyDown 112 ->
             if debug then
@@ -337,8 +329,8 @@ subscriptions _ _ =
         , onKeyDown (Decode.map (\x -> KeyDown x) (Decode.field "keyCode" Decode.int))
         , onKeyUp (Decode.map (\x -> KeyUp x) (Decode.field "keyCode" Decode.int))
         , onResize (\w h -> NewWindowSize ( toFloat w, toFloat h ))
-        , onMouseDown (Decode.map3 (\b x y -> RealMouseDown b ( x, y )) (Decode.field "button" Decode.int) (Decode.field "clientX" Decode.float) (Decode.field "clientY" Decode.float))
-        , onMouseUp (Decode.map2 (\x y -> RealMouseUp ( x, y )) (Decode.field "clientX" Decode.float) (Decode.field "clientY" Decode.float))
+        , onMouseDown (Decode.map3 (\b x y -> MouseDown b ( x, y )) (Decode.field "button" Decode.int) (Decode.field "clientX" Decode.float) (Decode.field "clientY" Decode.float))
+        , onMouseUp (Decode.map2 (\x y -> MouseUp ( x, y )) (Decode.field "clientX" Decode.float) (Decode.field "clientY" Decode.float))
         , onMouseMove (Decode.map2 (\x y -> MouseMove ( x, y )) (Decode.field "clientX" Decode.float) (Decode.field "clientY" Decode.float))
         , promptReceiver (\p -> Prompt p.name p.result)
         ]
