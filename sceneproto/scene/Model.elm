@@ -55,7 +55,16 @@ updateModel env model =
             { model | commonData = newenv.commonData, layers = newdata }
 
         ( newmodel, newsow, newgd2 ) =
-            List.foldl (\x ( y, _, cgd ) -> handleLayerMsg cgd x y) ( nmodel, [], newenv ) msgs
+            List.foldl
+                (\x ( y, lmsg, cgd ) ->
+                    let
+                        ( model2, msg2, env2 ) =
+                            handleLayerMsg cgd x y
+                    in
+                    ( model2, lmsg ++ msg2, env2 )
+                )
+                ( nmodel, [], newenv )
+                msgs
     in
     ( newmodel, newsow, noCommonData newgd2 )
 
