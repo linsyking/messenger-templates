@@ -76,8 +76,20 @@ init flags =
         ls =
             decodeLSInfo flags.info
 
+        oldIT =
+            initGlobalData.internalData
+
+        newIT =
+            { oldIT
+                | browserViewPort = ( flags.windowWidth, flags.windowHeight )
+                , realWidth = gw
+                , realHeight = gh
+                , startLeft = fl
+                , startTop = ft
+            }
+
         newgd =
-            { initGlobalData | currentTimeStamp = Time.millisToPosix flags.timeStamp, localStorage = ls, browserViewPort = ( flags.windowWidth, flags.windowHeight ), realWidth = gw, realHeight = gh, startLeft = fl, startTop = ft }
+            { initGlobalData | currentTimeStamp = Time.millisToPosix flags.timeStamp, localStorage = ls, internalData = newIT }
     in
     ( { ms | currentGlobalData = newgd }, Cmd.none, Audio.cmdNone )
 
@@ -89,7 +101,7 @@ If you add some SceneOutputMsg, you have to add corresponding updating logic her
 -}
 gameUpdate : Msg -> Model -> ( Model, Cmd Msg, AudioCmd Msg )
 gameUpdate msg model =
-    if List.length (Dict.keys model.currentGlobalData.sprites) < List.length allTexture then
+    if List.length (Dict.keys model.currentGlobalData.internalData.sprites) < List.length allTexture then
         -- Still loading assets
         ( model, Cmd.none, Audio.cmdNone )
 
@@ -104,8 +116,14 @@ gameUpdate msg model =
             newGD1 =
                 newenv.globalData
 
+            newIT =
+                newGD1.internalData
+
+            newIT2 =
+                { newIT | lastLocalStorage = oldLocalStorage }
+
             newGD2 =
-                { newGD1 | lastLocalStorage = oldLocalStorage }
+                { newGD1 | internalData = newIT2 }
 
             timeUpdatedModel =
                 case msg of
@@ -161,7 +179,7 @@ gameUpdate msg model =
         in
         ( newmodel
         , Cmd.batch <|
-            if newmodel.currentGlobalData.localStorage /= model.currentGlobalData.lastLocalStorage then
+            if newmodel.currentGlobalData.localStorage /= model.currentGlobalData.internalData.lastLocalStorage then
                 -- Save local storage
                 sendInfo (encodeLSInfo newmodel.currentGlobalData.localStorage) :: cmds
 
@@ -203,14 +221,27 @@ update _ msg model =
 
                                         newTexture =
                                             Canvas.Texture.sprite { x = x, y = y, width = w, height = h } t
+
+                                        oldIT =
+                                            lastgd.internalData
+
+                                        newIT =
+                                            { oldIT | sprites = saveSprite oldIT.sprites (name ++ "." ++ n) newTexture }
                                     in
-                                    { lastgd | sprites = saveSprite lastgd.sprites (name ++ "." ++ n) newTexture }
+                                    { lastgd | internalData = newIT }
                                 )
                                 gd
                                 sprites
 
                         Nothing ->
-                            { gd | sprites = saveSprite gd.sprites name t }
+                            let
+                                oldIT =
+                                    gd.internalData
+
+                                newIT =
+                                    { oldIT | sprites = saveSprite oldIT.sprites name t }
+                            in
+                            { gd | internalData = newIT }
             in
             ( { model | currentGlobalData = newgd }, Cmd.none, Audio.cmdNone )
 
@@ -239,8 +270,14 @@ update _ msg model =
                 ( fl, ft ) =
                     getStartPoint t
 
+                oldIT =
+                    gd.internalData
+
+                newIT =
+                    { oldIT | browserViewPort = t, realWidth = gw, realHeight = gh, startLeft = fl, startTop = ft }
+
                 newgd =
-                    { gd | browserViewPort = t, realWidth = gw, realHeight = gh, startLeft = fl, startTop = ft }
+                    { gd | internalData = newIT }
             in
             ( { model | currentGlobalData = newgd }, Cmd.none, Audio.cmdNone )
 
@@ -348,12 +385,12 @@ view _ model =
     let
         canvas =
             Canvas.toHtmlWith
-                { width = floor model.currentGlobalData.realWidth
-                , height = floor model.currentGlobalData.realHeight
+                { width = floor model.currentGlobalData.internalData.realWidth
+                , height = floor model.currentGlobalData.internalData.realHeight
                 , textures = getTexture
                 }
-                [ style "left" (String.fromFloat model.currentGlobalData.startLeft)
-                , style "top" (String.fromFloat model.currentGlobalData.startTop)
+                [ style "left" (String.fromFloat model.currentGlobalData.internalData.startLeft)
+                , style "top" (String.fromFloat model.currentGlobalData.internalData.startTop)
                 , style "position" "fixed"
                 ]
                 [ MainConfig.background model.currentGlobalData

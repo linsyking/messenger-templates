@@ -72,17 +72,22 @@ It is mainly used for display and reading/writing some localstorage data.
 
 -}
 type alias GlobalData =
+    { internalData : InternalData
+    , sceneStartTime : Int
+    , currentTimeStamp : Time.Posix
+    , mousePos : ( Float, Float )
+    , extraHTML : Maybe (Html Msg)
+    , localStorage : LSInfo
+    }
+
+
+type alias InternalData =
     { browserViewPort : ( Float, Float )
     , realWidth : Float
     , realHeight : Float
     , startLeft : Float
     , startTop : Float
     , sprites : Dict String Texture
-    , sceneStartTime : Int
-    , currentTimeStamp : Time.Posix
-    , mousePos : ( Float, Float )
-    , extraHTML : Maybe (Html Msg)
-    , localStorage : LSInfo
     , lastLocalStorage : LSInfo
     }
 

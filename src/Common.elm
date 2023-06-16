@@ -87,18 +87,20 @@ You may add your own global data.
 -}
 initGlobalData : GlobalData
 initGlobalData =
-    { browserViewPort = ( 1280, 720 )
-    , realHeight = 720
-    , realWidth = 1280
-    , startLeft = 0
-    , startTop = 0
-    , sprites = Dict.empty
+    { internalData =
+        { browserViewPort = ( 1920, 1080 )
+        , realHeight = 1080
+        , realWidth = 1920
+        , startLeft = 0
+        , startTop = 0
+        , sprites = Dict.empty
+        , lastLocalStorage = decodeLSInfo ""
+        }
+    , currentTimeStamp = Time.millisToPosix 0
     , sceneStartTime = 0
     , mousePos = ( 0, 0 )
     , extraHTML = Nothing
     , localStorage = decodeLSInfo ""
-    , lastLocalStorage = decodeLSInfo ""
-    , currentTimeStamp = Time.millisToPosix 0
     }
 
 

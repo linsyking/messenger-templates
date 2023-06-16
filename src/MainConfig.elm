@@ -85,4 +85,4 @@ Canvas.shapes [ fill Color.blue ][ Canvas.rect ( 0, 0 ) (toFloat gd.realWidth) (
 -}
 background : GlobalData -> Renderable
 background gd =
-    Canvas.clear ( 0, 0 ) gd.realWidth gd.realHeight
+    Canvas.clear ( 0, 0 ) gd.internalData.realWidth gd.internalData.realHeight

@@ -58,7 +58,7 @@ Same as posToReal, but add the initial position of canvas.
 -}
 fixedPosToReal : GlobalData -> ( Float, Float ) -> ( Float, Float )
 fixedPosToReal gd ( x, y ) =
-    floatpairadd (posToReal gd ( x, y )) ( gd.startLeft, gd.startTop )
+    floatpairadd (posToReal gd ( x, y )) ( gd.internalData.startLeft, gd.internalData.startTop )
 
 
 {-| posToReal
@@ -70,10 +70,10 @@ posToReal : GlobalData -> ( Float, Float ) -> ( Float, Float )
 posToReal gd ( x, y ) =
     let
         realWidth =
-            gd.realWidth
+            gd.internalData.realWidth
 
         realHeight =
-            gd.realHeight
+            gd.internalData.realHeight
     in
     ( realWidth * (x / plWidth), realHeight * (y / plHeight) )
 
@@ -84,10 +84,10 @@ posToVirtual : GlobalData -> ( Float, Float ) -> ( Float, Float )
 posToVirtual gd ( x, y ) =
     let
         realWidth =
-            gd.realWidth
+            gd.internalData.realWidth
 
         realHeight =
-            gd.realHeight
+            gd.internalData.realHeight
     in
     ( plWidth * (x / realWidth), plHeight * (y / realHeight) )
 
@@ -99,7 +99,7 @@ lengthToReal : GlobalData -> Float -> Float
 lengthToReal gd x =
     let
         realWidth =
-            gd.realWidth
+            gd.internalData.realWidth
     in
     realWidth * (x / plWidth)
 
@@ -110,7 +110,7 @@ fromRealLength : GlobalData -> Float -> Float
 fromRealLength gd x =
     let
         realWidth =
-            gd.realWidth
+            gd.internalData.realWidth
     in
     plWidth * (x / realWidth)
 
@@ -160,4 +160,4 @@ judgeMouseRect ( mx, my ) ( x, y ) ( w, h ) =
 -}
 fromMouseToVirtual : GlobalData -> ( Float, Float ) -> ( Float, Float )
 fromMouseToVirtual gd ( px, py ) =
-    posToVirtual gd ( px - gd.startLeft, py - gd.startTop )
+    posToVirtual gd ( px - gd.internalData.startLeft, py - gd.internalData.startTop )

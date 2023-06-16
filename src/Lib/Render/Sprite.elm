@@ -27,7 +27,7 @@ renderSprite : GlobalData -> List Setting -> ( Float, Float ) -> ( Float, Float 
 renderSprite gd ls p size name =
     let
         dst =
-            gd.sprites
+            gd.internalData.sprites
     in
     case igetSprite name dst of
         Just t ->
@@ -118,7 +118,7 @@ renderSpriteWithRev rev gd ls p size name =
         renderSprite gd ls p size name
 
     else
-        case igetSprite name gd.sprites of
+        case igetSprite name gd.internalData.sprites of
             Just t ->
                 renderSpriteWithRev_ gd ls p size t
 
