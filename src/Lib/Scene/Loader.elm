@@ -1,4 +1,4 @@
-module Lib.Scene.SceneLoader exposing
+module Lib.Scene.Loader exposing
     ( getScene, existScene
     , loadScene
     , loadSceneByName
