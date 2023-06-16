@@ -19,7 +19,7 @@ import Lib.Coordinate.Coordinates exposing (fixedPosToReal, lengthToReal)
 
 {-| Generate HTML Attributes that has the correct position
 -}
-genAttribute : GlobalData -> ( Int, Int ) -> ( Int, Int ) -> List (Attribute msg)
+genAttribute : GlobalData -> ( Float, Float ) -> ( Float, Float ) -> List (Attribute msg)
 genAttribute gd ( x, y ) ( w, h ) =
     let
         ( rx, ry ) =

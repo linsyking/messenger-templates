@@ -43,14 +43,14 @@ type Msg
     = Tick Time.Posix
     | KeyDown Int
     | KeyUp Int
-    | NewWindowSize ( Int, Int )
+    | NewWindowSize ( Float, Float )
     | SoundLoaded String AudioOption (Result Audio.LoadError Audio.Source)
     | PlaySoundGotTime String AudioOption Audio.Source Time.Posix
     | TextureLoaded String (Maybe Texture)
     | RealMouseDown Int ( Float, Float )
-    | MouseDown Int ( Int, Int )
+    | MouseDown Int ( Float, Float )
     | RealMouseUp ( Float, Float )
-    | MouseUp ( Int, Int )
+    | MouseUp ( Float, Float )
     | MouseMove ( Float, Float )
     | Prompt String String
     | NullMsg
@@ -74,15 +74,15 @@ It is mainly used for display and reading/writing some localstorage data.
 
 -}
 type alias GlobalData =
-    { browserViewPort : ( Int, Int )
-    , realWidth : Int
-    , realHeight : Int
+    { browserViewPort : ( Float, Float )
+    , realWidth : Float
+    , realHeight : Float
     , startLeft : Float
     , startTop : Float
     , sprites : Dict String Texture
     , sceneStartTime : Int
     , currentTimeStamp : Time.Posix
-    , mousePos : ( Int, Int )
+    , mousePos : ( Float, Float )
     , extraHTML : Maybe (Html Msg)
     , localStorage : LSInfo
     , lastLocalStorage : LSInfo
@@ -109,8 +109,8 @@ Get info from js script
 
 -}
 type alias Flags =
-    { windowWidth : Int
-    , windowHeight : Int
+    { windowWidth : Float
+    , windowHeight : Float
     , timeStamp : Int
     , info : String
     }

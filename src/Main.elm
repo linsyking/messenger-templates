@@ -20,8 +20,9 @@ import Lib.Audio.Audio exposing (audioPortFromJS, audioPortToJS, loadAudio, stop
 import Lib.Coordinate.Coordinates exposing (fromMouseToVirtual, getStartPoint, maxHandW)
 import Lib.Layer.Base exposing (LayerMsg(..))
 import Lib.LocalStorage.LocalStorage exposing (decodeLSInfo, encodeLSInfo, sendInfo)
-import Lib.Resources.Base exposing (allTexture, getTexture, saveSprite)
+import Lib.Resources.Base exposing (getTexture, saveSprite)
 import Lib.Resources.SpriteSheets exposing (allSpriteSheets)
+import Lib.Resources.Sprites exposing (allTexture)
 import Lib.Scene.Base exposing (SceneInitData(..), SceneOutputMsg(..))
 import Lib.Scene.SceneLoader exposing (existScene, getCurrentScene, loadSceneByName)
 import Lib.Tools.Browser exposing (alert, prompt, promptReceiver)
@@ -335,7 +336,7 @@ subscriptions _ _ =
         [ Time.every timeInterval Tick --- Slow down the fps
         , onKeyDown (Decode.map (\x -> KeyDown x) (Decode.field "keyCode" Decode.int))
         , onKeyUp (Decode.map (\x -> KeyUp x) (Decode.field "keyCode" Decode.int))
-        , onResize (\w h -> NewWindowSize ( w, h ))
+        , onResize (\w h -> NewWindowSize ( toFloat w, toFloat h ))
         , onMouseDown (Decode.map3 (\b x y -> RealMouseDown b ( x, y )) (Decode.field "button" Decode.int) (Decode.field "clientX" Decode.float) (Decode.field "clientY" Decode.float))
         , onMouseUp (Decode.map2 (\x y -> RealMouseUp ( x, y )) (Decode.field "clientX" Decode.float) (Decode.field "clientY" Decode.float))
         , onMouseMove (Decode.map2 (\x y -> MouseMove ( x, y )) (Decode.field "clientX" Decode.float) (Decode.field "clientY" Decode.float))
@@ -355,8 +356,8 @@ view _ model =
     let
         canvas =
             Canvas.toHtmlWith
-                { width = model.currentGlobalData.realWidth
-                , height = model.currentGlobalData.realHeight
+                { width = floor model.currentGlobalData.realWidth
+                , height = floor model.currentGlobalData.realHeight
                 , textures = getTexture
                 }
                 [ style "left" (String.fromFloat model.currentGlobalData.startLeft)

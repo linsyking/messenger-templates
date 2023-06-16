@@ -39,7 +39,7 @@ import MainConfig exposing (plHeight, plWidth)
 
 plScale : Float
 plScale =
-    toFloat plWidth / toFloat plHeight
+    plWidth / plHeight
 
 
 
@@ -56,7 +56,7 @@ floatpairadd ( x, y ) ( z, w ) =
 Same as posToReal, but add the initial position of canvas.
 
 -}
-fixedPosToReal : GlobalData -> ( Int, Int ) -> ( Float, Float )
+fixedPosToReal : GlobalData -> ( Float, Float ) -> ( Float, Float )
 fixedPosToReal gd ( x, y ) =
     floatpairadd (posToReal gd ( x, y )) ( gd.startLeft, gd.startTop )
 
@@ -66,7 +66,7 @@ fixedPosToReal gd ( x, y ) =
 Transform from the virtual coordinate system to the real pixel system.
 
 -}
-posToReal : GlobalData -> ( Int, Int ) -> ( Float, Float )
+posToReal : GlobalData -> ( Float, Float ) -> ( Float, Float )
 posToReal gd ( x, y ) =
     let
         realWidth =
@@ -75,12 +75,12 @@ posToReal gd ( x, y ) =
         realHeight =
             gd.realHeight
     in
-    ( toFloat realWidth * (toFloat x / toFloat plWidth), toFloat realHeight * (toFloat y / toFloat plHeight) )
+    ( realWidth * (x / plWidth), realHeight * (y / plHeight) )
 
 
 {-| Inverse of posToReal.
 -}
-posToVirtual : GlobalData -> ( Float, Float ) -> ( Int, Int )
+posToVirtual : GlobalData -> ( Float, Float ) -> ( Float, Float )
 posToVirtual gd ( x, y ) =
     let
         realWidth =
@@ -89,65 +89,65 @@ posToVirtual gd ( x, y ) =
         realHeight =
             gd.realHeight
     in
-    ( floor (toFloat plWidth * (x / toFloat realWidth)), floor (toFloat plHeight * (y / toFloat realHeight)) )
+    ( plWidth * (x / realWidth), plHeight * (y / realHeight) )
 
 
 {-| widthToReal
 Use this if you want to draw something based on the length.
 -}
-lengthToReal : GlobalData -> Int -> Float
+lengthToReal : GlobalData -> Float -> Float
 lengthToReal gd x =
     let
         realWidth =
             gd.realWidth
     in
-    toFloat realWidth * (toFloat x / toFloat plWidth)
+    realWidth * (x / plWidth)
 
 
 {-| The inverse function of widthToReal.
 -}
-fromRealLength : GlobalData -> Float -> Int
+fromRealLength : GlobalData -> Float -> Float
 fromRealLength gd x =
     let
         realWidth =
             gd.realWidth
     in
-    floor (toFloat plWidth * (x / toFloat realWidth))
+    plWidth * (x / realWidth)
 
 
 {-| maxHandW
 -}
-maxHandW : ( Int, Int ) -> ( Int, Int )
+maxHandW : ( Float, Float ) -> ( Float, Float )
 maxHandW ( w, h ) =
-    if toFloat w / toFloat h > plScale then
-        ( floor (toFloat h * plScale), h )
+    if w / h > plScale then
+        ( h * plScale, h )
 
     else
-        ( w, floor (toFloat w / plScale) )
+        ( w, w / plScale )
 
 
 {-| getStartPoint
 -}
-getStartPoint : ( Int, Int ) -> ( Float, Float )
+getStartPoint : ( Float, Float ) -> ( Float, Float )
 getStartPoint ( w, h ) =
     let
         fw =
-            toFloat h * plScale
+            h * plScale
 
         fh =
-            toFloat w / plScale
+            w / plScale
     in
-    if toFloat w / toFloat h > plScale then
-        ( (toFloat w - fw) / 2, 0 )
+    if w / h > plScale then
+        ( (w - fw) / 2, 0 )
 
     else
-        ( 0, (toFloat h - fh) / 2 )
+        ( 0, (h - fh) / 2 )
 
 
 {-| judgeMouseRect
 Judge whether the mouse position is in the rectangle.
 -}
-judgeMouseRect : ( Int, Int ) -> ( Int, Int ) -> ( Int, Int ) -> Bool
+judgeMouseRect : ( Float, Float ) -> ( Float, Float ) -> ( Float, Float ) -> Bool
 judgeMouseRect ( mx, my ) ( x, y ) ( w, h ) =
     if x <= mx && mx <= x + w && y <= my && my <= y + h then
         True
@@ -158,6 +158,6 @@ judgeMouseRect ( mx, my ) ( x, y ) ( w, h ) =
 
 {-| fromMouseToVirtual
 -}
-fromMouseToVirtual : GlobalData -> ( Float, Float ) -> ( Int, Int )
+fromMouseToVirtual : GlobalData -> ( Float, Float ) -> ( Float, Float )
 fromMouseToVirtual gd ( px, py ) =
     posToVirtual gd ( px - gd.startLeft, py - gd.startTop )

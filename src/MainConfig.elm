@@ -51,14 +51,14 @@ So please determine these two values before you start to write your game.
 The default scale is 16x9.
 
 -}
-plHeight : Int
+plHeight : Float
 plHeight =
     1080
 
 
 {-| The width of the game screen in pixel.
 -}
-plWidth : Int
+plWidth : Float
 plWidth =
     1920
 
@@ -85,4 +85,4 @@ Canvas.shapes [ fill Color.blue ][ Canvas.rect ( 0, 0 ) (toFloat gd.realWidth) (
 -}
 background : GlobalData -> Renderable
 background gd =
-    Canvas.clear ( 0, 0 ) (toFloat gd.realWidth) (toFloat gd.realHeight)
+    Canvas.clear ( 0, 0 ) gd.realWidth gd.realHeight

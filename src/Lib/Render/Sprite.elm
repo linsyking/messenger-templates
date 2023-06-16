@@ -23,7 +23,7 @@ import Lib.Resources.Base exposing (igetSprite)
 Render a single sprite.
 
 -}
-renderSprite : GlobalData -> List Setting -> ( Int, Int ) -> ( Int, Int ) -> String -> Renderable
+renderSprite : GlobalData -> List Setting -> ( Float, Float ) -> ( Float, Float ) -> String -> Renderable
 renderSprite gd ls p size name =
     let
         dst =
@@ -37,7 +37,7 @@ renderSprite gd ls p size name =
             empty
 
 
-renderSprite_ : GlobalData -> List Setting -> ( Int, Int ) -> ( Int, Int ) -> Texture -> Renderable
+renderSprite_ : GlobalData -> List Setting -> ( Float, Float ) -> ( Float, Float ) -> Texture -> Renderable
 renderSprite_ gd ls p ( w, h ) t =
     let
         text_dim =
@@ -112,7 +112,7 @@ Render a single sprite with (possible) reverse.
 The first argument is the reverse flag. Sent true to make the sprite being rendered in reverse.
 
 -}
-renderSpriteWithRev : Bool -> GlobalData -> List Setting -> ( Int, Int ) -> ( Int, Int ) -> String -> Renderable
+renderSpriteWithRev : Bool -> GlobalData -> List Setting -> ( Float, Float ) -> ( Float, Float ) -> String -> Renderable
 renderSpriteWithRev rev gd ls p size name =
     if not rev then
         renderSprite gd ls p size name
@@ -126,7 +126,7 @@ renderSpriteWithRev rev gd ls p size name =
                 empty
 
 
-renderSpriteWithRev_ : GlobalData -> List Setting -> ( Int, Int ) -> ( Int, Int ) -> Texture -> Renderable
+renderSpriteWithRev_ : GlobalData -> List Setting -> ( Float, Float ) -> ( Float, Float ) -> Texture -> Renderable
 renderSpriteWithRev_ gd ls p ( w, h ) t =
     let
         text_dim =

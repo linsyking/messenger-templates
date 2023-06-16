@@ -1,9 +1,7 @@
 module Lib.Resources.Base exposing
-    ( getTexture
-    , saveSprite
+    ( saveSprite
     , igetSprite
-    , allTexture
-    , getResourcePath
+    , getTexture
     )
 
 {-|
@@ -21,10 +19,8 @@ If some asset is not found, the game will panic and throw an error (alert).
 
 After the resources are loaded, we can get those data from globaldata.sprites.
 
-@docs getTexture
 @docs saveSprite
 @docs igetSprite
-@docs allTexture
 @docs getResourcePath
 
 -}
@@ -32,13 +28,7 @@ After the resources are loaded, we can get those data from globaldata.sprites.
 import Base exposing (Msg(..))
 import Canvas.Texture as Texture exposing (Texture)
 import Dict exposing (Dict)
-
-
-{-| Get the path of the resource.
--}
-getResourcePath : String -> String
-getResourcePath x =
-    "assets/" ++ x
+import Lib.Resources.Sprites exposing (allTexture)
 
 
 {-| getTexture
@@ -66,22 +56,3 @@ Get the texture by name.
 igetSprite : String -> Dict String Texture -> Maybe Texture
 igetSprite name dst =
     Dict.get name dst
-
-
-{-| allTexture
-
-A list of all the textures.
-
-Add your textures here. Don't worry if your list is too long. You can split those resources according to their usage.
-
-Examples:
-
-[
-( "ball", getResourcePath "img/ball.png" ),
-( "car", getResourcePath "img/car.jpg" )
-]
-
--}
-allTexture : List ( String, String )
-allTexture =
-    []
