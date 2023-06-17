@@ -94,7 +94,6 @@ initGlobalData =
         , startLeft = 0
         , startTop = 0
         , sprites = Dict.empty
-        , lastLocalStorage = decodeLSInfo ""
         }
     , currentTimeStamp = Time.millisToPosix 0
     , sceneStartTime = 0

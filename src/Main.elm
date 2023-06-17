@@ -116,23 +116,14 @@ gameUpdate msg model =
             newGD1 =
                 newenv.globalData
 
-            newIT =
-                newGD1.internalData
-
-            newIT2 =
-                { newIT | lastLocalStorage = oldLocalStorage }
-
-            newGD2 =
-                { newGD1 | internalData = newIT2 }
-
             timeUpdatedModel =
                 case msg of
                     Tick _ ->
                         -- Tick event needs to update time
-                        { model | time = model.time + 1, currentGlobalData = newGD2 }
+                        { model | time = model.time + 1, currentGlobalData = newGD1 }
 
                     _ ->
-                        { model | currentGlobalData = newGD2 }
+                        { model | currentGlobalData = newGD1 }
 
             newModel =
                 updateSceneStartTime { timeUpdatedModel | currentData = sdt }
@@ -179,7 +170,7 @@ gameUpdate msg model =
         in
         ( newmodel
         , Cmd.batch <|
-            if newmodel.currentGlobalData.localStorage /= model.currentGlobalData.internalData.lastLocalStorage then
+            if newmodel.currentGlobalData.localStorage /= oldLocalStorage then
                 -- Save local storage
                 sendInfo (encodeLSInfo newmodel.currentGlobalData.localStorage) :: cmds
 
@@ -332,10 +323,13 @@ update _ msg model =
                         ls =
                             gd.localStorage
 
+                        newls =
+                            { ls | volume = v }
+
                         newGd =
-                            { gd | localStorage = { ls | volume = v } }
+                            { gd | localStorage = newls }
                     in
-                    ( { model | currentGlobalData = newGd }, Cmd.none, Audio.cmdNone )
+                    ( { model | currentGlobalData = newGd }, sendInfo (encodeLSInfo newls), Audio.cmdNone )
 
                 Nothing ->
                     ( model, alert "Not a number", Audio.cmdNone )
@@ -346,6 +340,9 @@ update _ msg model =
                     { gd | currentTimeStamp = x }
             in
             gameUpdate msg { model | currentGlobalData = newGD }
+
+        NullMsg ->
+            ( model, Cmd.none, Audio.cmdNone )
 
         _ ->
             gameUpdate msg model
@@ -363,8 +360,30 @@ subscriptions : AudioData -> Model -> Sub Msg
 subscriptions _ _ =
     Sub.batch
         [ Time.every timeInterval Tick --- Slow down the fps
-        , onKeyDown (Decode.map (\x -> KeyDown x) (Decode.field "keyCode" Decode.int))
-        , onKeyUp (Decode.map (\x -> KeyUp x) (Decode.field "keyCode" Decode.int))
+        , onKeyDown
+            (Decode.map2
+                (\x rep ->
+                    if not rep then
+                        KeyDown x
+
+                    else
+                        NullMsg
+                )
+                (Decode.field "keyCode" Decode.int)
+                (Decode.field "repeat" Decode.bool)
+            )
+        , onKeyUp
+            (Decode.map2
+                (\x rep ->
+                    if not rep then
+                        KeyUp x
+
+                    else
+                        NullMsg
+                )
+                (Decode.field "keyCode" Decode.int)
+                (Decode.field "repeat" Decode.bool)
+            )
         , onResize (\w h -> NewWindowSize ( toFloat w, toFloat h ))
         , onMouseDown (Decode.map3 (\b x y -> MouseDown b ( x, y )) (Decode.field "button" Decode.int) (Decode.field "clientX" Decode.float) (Decode.field "clientY" Decode.float))
         , onMouseUp (Decode.map2 (\x y -> MouseUp ( x, y )) (Decode.field "clientX" Decode.float) (Decode.field "clientY" Decode.float))

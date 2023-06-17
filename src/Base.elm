@@ -88,7 +88,6 @@ type alias InternalData =
     , startLeft : Float
     , startTop : Float
     , sprites : Dict String Texture
-    , lastLocalStorage : LSInfo
     }
 
 
