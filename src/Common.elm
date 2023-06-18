@@ -24,6 +24,7 @@ import Lib.Audio.Base exposing (AudioRepo)
 import Lib.LocalStorage.LocalStorage exposing (decodeLSInfo)
 import Lib.Scene.Base exposing (SceneInitData)
 import Lib.Scene.Transitions.Base exposing (Transition)
+import MainConfig exposing (initScene)
 import Scenes.SceneSettings exposing (SceneDataTypes, SceneT)
 import Time
 
@@ -103,6 +104,7 @@ initGlobalData =
     , mousePos = ( 0, 0 )
     , extraHTML = Nothing
     , localStorage = decodeLSInfo ""
+    , currentScene = initScene
     }
 
 

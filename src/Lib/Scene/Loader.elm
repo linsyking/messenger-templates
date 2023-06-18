@@ -66,26 +66,25 @@ getScene i =
 {-| loadScene
 -}
 loadScene : Msg -> Model -> SceneT -> SceneInitData -> Model
-loadScene msg model cs tm =
-    let
-        ls =
-            { model | currentScene = cs }
-
-        ld =
-            { ls | currentData = cs.init { t = model.time, globalData = model.currentGlobalData, msg = msg } tm }
-    in
-    ld
+loadScene msg model cs sid =
+    { model
+        | currentScene = cs
+        , currentData = cs.init { t = model.time, globalData = model.currentGlobalData, msg = msg } sid
+    }
 
 
 {-| loadSceneByName
 -}
 loadSceneByName : Msg -> Model -> String -> SceneInitData -> Model
-loadSceneByName msg model i tm =
+loadSceneByName msg model name sid =
     let
-        sc =
-            getScene i
+        newModel =
+            loadScene msg model (getScene name) sid
+
+        gd =
+            newModel.currentGlobalData
     in
-    loadScene msg model sc tm
+    { newModel | currentGlobalData = { gd | currentScene = name } }
 
 
 {-| getCurrentScene

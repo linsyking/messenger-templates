@@ -78,6 +78,7 @@ type alias GlobalData =
     , mousePos : ( Float, Float )
     , extraHTML : Maybe (Html Msg)
     , localStorage : LSInfo
+    , currentScene : String
     }
 
 
