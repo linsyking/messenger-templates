@@ -41,11 +41,19 @@ ldtToData ldt =
 getLayerT : Layer Data CommonData -> LayerT
 getLayerT layer =
     let
-        update : EnvC -> LayerMsg -> LayerDataType -> ( LayerDataType, List ( LayerTarget, LayerMsg ), EnvC )
-        update env lm ldt =
+        update : EnvC -> LayerDataType -> ( LayerDataType, List ( LayerTarget, LayerMsg ), EnvC )
+        update env ldt =
             let
                 ( rldt, newmsg, newenv ) =
-                    layer.update env lm (ldtToData ldt)
+                    layer.update env (ldtToData ldt)
+            in
+            ( dataToLDT rldt, newmsg, newenv )
+
+        updaterec : EnvC -> LayerMsg -> LayerDataType -> ( LayerDataType, List ( LayerTarget, LayerMsg ), EnvC )
+        updaterec env lm ldt =
+            let
+                ( rldt, newmsg, newenv ) =
+                    layer.updaterec env lm (ldtToData ldt)
             in
             ( dataToLDT rldt, newmsg, newenv )
 
@@ -53,4 +61,4 @@ getLayerT layer =
         view env ldt =
             layer.view env (ldtToData ldt)
     in
-    GeneralModel layer.name (dataToLDT layer.data) update view
+    GeneralModel layer.name (dataToLDT layer.data) update updaterec view

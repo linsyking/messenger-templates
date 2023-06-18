@@ -1,13 +1,13 @@
 module Scenes.$0.$1.Model exposing
     ( initModel
-    , updateModel
+    , updateModel, updateModelRec
     , viewModel
     )
 
 {-| Model module
 
 @docs initModel
-@docs updateModel
+@docs updateModel, updateModelRec
 @docs viewModel
 
 -}
@@ -29,12 +29,23 @@ initModel _ _ =
 {-| updateModel
 Default update function
 
-Add your logic to handle msg and LayerMsg here
+Add your logic to handle msg here
 
 -}
-updateModel : EnvC -> LayerMsg -> Model -> ( Model, List ( LayerTarget, LayerMsg ), EnvC )
-updateModel env _ model =
-    (model, [], env)
+updateModel : EnvC -> Model -> ( Model, List ( LayerTarget, LayerMsg ), EnvC )
+updateModel env model =
+    ( model, [], env )
+
+
+{-| updateModelRec
+Default update function
+
+Add your logic to handle LayerMsg here
+
+-}
+updateModelRec : EnvC -> LayerMsg -> Model -> ( Model, List ( LayerTarget, LayerMsg ), EnvC )
+updateModelRec env _ model =
+    ( model, [], env )
 
 
 {-| viewModel

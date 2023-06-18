@@ -19,12 +19,12 @@ import Lib.Layer.Base exposing (LayerMsg(..))
 import Lib.Layer.LayerHandler exposing (updateLayer, viewLayer)
 import Lib.Scene.Base exposing (SceneOutputMsg(..))
 import SceneProtos.$0.Common exposing (Model)
-import SceneProtos.$0.LayerBase exposing (CommonData, nullCommonData)
+import SceneProtos.$0.LayerBase exposing (CommonData)
 
 
 {-| handleLayerMsg
 
-Usually you are adding logic here.
+Usually you add logic here.
 
 -}
 handleLayerMsg : EnvC CommonData -> LayerMsg -> Model -> ( Model, List SceneOutputMsg, EnvC CommonData )

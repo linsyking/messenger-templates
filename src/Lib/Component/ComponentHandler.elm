@@ -1,5 +1,5 @@
 module Lib.Component.ComponentHandler exposing
-    ( update, match, super, recBody
+    ( update, updaterec, match, super, recBody
     , updateComponents
     , viewComponent
     )
@@ -10,7 +10,7 @@ You can use these functions to handle components.
 
 The mosy commonly used one is the `updateComponents` function, which will update all components recursively.
 
-@docs update, match, super, recBody
+@docs update, updaterec, match, super, recBody
 @docs updateComponents
 @docs viewComponent
 
@@ -29,13 +29,24 @@ import Messenger.RecursionList exposing (updateObjects)
 -- Below are using the Recursion algorithm to get the update function
 
 
-{-| Updater
+{-| RecUpdater
 -}
-update : Component -> Env -> ComponentMsg -> ( Component, List ( ComponentTarget, ComponentMsg ), Env )
-update c env ct =
+updaterec : Component -> Env -> ComponentMsg -> ( Component, List ( ComponentTarget, ComponentMsg ), Env )
+updaterec c env ct =
     let
         ( newx, newmsg, newenv ) =
-            c.update env ct c.data
+            c.updaterec env ct c.data
+    in
+    ( { c | data = newx }, newmsg, newenv )
+
+
+{-| Updater
+-}
+update : Component -> Env -> ( Component, List ( ComponentTarget, ComponentMsg ), Env )
+update c env =
+    let
+        ( newx, newmsg, newenv ) =
+            c.update env c.data
     in
     ( { c | data = newx }, newmsg, newenv )
 
@@ -72,6 +83,7 @@ super ct =
 recBody : RecBody Component ComponentMsg Env ComponentTarget
 recBody =
     { update = update
+    , updaterec = updaterec
     , match = match
     , super = super
     , clean = cleanEnv
@@ -85,7 +97,7 @@ Return a list of messages sent to the parentlayer.
 -}
 updateComponents : Env -> List Component -> ( List Component, List ComponentMsg, Env )
 updateComponents env =
-    updateObjects recBody env NullComponentMsg
+    updateObjects recBody env
 
 
 {-| Generate the view of the components

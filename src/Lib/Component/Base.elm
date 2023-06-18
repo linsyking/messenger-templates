@@ -30,10 +30,10 @@ Gamecomponents have better speed when communicating with each other. (their mess
 -}
 
 import Canvas exposing (Renderable, empty)
+import Color exposing (Color)
 import Dict exposing (Dict)
 import Lib.Env.Env exposing (Env)
 import Messenger.GeneralModel exposing (GeneralModel)
-import Color exposing (Color)
 
 
 
@@ -70,6 +70,12 @@ nullComponent =
     { name = "NULL"
     , data = Dict.empty
     , update =
+        \env _ ->
+            ( Dict.empty
+            , []
+            , env
+            )
+    , updaterec =
         \env _ _ ->
             ( Dict.empty
             , []

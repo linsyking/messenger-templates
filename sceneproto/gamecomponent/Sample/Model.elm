@@ -1,11 +1,11 @@
-module SceneProtos.$0.GameComponents.$1.Model exposing (initModel, updateModel, viewModel)
+module SceneProtos.$0.GameComponents.$1.Model exposing (initModel, updateModel, updateModelRec, viewModel)
 
 {-|
 
 
 # Model for this GameComponent
 
-@docs initModel, updateModel, viewModel
+@docs initModel, updateModel, updateModelRec, viewModel
 
 -}
 import Canvas exposing (Renderable)
@@ -35,8 +35,18 @@ initModel _ initData =
 Add your component logic here.
 
 -}
-updateModel : EnvC CommonData -> GameComponentMsg -> Data -> ( Data, List ( GameComponentTarget, GameComponentMsg ), EnvC CommonData )
-updateModel env _ d =
+updateModel : EnvC CommonData -> Data -> ( Data, List ( GameComponentTarget, GameComponentMsg ), EnvC CommonData )
+updateModel env d =
+    ( d, [], env )
+
+
+{-| updateModelRec
+
+Add your component logic here.
+
+-}
+updateModelRec : EnvC CommonData -> GameComponentMsg -> Data -> ( Data, List ( GameComponentTarget, GameComponentMsg ), EnvC CommonData )
+updateModelRec env _ d =
     ( d, [], env )
 
 

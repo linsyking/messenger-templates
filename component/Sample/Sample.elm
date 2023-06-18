@@ -1,6 +1,6 @@
 module Components.$0.$1 exposing
     ( initModel
-    , updateModel
+    , updateModel, updateModelRec
     , viewModel
     )
 
@@ -9,7 +9,7 @@ module Components.$0.$1 exposing
 This is a component model module. It should define init, update and view model.
 
 @docs initModel
-@docs updateModel
+@docs updateModel, updateModelRec
 @docs viewModel
 
 -}
@@ -39,11 +39,21 @@ initModel _ i =
 
 {-| updateModel
 
-Add your component logic here.
+Add your component logic to handle Msg here.
 
 -}
-updateModel : Env -> ComponentMsg -> Data -> ( Data, List ( ComponentTarget, ComponentMsg ), Env )
-updateModel env _ d =
+updateModel : Env -> Data -> ( Data, List ( ComponentTarget, ComponentMsg ), Env )
+updateModel env d =
+    ( d, [], env )
+
+
+{-| updateModelRec
+
+Add your component logic to handle ComponentMsg here.
+
+-}
+updateModelRec : Env -> ComponentMsg -> Data -> ( Data, List ( ComponentTarget, ComponentMsg ), Env )
+updateModelRec env _ d =
     ( d, [], env )
 
 

@@ -1,11 +1,11 @@
 module SceneProtos.$0.GameComponent.Handler exposing
-    ( update, match, super, recBody
+    ( update, updaterec, match, super, recBody
     , updateGC, viewGC
     )
 
 {-| Handler to update game components
 
-@docs update, match, super, recBody
+@docs update, updaterec, match, super, recBody
 @docs updateGC, viewGC
 
 -}
@@ -19,13 +19,24 @@ import SceneProtos.$0.GameComponent.Base exposing (GameComponent, GameComponentM
 import SceneProtos.$0.LayerBase exposing (CommonData)
 
 
-{-| Updater
+{-| RecUpdater
 -}
-update : GameComponent -> EnvC CommonData -> GameComponentMsg -> ( GameComponent, List ( GameComponentTarget, GameComponentMsg ), EnvC CommonData )
-update gc env msg =
+updaterec : GameComponent -> EnvC CommonData -> GameComponentMsg -> ( GameComponent, List ( GameComponentTarget, GameComponentMsg ), EnvC CommonData )
+updaterec gc env msg =
     let
         ( newGC, newMsg, newEnv ) =
-            gc.update env msg gc.data
+            gc.updaterec env msg gc.data
+    in
+    ( { gc | data = newGC }, newMsg, newEnv )
+
+
+{-| Updater
+-}
+update : GameComponent -> EnvC CommonData -> ( GameComponent, List ( GameComponentTarget, GameComponentMsg ), EnvC CommonData )
+update gc env =
+    let
+        ( newGC, newMsg, newEnv ) =
+            gc.update env gc.data
     in
     ( { gc | data = newGC }, newMsg, newEnv )
 
@@ -62,6 +73,7 @@ super tar =
 recBody : RecBody GameComponent GameComponentMsg (EnvC CommonData) GameComponentTarget
 recBody =
     { update = update
+    , updaterec = updaterec
     , match = match
     , super = super
     , clean = cleanEnvC
@@ -77,7 +89,7 @@ updateGC : EnvC CommonData -> List GameComponent -> ( List GameComponent, List G
 updateGC env xs =
     let
         ( newGC, newMsg, newEnv ) =
-            updateObjects recBody env NullGCMsg xs
+            updateObjects recBody env xs
     in
     ( newGC, newMsg, newEnv )
 

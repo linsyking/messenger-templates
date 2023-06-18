@@ -12,7 +12,7 @@ module SceneProtos.$0.$1.Export exposing
 
 import Lib.Layer.Base exposing (Layer)
 import SceneProtos.$0.$1.Common exposing (EnvC, Model)
-import SceneProtos.$0.$1.Model exposing (initModel, updateModel, viewModel)
+import SceneProtos.$0.$1.Model exposing (initModel, updateModel, updateModelRec, viewModel)
 import SceneProtos.$0.LayerBase exposing (CommonData)
 import SceneProtos.$0.SceneInit exposing ($0Init)
 
@@ -30,6 +30,7 @@ initLayer env i =
     { name = "$1"
     , data = initModel env i
     , update = updateModel
+    , updaterec = updateModelRec
     , view = viewModel
     }
 

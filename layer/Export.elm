@@ -16,7 +16,7 @@ Although this will not be updated, usually you don't need to change this file.
 
 import Lib.Layer.Base exposing (Layer)
 import Scenes.$0.$1.Common exposing (EnvC, Model)
-import Scenes.$0.$1.Model exposing (initModel, updateModel, viewModel)
+import Scenes.$0.$1.Model exposing (initModel, updateModel, updateModelRec, viewModel)
 import Scenes.$0.LayerBase exposing (CommonData)
 import Scenes.$0.SceneInit exposing ($0Init)
 
@@ -34,6 +34,7 @@ initLayer env i =
     { name = "$1"
     , data = initModel env i
     , update = updateModel
+    , updaterec = updateModelRec
     , view = viewModel
     }
 

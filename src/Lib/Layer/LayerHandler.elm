@@ -1,5 +1,5 @@
 module Lib.Layer.LayerHandler exposing
-    ( update, match, super, recBody
+    ( update, updaterec, match, super, recBody
     , updateLayer
     , viewLayer
     )
@@ -9,7 +9,7 @@ module Lib.Layer.LayerHandler exposing
 
 # Layer Handler
 
-@docs update, match, super, recBody
+@docs update, updaterec, match, super, recBody
 @docs updateLayer
 @docs viewLayer
 
@@ -25,11 +25,22 @@ import Messenger.RecursionList exposing (updateObjects)
 
 {-| Updater
 -}
-update : Layer a b -> EnvC b -> LayerMsg -> ( Layer a b, List ( LayerTarget, LayerMsg ), EnvC b )
-update layer env lm =
+update : Layer a b -> EnvC b -> ( Layer a b, List ( LayerTarget, LayerMsg ), EnvC b )
+update layer env =
     let
         ( newData, newMsgs, newEnv ) =
-            layer.update env lm layer.data
+            layer.update env layer.data
+    in
+    ( { layer | data = newData }, newMsgs, newEnv )
+
+
+{-| RecUpdater
+-}
+updaterec : Layer a b -> EnvC b -> LayerMsg -> ( Layer a b, List ( LayerTarget, LayerMsg ), EnvC b )
+updaterec layer env lm =
+    let
+        ( newData, newMsgs, newEnv ) =
+            layer.updaterec env lm layer.data
     in
     ( { layer | data = newData }, newMsgs, newEnv )
 
@@ -62,7 +73,7 @@ super t =
 -}
 recBody : RecBody (Layer a b) LayerMsg (EnvC b) LayerTarget
 recBody =
-    { update = update, match = match, super = super, clean = cleanEnvC }
+    { update = update, updaterec = updaterec, match = match, super = super, clean = cleanEnvC }
 
 
 {-| updateLayer
@@ -72,7 +83,7 @@ Update all the layers.
 -}
 updateLayer : EnvC b -> List (Layer a b) -> ( List (Layer a b), List LayerMsg, EnvC b )
 updateLayer env =
-    updateObjects recBody env NullLayerMsg
+    updateObjects recBody env
 
 
 {-| viewLayer
