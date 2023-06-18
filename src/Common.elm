@@ -22,6 +22,8 @@ import Dict
 import Lib.Audio.Audio exposing (getAudio)
 import Lib.Audio.Base exposing (AudioRepo)
 import Lib.LocalStorage.LocalStorage exposing (decodeLSInfo)
+import Lib.Scene.Base exposing (SceneInitData)
+import Lib.Scene.Transitions.Base exposing (Transition)
 import Scenes.SceneSettings exposing (SceneDataTypes, SceneT)
 import Time
 
@@ -43,6 +45,7 @@ type alias Model =
     , currentGlobalData : GlobalData --- Writable
     , time : Int --- Readonly
     , audiorepo : AudioRepo
+    , transition : Maybe ( Transition, ( String, SceneInitData ) )
     }
 
 

@@ -25,6 +25,7 @@ import Lib.Resources.SpriteSheets exposing (allSpriteSheets)
 import Lib.Resources.Sprites exposing (allTexture)
 import Lib.Scene.Base exposing (SceneInitData(..), SceneOutputMsg(..))
 import Lib.Scene.Loader exposing (existScene, getCurrentScene, loadSceneByName)
+import Lib.Scene.Transition exposing (makeTransition)
 import Lib.Tools.Browser exposing (alert, prompt, promptReceiver)
 import MainConfig exposing (debug, initScene, initSceneSettings, timeInterval)
 import Scenes.SceneSettings exposing (SceneDataTypes(..), nullSceneT)
@@ -41,6 +42,7 @@ initModel =
     , currentGlobalData = initGlobalData
     , time = 0
     , audiorepo = []
+    , transition = Nothing
     }
 
 
@@ -132,10 +134,17 @@ gameUpdate msg model =
                 List.foldl
                     (\singleSOM ( lastModel, lastCmds, lastAudioCmds ) ->
                         case singleSOM of
-                            SOMChangeScene ( tm, s ) ->
+                            SOMChangeScene ( tm, s, Nothing ) ->
                                 --- Load new scene
                                 ( loadSceneByName msg lastModel s tm
                                     |> resetSceneStartTime
+                                , lastCmds
+                                , lastAudioCmds
+                                )
+
+                            SOMChangeScene ( tm, s, Just trans ) ->
+                                --- Delayed Loading
+                                ( { lastModel | transition = Just ( trans, ( s, tm ) ) }
                                 , lastCmds
                                 , lastAudioCmds
                                 )
@@ -167,12 +176,25 @@ gameUpdate msg model =
                     )
                     ( newModel, [], [] )
                     som
+
+            newmodel2 =
+                case newmodel.transition of
+                    Just ( trans, ( d, n ) ) ->
+                        if trans.currentTransition == trans.outT then
+                            loadSceneByName msg newmodel d n
+                                |> resetSceneStartTime
+
+                        else
+                            newmodel
+
+                    Nothing ->
+                        newmodel
         in
-        ( newmodel
+        ( newmodel2
         , Cmd.batch <|
-            if newmodel.currentGlobalData.localStorage /= oldLocalStorage then
+            if newmodel2.currentGlobalData.localStorage /= oldLocalStorage then
                 -- Save local storage
-                sendInfo (encodeLSInfo newmodel.currentGlobalData.localStorage) :: cmds
+                sendInfo (encodeLSInfo newmodel2.currentGlobalData.localStorage) :: cmds
 
             else
                 cmds
@@ -338,8 +360,23 @@ update _ msg model =
             let
                 newGD =
                     { gd | currentTimeStamp = x }
+
+                trans =
+                    model.transition
+
+                newTrans =
+                    case trans of
+                        Just ( data, sd ) ->
+                            if data.currentTransition >= data.inT + data.outT then
+                                Nothing
+
+                            else
+                                Just ( { data | currentTransition = data.currentTransition + 1 }, sd )
+
+                        Nothing ->
+                            trans
             in
-            gameUpdate msg { model | currentGlobalData = newGD }
+            gameUpdate msg { model | currentGlobalData = newGD, transition = newTrans }
 
         NullMsg ->
             ( model, Cmd.none, Audio.cmdNone )
@@ -402,6 +439,9 @@ You can change the mouse style here.
 view : AudioData -> Model -> Html Msg
 view _ model =
     let
+        transitiondata =
+            Maybe.map Tuple.first model.transition
+
         canvas =
             Canvas.toHtmlWith
                 { width = floor model.currentGlobalData.internalData.realWidth
@@ -413,7 +453,7 @@ view _ model =
                 , style "position" "fixed"
                 ]
                 [ MainConfig.background model.currentGlobalData
-                , (getCurrentScene model).view { msg = NullMsg, t = model.time, globalData = model.currentGlobalData } model.currentData
+                , makeTransition model.currentGlobalData transitiondata <| (getCurrentScene model).view { msg = NullMsg, t = model.time, globalData = model.currentGlobalData } model.currentData
                 ]
     in
     Html.div []

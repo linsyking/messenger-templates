@@ -23,6 +23,7 @@ You have to send data to next scene if you don't store the data in globaldata.
 import Canvas exposing (Renderable)
 import Lib.Audio.Base exposing (AudioOption)
 import Lib.Env.Env exposing (Env)
+import Lib.Scene.Transitions.Base exposing (Transition)
 
 
 {-| Scene
@@ -63,7 +64,7 @@ Add your own messages here if you want to do more things.
 
 -}
 type SceneOutputMsg
-    = SOMChangeScene ( SceneInitData, String )
+    = SOMChangeScene ( SceneInitData, String, Maybe Transition )
     | SOMPlayAudio String String AudioOption -- audio name, audio url, audio option
     | SOMAlert String
     | SOMStopAudio String
