@@ -51,7 +51,7 @@ updateModel env model =
 {-| updateModelRec
 Default update function
 
-Add your logic to handle msg and LayerMsg here
+Add your logic to handle LayerMsg here
 
 -}
 updateModelRec : EnvC -> LayerMsg -> Model -> ( Model, List ( LayerTarget, LayerMsg ), EnvC )
