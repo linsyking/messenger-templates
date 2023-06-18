@@ -12,18 +12,19 @@
 <body oncontextmenu="return false;">
   <div id="myapp"></div>
   <script>
+    const pathname = document.location.pathname + "info";
     var app = Elm.Main.init({
       node: document.getElementById('myapp'),
       flags: {
         windowWidth: window.innerWidth,
         windowHeight: window.innerHeight,
         timeStamp: Math.floor(Date.now()),
-        info: localStorage.getItem("info") ? localStorage.getItem("info") : ""
+        info: localStorage.getItem(pathname) ? localStorage.getItem(pathname) : ""
       }
     });
 
     app.ports.sendInfo.subscribe(function (m) {
-      localStorage.setItem("info", m);
+      localStorage.setItem(pathname, m);
     });
 
     app.ports.alert.subscribe(function (m) {
