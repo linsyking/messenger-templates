@@ -24,7 +24,7 @@ import Scenes.$0.LayerBase exposing (CommonData)
 
 {-| handleLayerMsg
 
-Usually you are adding logic here.
+Handle Layer Messages
 
 -}
 handleLayerMsg : EnvC CommonData -> LayerMsg -> Model -> ( Model, List SceneOutputMsg, EnvC CommonData )
