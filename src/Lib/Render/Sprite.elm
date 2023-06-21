@@ -1,4 +1,7 @@
-module Lib.Render.Sprite exposing (renderSprite, renderSpriteWithRev)
+module Lib.Render.Sprite exposing
+    ( renderSprite, renderSpriteWithRev
+    , renderSpriteCropped
+    )
 
 {-|
 
@@ -6,6 +9,7 @@ module Lib.Render.Sprite exposing (renderSprite, renderSpriteWithRev)
 # Sprite Rendering
 
 @docs renderSprite, renderSpriteWithRev
+@docs renderSpriteCropped
 
 -}
 
@@ -13,15 +17,12 @@ import Base exposing (GlobalData)
 import Canvas exposing (Renderable, empty, texture)
 import Canvas.Settings exposing (Setting)
 import Canvas.Settings.Advanced exposing (scale, transform, translate)
-import Canvas.Texture exposing (Texture, dimensions)
+import Canvas.Texture exposing (Texture, dimensions, sprite)
 import Lib.Coordinate.Coordinates exposing (lengthToReal, posToReal)
 import Lib.Resources.Base exposing (igetSprite)
 
 
-{-| renderSprite
-
-Render a single sprite.
-
+{-| Render a single sprite.
 -}
 renderSprite : GlobalData -> List Setting -> ( Float, Float ) -> ( Float, Float ) -> String -> Renderable
 renderSprite gd ls p size name =
@@ -32,6 +33,22 @@ renderSprite gd ls p size name =
     case igetSprite name dst of
         Just t ->
             renderSprite_ gd ls p size t
+
+        Nothing ->
+            empty
+
+
+{-| Render a single sprite with crop.
+-}
+renderSpriteCropped : GlobalData -> List Setting -> ( Float, Float ) -> ( Float, Float ) -> { x : Float, y : Float, width : Float, height : Float } -> String -> Renderable
+renderSpriteCropped gd ls p size spconf name =
+    let
+        dst =
+            gd.internalData.sprites
+    in
+    case igetSprite name dst of
+        Just t ->
+            renderSprite_ gd ls p size (sprite spconf t)
 
         Nothing ->
             empty
