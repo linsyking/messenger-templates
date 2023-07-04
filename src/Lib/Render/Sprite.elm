@@ -174,7 +174,7 @@ renderSpriteWithRev_ gd ls p ( w, h ) t =
         texture
             (transform
                 [ translate newx newy
-                , scale -width_s width_s
+                , scale -width_s height_s
                 , translate -text_width 0
                 ]
                 :: ls
