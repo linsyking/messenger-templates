@@ -5,7 +5,7 @@ module Lib.Resources.SpriteSheets exposing (allSpriteSheets)
 
 # Sprite Sheets
 
-@docs sampleSpriteSheet
+@docs allSpriteSheets
 
 -}
 

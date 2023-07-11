@@ -17,6 +17,7 @@ You have to send data to next scene if you don't store the data in globaldata.
 
 @docs SceneTMsg, SceneOutputMsg
 @docs Scene, SceneInitData
+@docs LayerPacker
 
 -}
 

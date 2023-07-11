@@ -14,6 +14,7 @@ For every gamedata, you first need to add that data type to LSInfo.
 
 @docs decodeLSInfo
 @docs encodeLSInfo
+@docs sendInfo
 
 -}
 

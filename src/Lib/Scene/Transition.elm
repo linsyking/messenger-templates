@@ -5,6 +5,8 @@ module Lib.Scene.Transition exposing (makeTransition)
 
 # Transtition Library
 
+@docs makeTransition
+
 -}
 
 import Base exposing (GlobalData)
