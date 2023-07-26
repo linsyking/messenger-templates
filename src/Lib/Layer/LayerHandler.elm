@@ -16,7 +16,7 @@ module Lib.Layer.LayerHandler exposing
 -}
 
 import Canvas exposing (Renderable, group)
-import Lib.Env.Env exposing (EnvC, cleanEnvC)
+import Lib.Env.Env exposing (EnvC, cleanEnvC, patchEnvC)
 import Lib.Layer.Base exposing (Layer, LayerMsg(..), LayerTarget(..))
 import Messenger.GeneralModel exposing (viewModelList)
 import Messenger.Recursion exposing (RecBody)
@@ -73,7 +73,7 @@ super t =
 -}
 recBody : RecBody (Layer a b) LayerMsg (EnvC b) LayerTarget
 recBody =
-    { update = update, updaterec = updaterec, match = match, super = super, clean = cleanEnvC }
+    { update = update, updaterec = updaterec, match = match, super = super, clean = cleanEnvC, patch = patchEnvC }
 
 
 {-| updateLayer

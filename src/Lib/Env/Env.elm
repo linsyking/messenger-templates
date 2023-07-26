@@ -2,6 +2,7 @@ module Lib.Env.Env exposing
     ( Env, EnvC
     , noCommonData, addCommonData
     , cleanEnv, cleanEnvC
+    , patchEnv, patchEnvC
     )
 
 {-|
@@ -14,6 +15,7 @@ Provide type support for environment variables.
 @docs Env, EnvC
 @docs noCommonData, addCommonData
 @docs cleanEnv, cleanEnvC
+@docs patchEnv, patchEnvC
 
 -}
 
@@ -75,3 +77,17 @@ cleanEnv env =
 cleanEnvC : EnvC b -> EnvC b
 cleanEnvC env =
     { env | msg = NullMsg }
+
+
+{-| Patch the environment
+-}
+patchEnv : Env -> Env -> Env
+patchEnv old new =
+    { new | msg = old.msg }
+
+
+{-| Patch the environment with commonData
+-}
+patchEnvC : EnvC b -> EnvC b -> EnvC b
+patchEnvC old new =
+    { new | msg = old.msg }

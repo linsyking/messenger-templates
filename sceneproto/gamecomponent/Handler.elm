@@ -11,7 +11,7 @@ module SceneProtos.$0.GameComponent.Handler exposing
 -}
 
 import Canvas exposing (Renderable, group)
-import Lib.Env.Env exposing (EnvC, cleanEnvC)
+import Lib.Env.Env exposing (EnvC, cleanEnvC, patchEnvC)
 import Messenger.GeneralModel exposing (viewModelList)
 import Messenger.Recursion exposing (RecBody)
 import Messenger.RecursionList exposing (updateObjects)
@@ -77,6 +77,7 @@ recBody =
     , match = match
     , super = super
     , clean = cleanEnvC
+    , patch = patchEnvC
     }
 
 

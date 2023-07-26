@@ -19,7 +19,7 @@ The mosy commonly used one is the `updateComponents` function, which will update
 import Canvas exposing (Renderable, group)
 import Dict
 import Lib.Component.Base exposing (Component, ComponentMsg(..), ComponentTarget(..), DefinedTypes(..))
-import Lib.Env.Env exposing (Env, cleanEnv)
+import Lib.Env.Env exposing (Env, cleanEnv, patchEnv)
 import Messenger.GeneralModel exposing (viewModelList)
 import Messenger.Recursion exposing (RecBody)
 import Messenger.RecursionList exposing (updateObjects)
@@ -87,6 +87,7 @@ recBody =
     , match = match
     , super = super
     , clean = cleanEnv
+    , patch = patchEnv
     }
 
 
