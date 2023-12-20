@@ -14,7 +14,7 @@ module Scenes.$0.Model exposing
 
 import Canvas exposing (Renderable)
 import Lib.Audio.Base exposing (AudioOption(..))
-import Lib.Env.Env exposing (Env, EnvC, addCommonData, noCommonData)
+import Lib.Env.Env exposing (Env, addCommonData, noCommonData)
 import Lib.Layer.Base exposing (LayerMsg(..))
 import Lib.Layer.LayerHandler exposing (updateLayer, viewLayer)
 import Lib.Scene.Base exposing (SceneOutputMsg(..))
@@ -27,7 +27,7 @@ import Scenes.$0.LayerBase exposing (CommonData)
 Handle Layer Messages
 
 -}
-handleLayerMsg : EnvC CommonData -> LayerMsg -> Model -> ( Model, List SceneOutputMsg, EnvC CommonData )
+handleLayerMsg : Env CommonData -> LayerMsg -> Model -> ( Model, List SceneOutputMsg, Env CommonData )
 handleLayerMsg env lmsg model =
     case lmsg of
         LayerSoundMsg name path opt ->
@@ -45,7 +45,7 @@ handleLayerMsg env lmsg model =
 Default update function. Normally you won't change this function.
 
 -}
-updateModel : Env -> Model -> ( Model, List SceneOutputMsg, Env )
+updateModel : Env () -> Model -> ( Model, List SceneOutputMsg, Env () )
 updateModel env model =
     let
         ( newdata, msgs, newenv ) =
@@ -71,6 +71,6 @@ updateModel env model =
 
 {-| Default view function
 -}
-viewModel : Env -> Model -> Renderable
+viewModel : Env () -> Model -> Renderable
 viewModel env model =
     viewLayer (addCommonData model.commonData env) model.layers

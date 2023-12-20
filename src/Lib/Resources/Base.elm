@@ -1,7 +1,7 @@
 module Lib.Resources.Base exposing
     ( saveSprite
-    , igetSprite
     , getTexture
+    , igetSprite
     )
 
 {-|

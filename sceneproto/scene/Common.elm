@@ -33,7 +33,7 @@ nullModel =
 
 {-| Initialize the model
 -}
-initModel : Env -> SceneInitData -> Model
+initModel : Env () -> SceneInitData -> Model
 initModel env init =
     let
         layerInitData =

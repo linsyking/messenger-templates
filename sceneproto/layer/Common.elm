@@ -1,8 +1,8 @@
-module SceneProtos.$0.$1.Common exposing (Model, EnvC, nullModel)
+module SceneProtos.$0.$1.Common exposing (Model, Env, nullModel)
 
 {-| Common definitions
 
-@docs Model, EnvC, nullModel
+@docs Model, Env, nullModel
 
 -}
 
@@ -28,5 +28,5 @@ nullModel =
 
 {-| Convenient type alias for the environment
 -}
-type alias EnvC =
-    Env.EnvC CommonData
+type alias Env =
+    Env.Env CommonData

@@ -38,11 +38,11 @@ sdtToData dt =
 sceneToST : Scene Data -> SceneT
 sceneToST sd =
     let
-        init : Env -> SceneInitData -> SceneDataTypes
+        init : Env () -> SceneInitData -> SceneDataTypes
         init t tm =
             dataToSDT (sd.init t tm)
 
-        update : Env -> SceneDataTypes -> ( SceneDataTypes, List SceneOutputMsg, Env )
+        update : Env () -> SceneDataTypes -> ( SceneDataTypes, List SceneOutputMsg, Env () )
         update env sdt =
             let
                 ( newm, som, newgd ) =
@@ -50,7 +50,7 @@ sceneToST sd =
             in
             ( dataToSDT newm, som, newgd )
 
-        view : Env -> SceneDataTypes -> Renderable
+        view : Env () -> SceneDataTypes -> Renderable
         view env sdt =
             sd.view env (sdtToData sdt)
     in

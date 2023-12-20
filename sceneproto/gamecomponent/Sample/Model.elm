@@ -9,7 +9,7 @@ module SceneProtos.$0.GameComponents.$1.Model exposing (initModel, updateModel, 
 
 -}
 import Canvas exposing (Renderable)
-import Lib.Env.Env exposing (Env, EnvC)
+import Lib.Env.Env exposing (Env)
 import SceneProtos.$0.GameComponent.Base exposing (Data, GameComponentInitData(..), GameComponentMsg, GameComponentTarget, nullData)
 import SceneProtos.$0.LayerBase exposing (CommonData)
 
@@ -19,7 +19,7 @@ import SceneProtos.$0.LayerBase exposing (CommonData)
 Initialize the model. It should update the id.
 
 -}
-initModel : Env -> GameComponentInitData -> Data
+initModel : Env () -> GameComponentInitData -> Data
 initModel _ initData =
     case initData of
         GCIdData _ (GC$1InitData _) ->
@@ -35,7 +35,7 @@ initModel _ initData =
 Add your component logic here.
 
 -}
-updateModel : EnvC CommonData -> Data -> ( Data, List ( GameComponentTarget, GameComponentMsg ), EnvC CommonData )
+updateModel : Env CommonData -> Data -> ( Data, List ( GameComponentTarget, GameComponentMsg ), Env CommonData )
 updateModel env d =
     ( d, [], env )
 
@@ -45,7 +45,7 @@ updateModel env d =
 Add your component logic here.
 
 -}
-updateModelRec : EnvC CommonData -> GameComponentMsg -> Data -> ( Data, List ( GameComponentTarget, GameComponentMsg ), EnvC CommonData )
+updateModelRec : Env CommonData -> GameComponentMsg -> Data -> ( Data, List ( GameComponentTarget, GameComponentMsg ), Env CommonData )
 updateModelRec env _ d =
     ( d, [], env )
 
@@ -55,6 +55,6 @@ updateModelRec env _ d =
 Change this to your own component view function.
 
 -}
-viewModel : EnvC CommonData -> Data -> List ( Renderable, Int )
+viewModel : Env CommonData -> Data -> List ( Renderable, Int )
 viewModel _ _ =
     []

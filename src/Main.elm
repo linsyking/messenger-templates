@@ -113,7 +113,7 @@ gameUpdate msg model =
                 model.currentGlobalData.localStorage
 
             ( sdt, som, newenv ) =
-                (getCurrentScene model).update { msg = msg, globalData = model.currentGlobalData, t = model.time } model.currentData
+                (getCurrentScene model).update { msg = msg, globalData = model.currentGlobalData, t = model.time, commonData = () } model.currentData
 
             newGD1 =
                 newenv.globalData
@@ -453,7 +453,7 @@ view _ model =
                 , style "position" "fixed"
                 ]
                 [ MainConfig.background model.currentGlobalData
-                , makeTransition model.currentGlobalData transitiondata <| (getCurrentScene model).view { msg = NullMsg, t = model.time, globalData = model.currentGlobalData } model.currentData
+                , makeTransition model.currentGlobalData transitiondata <| (getCurrentScene model).view { msg = NullMsg, t = model.time, globalData = model.currentGlobalData, commonData = () } model.currentData
                 ]
     in
     Html.div []

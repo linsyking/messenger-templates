@@ -11,7 +11,7 @@ module SceneProtos.$0.GameComponent.Handler exposing
 -}
 
 import Canvas exposing (Renderable, group)
-import Lib.Env.Env exposing (EnvC, cleanEnvC, patchEnvC)
+import Lib.Env.Env exposing (Env, cleanEnv, patchEnv)
 import Messenger.GeneralModel exposing (viewModelList)
 import Messenger.Recursion exposing (RecBody)
 import Messenger.RecursionList exposing (updateObjects)
@@ -21,7 +21,7 @@ import SceneProtos.$0.LayerBase exposing (CommonData)
 
 {-| RecUpdater
 -}
-updaterec : GameComponent -> EnvC CommonData -> GameComponentMsg -> ( GameComponent, List ( GameComponentTarget, GameComponentMsg ), EnvC CommonData )
+updaterec : GameComponent -> Env CommonData -> GameComponentMsg -> ( GameComponent, List ( GameComponentTarget, GameComponentMsg ), Env CommonData )
 updaterec gc env msg =
     let
         ( newGC, newMsg, newEnv ) =
@@ -32,7 +32,7 @@ updaterec gc env msg =
 
 {-| Updater
 -}
-update : GameComponent -> EnvC CommonData -> ( GameComponent, List ( GameComponentTarget, GameComponentMsg ), EnvC CommonData )
+update : GameComponent -> Env CommonData -> ( GameComponent, List ( GameComponentTarget, GameComponentMsg ), Env CommonData )
 update gc env =
     let
         ( newGC, newMsg, newEnv ) =
@@ -70,14 +70,14 @@ super tar =
 
 {-| Rec body for the component
 -}
-recBody : RecBody GameComponent GameComponentMsg (EnvC CommonData) GameComponentTarget
+recBody : RecBody GameComponent GameComponentMsg (Env CommonData) GameComponentTarget
 recBody =
     { update = update
     , updaterec = updaterec
     , match = match
     , super = super
-    , clean = cleanEnvC
-    , patch = patchEnvC
+    , clean = cleanEnv
+    , patch = patchEnv
     }
 
 
@@ -86,7 +86,7 @@ recBody =
 Return a list of messages sent to the parentlayer.
 
 -}
-updateGC : EnvC CommonData -> List GameComponent -> ( List GameComponent, List GameComponentMsg, EnvC CommonData )
+updateGC : Env CommonData -> List GameComponent -> ( List GameComponent, List GameComponentMsg, Env CommonData )
 updateGC env xs =
     let
         ( newGC, newMsg, newEnv ) =
@@ -97,7 +97,7 @@ updateGC env xs =
 
 {-| Generate the view of the components
 -}
-viewGC : EnvC CommonData -> List GameComponent -> Renderable
+viewGC : Env CommonData -> List GameComponent -> Renderable
 viewGC env xs =
     group [] <|
         List.map (\( a, _ ) -> a) <|

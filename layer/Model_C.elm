@@ -17,14 +17,14 @@ import Lib.Component.Base exposing (ComponentMsg(..))
 import Lib.Component.ComponentHandler exposing (viewComponent)
 import Lib.Env.Env exposing (noCommonData)
 import Lib.Layer.Base exposing (LayerMsg(..), LayerTarget(..))
-import Scenes.$0.$1.Common exposing (EnvC, Model, updateComponentsByHandler)
+import Scenes.$0.$1.Common exposing (Env, Model, updateComponentsByHandler)
 import Scenes.$0.SceneInit exposing ($0Init)
 
 
 {-| initModel
 Add components here
 -}
-initModel : EnvC -> $0Init -> Model
+initModel : Env -> $0Init -> Model
 initModel _ _ =
     { components = []
     }
@@ -32,7 +32,7 @@ initModel _ _ =
 
 {-| Handle component messages (that are sent to this layer).
 -}
-handleComponentMsg : EnvC -> ComponentMsg -> Model -> ( Model, List ( LayerTarget, LayerMsg ), EnvC )
+handleComponentMsg : Env -> ComponentMsg -> Model -> ( Model, List ( LayerTarget, LayerMsg ), Env )
 handleComponentMsg env _ model =
     ( model, [], env )
 
@@ -43,7 +43,7 @@ Default update function
 Add your logic to handle Msg here
 
 -}
-updateModel : EnvC -> Model -> ( Model, List ( LayerTarget, LayerMsg ), EnvC )
+updateModel : Env -> Model -> ( Model, List ( LayerTarget, LayerMsg ), Env )
 updateModel env model =
     updateComponentsByHandler env model handleComponentMsg
 
@@ -54,7 +54,7 @@ Default update function
 Add your logic to handle LayerMsg here
 
 -}
-updateModelRec : EnvC -> LayerMsg -> Model -> ( Model, List ( LayerTarget, LayerMsg ), EnvC )
+updateModelRec : Env -> LayerMsg -> Model -> ( Model, List ( LayerTarget, LayerMsg ), Env )
 updateModelRec env _ model =
     ( model, [], env )
 
@@ -67,6 +67,6 @@ If you don't have components, remove viewComponent.
 If you have other elements than components, add them after viewComponent.
 
 -}
-viewModel : EnvC -> Model -> Renderable
+viewModel : Env -> Model -> Renderable
 viewModel env model =
     viewComponent (noCommonData env) model.components

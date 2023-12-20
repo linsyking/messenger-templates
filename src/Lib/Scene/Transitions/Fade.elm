@@ -1,7 +1,7 @@
 module Lib.Scene.Transitions.Fade exposing
-    ( fadeOutBlack, fadeInBlack
+    ( fadeIn, fadeOut
+    , fadeOutBlack, fadeInBlack
     , fadeOutWithRenderable, fadeInWithRenderable
-    , fadeIn, fadeOut
     )
 
 {-| Fading Effects

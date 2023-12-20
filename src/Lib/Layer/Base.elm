@@ -20,7 +20,7 @@ Using layers can help us deal with different things in different layers.
 
 import Canvas exposing (Renderable)
 import Lib.Audio.Base exposing (AudioOption)
-import Lib.Env.Env exposing (EnvC)
+import Lib.Env.Env exposing (Env)
 import Messenger.GeneralModel exposing (GeneralModel)
 
 
@@ -32,7 +32,7 @@ a is the layer data, b is the common data that shares between layers, c is the i
 
 -}
 type alias Layer a b =
-    GeneralModel a (EnvC b) LayerMsg LayerTarget Renderable
+    GeneralModel a (Env b) LayerMsg LayerTarget Renderable
 
 
 {-| LayerMsg

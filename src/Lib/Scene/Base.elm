@@ -30,9 +30,9 @@ import Lib.Scene.Transitions.Base exposing (Transition)
 {-| Scene
 -}
 type alias Scene a =
-    { init : Env -> SceneInitData -> a
-    , update : Env -> a -> ( a, List SceneOutputMsg, Env )
-    , view : Env -> a -> Renderable
+    { init : Env () -> SceneInitData -> a
+    , update : Env () -> a -> ( a, List SceneOutputMsg, Env () )
+    , view : Env () -> a -> Renderable
     }
 
 

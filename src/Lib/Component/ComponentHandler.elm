@@ -31,7 +31,7 @@ import Messenger.RecursionList exposing (updateObjects)
 
 {-| RecUpdater
 -}
-updaterec : Component -> Env -> ComponentMsg -> ( Component, List ( ComponentTarget, ComponentMsg ), Env )
+updaterec : Component -> Env () -> ComponentMsg -> ( Component, List ( ComponentTarget, ComponentMsg ), Env () )
 updaterec c env ct =
     let
         ( newx, newmsg, newenv ) =
@@ -42,7 +42,7 @@ updaterec c env ct =
 
 {-| Updater
 -}
-update : Component -> Env -> ( Component, List ( ComponentTarget, ComponentMsg ), Env )
+update : Component -> Env () -> ( Component, List ( ComponentTarget, ComponentMsg ), Env () )
 update c env =
     let
         ( newx, newmsg, newenv ) =
@@ -80,7 +80,7 @@ super ct =
 
 {-| Rec body for the component
 -}
-recBody : RecBody Component ComponentMsg Env ComponentTarget
+recBody : RecBody Component ComponentMsg (Env ()) ComponentTarget
 recBody =
     { update = update
     , updaterec = updaterec
@@ -96,13 +96,13 @@ recBody =
 Return a list of messages sent to the parentlayer.
 
 -}
-updateComponents : Env -> List Component -> ( List Component, List ComponentMsg, Env )
+updateComponents : Env () -> List Component -> ( List Component, List ComponentMsg, Env () )
 updateComponents env =
     updateObjects recBody env
 
 
 {-| Generate the view of the components
 -}
-viewComponent : Env -> List Component -> Renderable
+viewComponent : Env () -> List Component -> Renderable
 viewComponent env xs =
     group [] <| viewModelList env xs

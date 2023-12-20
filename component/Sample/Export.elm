@@ -16,7 +16,7 @@ import Lib.Env.Env exposing (Env)
 {-| initComponent
 Write a description here for how to initialize your component.
 -}
-initComponent : Env -> ComponentInitData -> Component
+initComponent : Env () -> ComponentInitData -> Component
 initComponent env i =
     { name = "$1"
     , data = initModel env i

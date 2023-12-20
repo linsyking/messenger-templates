@@ -69,7 +69,7 @@ loadScene : Msg -> Model -> SceneT -> SceneInitData -> Model
 loadScene msg model cs sid =
     { model
         | currentScene = cs
-        , currentData = cs.init { t = model.time, globalData = model.currentGlobalData, msg = msg } sid
+        , currentData = cs.init { t = model.time, globalData = model.currentGlobalData, msg = msg, commonData = () } sid
     }
 
 

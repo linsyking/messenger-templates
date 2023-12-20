@@ -5,7 +5,7 @@ import SceneProtos.$0.GameComponent.Base exposing (GameComponent, GameComponentI
 import SceneProtos.$0.GameComponents.$1.Model exposing (initModel, updateModel, updateModelRec, viewModel)
 
 
-initGC : Env -> GameComponentInitData -> GameComponent
+initGC : Env () -> GameComponentInitData -> GameComponent
 initGC env i =
     { name = "$1"
     , data = initModel env i

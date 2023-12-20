@@ -1,8 +1,8 @@
-module Scenes.$0.$1.Common exposing (Model, nullModel, EnvC)
+module Scenes.$0.$1.Common exposing (Model, nullModel, Env)
 
 {-| Common module
 
-@docs Model, nullModel, EnvC
+@docs Model, nullModel, Env
 
 -}
 
@@ -26,5 +26,5 @@ nullModel =
 
 {-| Convenient type alias for the environment
 -}
-type alias EnvC =
-    Env.EnvC CommonData
+type alias Env =
+    Env.Env CommonData

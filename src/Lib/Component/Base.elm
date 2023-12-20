@@ -1,9 +1,11 @@
 module Lib.Component.Base exposing
-    ( DefinedTypes(..)
+    ( ComponentMsg(..)
+    , ComponentTarget(..)
+    , DefinedTypes(..)
+    , ComponentInitData(..)
     , Component
     , Data
     , nullComponent
-    , ComponentInitData(..), ComponentMsg(..), ComponentTarget(..)
     )
 
 {-|
@@ -54,7 +56,7 @@ Examples are [GameComponent](https://github.com/linsyking/Reweave/blob/master/sr
 
 -}
 type alias Component =
-    GeneralModel Data Env ComponentMsg ComponentTarget Renderable
+    GeneralModel Data (Env ()) ComponentMsg ComponentTarget Renderable
 
 
 {-| Data type used to initialize a component.

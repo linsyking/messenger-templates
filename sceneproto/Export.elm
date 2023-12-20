@@ -13,6 +13,6 @@ import SceneProtos.$1.SceneInit exposing ($1Init)
 
 {-| Use the environment and sent init data to change the init data.
 -}
-game : Env -> SceneTMsg -> $1Init
+game : Env () -> SceneTMsg -> $1Init
 game _ _ =
     {}

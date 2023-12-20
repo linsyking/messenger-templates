@@ -25,7 +25,7 @@ import Lib.Env.Env exposing (Env)
 Initialize the model. It should update the id.
 
 -}
-initModel : Env -> ComponentInitData -> Data
+initModel : Env () -> ComponentInitData -> Data
 initModel _ i =
     case i of
         ComponentID id _ ->
@@ -42,7 +42,7 @@ initModel _ i =
 Add your component logic to handle Msg here.
 
 -}
-updateModel : Env -> Data -> ( Data, List ( ComponentTarget, ComponentMsg ), Env )
+updateModel : Env () -> Data -> ( Data, List ( ComponentTarget, ComponentMsg ), Env () )
 updateModel env d =
     ( d, [], env )
 
@@ -52,7 +52,7 @@ updateModel env d =
 Add your component logic to handle ComponentMsg here.
 
 -}
-updateModelRec : Env -> ComponentMsg -> Data -> ( Data, List ( ComponentTarget, ComponentMsg ), Env )
+updateModelRec : Env () -> ComponentMsg -> Data -> ( Data, List ( ComponentTarget, ComponentMsg ), Env () )
 updateModelRec env _ d =
     ( d, [], env )
 
@@ -64,6 +64,6 @@ Change this to your own component view function.
 If there is no view function, return Nothing.
 
 -}
-viewModel : Env -> Data -> Renderable
+viewModel : Env () -> Data -> Renderable
 viewModel _ _ =
     empty

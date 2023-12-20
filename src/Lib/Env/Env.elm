@@ -1,8 +1,8 @@
 module Lib.Env.Env exposing
-    ( Env, EnvC
+    ( Env
     , noCommonData, addCommonData
-    , cleanEnv, cleanEnvC
-    , patchEnv, patchEnvC
+    , cleanEnv
+    , patchEnv
     )
 
 {-|
@@ -12,28 +12,19 @@ module Lib.Env.Env exposing
 
 Provide type support for environment variables.
 
-@docs Env, EnvC
+@docs Env
 @docs noCommonData, addCommonData
-@docs cleanEnv, cleanEnvC
-@docs patchEnv, patchEnvC
+@docs cleanEnv
+@docs patchEnv
 
 -}
 
 import Base exposing (GlobalData, Msg(..))
 
 
-{-| Normal environment.
--}
-type alias Env =
-    { msg : Msg
-    , t : Int
-    , globalData : GlobalData
-    }
-
-
 {-| Normal environment with extra common data.
 -}
-type alias EnvC b =
+type alias Env b =
     { msg : Msg
     , globalData : GlobalData
     , t : Int
@@ -46,17 +37,18 @@ type alias EnvC b =
 Useful when sending message to a component.
 
 -}
-noCommonData : EnvC b -> Env
+noCommonData : Env b -> Env ()
 noCommonData env =
     { msg = env.msg
     , globalData = env.globalData
     , t = env.t
+    , commonData = ()
     }
 
 
 {-| Add the common data back.
 -}
-addCommonData : b -> Env -> EnvC b
+addCommonData : b -> Env () -> Env b
 addCommonData commonData env =
     { msg = env.msg
     , globalData = env.globalData
@@ -67,27 +59,13 @@ addCommonData commonData env =
 
 {-| Clean the environment
 -}
-cleanEnv : Env -> Env
+cleanEnv : Env a -> Env a
 cleanEnv env =
-    { env | msg = NullMsg }
-
-
-{-| Clean the environment with commonData
--}
-cleanEnvC : EnvC b -> EnvC b
-cleanEnvC env =
     { env | msg = NullMsg }
 
 
 {-| Patch the environment
 -}
-patchEnv : Env -> Env -> Env
+patchEnv : Env a -> Env a -> Env a
 patchEnv old new =
-    { new | msg = old.msg }
-
-
-{-| Patch the environment with commonData
--}
-patchEnvC : EnvC b -> EnvC b -> EnvC b
-patchEnvC old new =
     { new | msg = old.msg }

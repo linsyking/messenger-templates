@@ -16,7 +16,7 @@ module Lib.Layer.LayerHandler exposing
 -}
 
 import Canvas exposing (Renderable, group)
-import Lib.Env.Env exposing (EnvC, cleanEnvC, patchEnvC)
+import Lib.Env.Env exposing (Env, cleanEnv, patchEnv)
 import Lib.Layer.Base exposing (Layer, LayerMsg(..), LayerTarget(..))
 import Messenger.GeneralModel exposing (viewModelList)
 import Messenger.Recursion exposing (RecBody)
@@ -25,7 +25,7 @@ import Messenger.RecursionList exposing (updateObjects)
 
 {-| Updater
 -}
-update : Layer a b -> EnvC b -> ( Layer a b, List ( LayerTarget, LayerMsg ), EnvC b )
+update : Layer a b -> Env b -> ( Layer a b, List ( LayerTarget, LayerMsg ), Env b )
 update layer env =
     let
         ( newData, newMsgs, newEnv ) =
@@ -36,7 +36,7 @@ update layer env =
 
 {-| RecUpdater
 -}
-updaterec : Layer a b -> EnvC b -> LayerMsg -> ( Layer a b, List ( LayerTarget, LayerMsg ), EnvC b )
+updaterec : Layer a b -> Env b -> LayerMsg -> ( Layer a b, List ( LayerTarget, LayerMsg ), Env b )
 updaterec layer env lm =
     let
         ( newData, newMsgs, newEnv ) =
@@ -71,9 +71,9 @@ super t =
 
 {-| Recbody
 -}
-recBody : RecBody (Layer a b) LayerMsg (EnvC b) LayerTarget
+recBody : RecBody (Layer a b) LayerMsg (Env b) LayerTarget
 recBody =
-    { update = update, updaterec = updaterec, match = match, super = super, clean = cleanEnvC, patch = patchEnvC }
+    { update = update, updaterec = updaterec, match = match, super = super, clean = cleanEnv, patch = patchEnv }
 
 
 {-| updateLayer
@@ -81,7 +81,7 @@ recBody =
 Update all the layers.
 
 -}
-updateLayer : EnvC b -> List (Layer a b) -> ( List (Layer a b), List LayerMsg, EnvC b )
+updateLayer : Env b -> List (Layer a b) -> ( List (Layer a b), List LayerMsg, Env b )
 updateLayer env =
     updateObjects recBody env
 
@@ -91,6 +91,6 @@ updateLayer env =
 Get the view of the layer.
 
 -}
-viewLayer : EnvC b -> List (Layer a b) -> Renderable
+viewLayer : Env b -> List (Layer a b) -> Renderable
 viewLayer env models =
     group [] <| viewModelList env models

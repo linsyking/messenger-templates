@@ -1,11 +1,11 @@
 module Scenes.$0.$1.Common exposing
-    ( Model, nullModel, EnvC
+    ( Model, nullModel, Env
     , updateComponentsByHandler
     )
 
 {-| Common module
 
-@docs Model, nullModel, EnvC
+@docs Model, nullModel, Env
 @docs updateComponentsByHandler
 
 -}
@@ -35,8 +35,8 @@ nullModel =
 
 {-| Convenient type alias for the environment
 -}
-type alias EnvC =
-    Env.EnvC CommonData
+type alias Env =
+    Env.Env CommonData
 
 
 {-| Update model components by handler
@@ -44,7 +44,7 @@ type alias EnvC =
 Don't modify this function
 
 -}
-updateComponentsByHandler : EnvC -> Model -> (EnvC -> ComponentMsg -> Model -> ( Model, List ( LayerTarget, LayerMsg ), EnvC )) -> ( Model, List ( LayerTarget, LayerMsg ), EnvC )
+updateComponentsByHandler : Env -> Model -> (Env -> ComponentMsg -> Model -> ( Model, List ( LayerTarget, LayerMsg ), Env )) -> ( Model, List ( LayerTarget, LayerMsg ), Env )
 updateComponentsByHandler env model handle =
     let
         ( newComponents, newMsg, newEnv ) =

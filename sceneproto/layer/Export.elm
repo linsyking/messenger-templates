@@ -11,7 +11,7 @@ module SceneProtos.$0.$1.Export exposing
 -}
 
 import Lib.Layer.Base exposing (Layer)
-import SceneProtos.$0.$1.Common exposing (EnvC, Model)
+import SceneProtos.$0.$1.Common exposing (Env, Model)
 import SceneProtos.$0.$1.Model exposing (initModel, updateModel, updateModelRec, viewModel)
 import SceneProtos.$0.LayerBase exposing (CommonData)
 import SceneProtos.$0.SceneInit exposing ($0Init)
@@ -25,7 +25,7 @@ type alias Data =
 
 {-| initLayer
 -}
-initLayer : EnvC -> $0Init -> Layer Data CommonData
+initLayer : Env -> $0Init -> Layer Data CommonData
 initLayer env i =
     { name = "$1"
     , data = initModel env i

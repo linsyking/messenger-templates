@@ -27,7 +27,7 @@ type alias Data =
 
 {-| genScene
 -}
-genScene : (Env -> SceneTMsg -> $0Init) -> Scene Data
+genScene : (Env () -> SceneTMsg -> $0Init) -> Scene Data
 genScene im =
     { init =
         \env i ->
