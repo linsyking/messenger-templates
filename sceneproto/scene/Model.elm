@@ -24,7 +24,9 @@ import SceneProtos.$0.LayerBase exposing (CommonData)
 
 {-| handleLayerMsg
 
-Usually you add logic here.
+Handle Layer Messages
+
+Note that the layer messages with SOMMsg type(directly copy from the component message) will be directly sent to messenger
 
 -}
 handleLayerMsg : Env CommonData -> LayerMsg -> Model -> ( Model, List SceneOutputMsg, Env CommonData )

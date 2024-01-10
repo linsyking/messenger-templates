@@ -90,9 +90,22 @@ nullComponent =
     }
 
 
-{-| ComponentTMsg
+{-| ComponentMsg
 
 This is the message that can be sent to the layer
+
+It can also be directly sent to messenger if using SOMMsg type, else should use OtherMsg type.
+
+Add your own data in **ComponentMsg\_**
+
+-}
+type alias ComponentMsg =
+    MsgBase ComponentMsg_
+
+
+{-| ComponentMsg\_
+
+this message is used when you want layer to deal with the component message.
 
 Those entries are some basic data types we need.
 
@@ -100,11 +113,9 @@ You may add your own data types here.
 
 However, if your data types are too complicated, you might want to create your own component type (like game component) to achieve better performance.
 
+Only used in ComponentMsg type.
+
 -}
-type alias ComponentMsg =
-    MsgBase ComponentMsg_
-
-
 type ComponentMsg_
     = ComponentStringMsg String
     | ComponentIntMsg Int

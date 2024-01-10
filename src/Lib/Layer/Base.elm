@@ -38,15 +38,26 @@ type alias Layer a b =
 
 {-| LayerMsg
 
-Add your own layer messages here.
+Add your own data in **LayerMsg\_**
 
-LayerSoundMsg name path option
+The SOMMsg type is only used to pass the component message
 
 -}
 type alias LayerMsg =
     MsgBase LayerMsg_
 
 
+{-| LayerMsg\_
+
+this message is used when you want scene to deal with the layer message.
+
+Add your own layer messages here.
+
+LayerSoundMsg name path option
+
+Only used in LayerMsg type.
+
+-}
 type LayerMsg_
     = LayerStringMsg String
     | LayerIntMsg Int

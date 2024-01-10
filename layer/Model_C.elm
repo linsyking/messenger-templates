@@ -31,7 +31,10 @@ initModel _ _ =
     }
 
 
-{-| Handle component messages (that are sent to this layer).
+{-| 
+Handle component messages (that are sent to this layer).
+
+Note that the comonent messanges with SOMMsg type will be directly sent to the scene.
 -}
 handleComponentMsg : Env -> ComponentMsg -> Model -> ( Model, List ( LayerTarget, LayerMsg ), Env )
 handleComponentMsg env msg model =
