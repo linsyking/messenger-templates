@@ -30,7 +30,8 @@ You have to use functions here to decode and encode DefinedTypes.
 
 import Color exposing (Color)
 import Dict exposing (Dict)
-import Lib.Component.Base exposing (Component, ComponentMsg(..), ComponentTarget(..), DefinedTypes(..), nullComponent)
+import Lib.Component.Base exposing (Component, ComponentMsg, ComponentMsg_(..), ComponentTarget(..), DefinedTypes(..), nullComponent)
+import Lib.Scene.Base exposing (MsgBase(..))
 
 
 {-| dIntGet
@@ -214,7 +215,7 @@ dComponentMsgGet f s =
             x
 
         _ ->
-            NullComponentMsg
+            OtherMsg NullComponentMsg
 
 
 {-| dComponentMsgSet

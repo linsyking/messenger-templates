@@ -15,9 +15,9 @@ module Scenes.$0.Model exposing
 import Canvas exposing (Renderable)
 import Lib.Audio.Base exposing (AudioOption(..))
 import Lib.Env.Env exposing (Env, addCommonData, noCommonData)
-import Lib.Layer.Base exposing (LayerMsg(..))
+import Lib.Layer.Base exposing (LayerMsg, LayerMsg_(..))
 import Lib.Layer.LayerHandler exposing (updateLayer, viewLayer)
-import Lib.Scene.Base exposing (SceneOutputMsg(..))
+import Lib.Scene.Base exposing (MsgBase(..), SceneOutputMsg(..))
 import Scenes.$0.Common exposing (Model)
 import Scenes.$0.LayerBase exposing (CommonData)
 
@@ -28,16 +28,21 @@ Handle Layer Messages
 
 -}
 handleLayerMsg : Env CommonData -> LayerMsg -> Model -> ( Model, List SceneOutputMsg, Env CommonData )
-handleLayerMsg env lmsg model =
-    case lmsg of
-        LayerSoundMsg name path opt ->
-            ( model, [ SOMPlayAudio name path opt ], env )
+handleLayerMsg env msgb model =
+    case msgb of
+        OtherMsg lmsg ->
+            case lmsg of
+                LayerSoundMsg name path opt ->
+                    ( model, [ SOMPlayAudio name path opt ], env )
 
-        LayerStopSoundMsg name ->
-            ( model, [ SOMStopAudio name ], env )
+                LayerStopSoundMsg name ->
+                    ( model, [ SOMStopAudio name ], env )
 
-        _ ->
-            ( model, [], env )
+                _ ->
+                    ( model, [], env )
+
+        SOMMsg sommsg ->
+            ( model, [ sommsg ], env )
 
 
 {-| updateModel

@@ -17,7 +17,7 @@ module Lib.Layer.LayerHandler exposing
 
 import Canvas exposing (Renderable, group)
 import Lib.Env.Env exposing (Env, cleanEnv, patchEnv)
-import Lib.Layer.Base exposing (Layer, LayerMsg(..), LayerTarget(..))
+import Lib.Layer.Base exposing (Layer, LayerMsg, LayerTarget(..))
 import Messenger.GeneralModel exposing (viewModelList)
 import Messenger.Recursion exposing (RecBody)
 import Messenger.RecursionList exposing (updateObjects)

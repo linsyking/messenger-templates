@@ -15,9 +15,9 @@ module SceneProtos.$0.Model exposing
 import Canvas exposing (Renderable)
 import Lib.Audio.Base exposing (AudioOption(..))
 import Lib.Env.Env exposing (Env, addCommonData, noCommonData)
-import Lib.Layer.Base exposing (LayerMsg(..))
+import Lib.Layer.Base exposing (LayerMsg, LayerMsg_(..))
 import Lib.Layer.LayerHandler exposing (updateLayer, viewLayer)
-import Lib.Scene.Base exposing (SceneOutputMsg(..))
+import Lib.Scene.Base exposing (MsgBase(..), SceneOutputMsg(..))
 import SceneProtos.$0.Common exposing (Model)
 import SceneProtos.$0.LayerBase exposing (CommonData)
 
@@ -28,16 +28,24 @@ Usually you add logic here.
 
 -}
 handleLayerMsg : Env CommonData -> LayerMsg -> Model -> ( Model, List SceneOutputMsg, Env CommonData )
-handleLayerMsg env lmsg model =
-    case lmsg of
-        LayerSoundMsg name path opt ->
-            ( model, [ SOMPlayAudio name path opt ], env )
+handleLayerMsg env msgb model =
+    case msgb of
+        OtherMsg lmsg ->
+            case lmsg of
+                LayerSoundMsg name path opt ->
+                    ( model, [ SOMPlayAudio name path opt ], env )
 
-        LayerStopSoundMsg name ->
-            ( model, [ SOMStopAudio name ], env )
+                LayerStopSoundMsg name ->
+                    ( model, [ SOMStopAudio name ], env )
 
-        _ ->
-            ( model, [], env )
+                LayerChangeSceneMsg name ->
+                    ( model, [ SOMChangeScene ( NullSceneInitData, name, Nothing ) ], env )
+
+                _ ->
+                    ( model, [], env )
+
+        SOMMsg sommsg ->
+            ( model, [ sommsg ], env )
 
 
 {-| updateModel

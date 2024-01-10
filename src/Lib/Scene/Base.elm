@@ -1,5 +1,5 @@
 module Lib.Scene.Base exposing
-    ( SceneTMsg(..), SceneOutputMsg(..)
+    ( SceneTMsg(..), SceneOutputMsg(..), MsgBase(..)
     , Scene, SceneInitData(..)
     , LayerPacker
     )
@@ -15,7 +15,7 @@ It is like a "page". You can change scenes in the game.
 
 You have to send data to next scene if you don't store the data in globaldata.
 
-@docs SceneTMsg, SceneOutputMsg
+@docs SceneTMsg, SceneOutputMsg, MsgBase
 @docs Scene, SceneInitData
 @docs LayerPacker
 
@@ -80,3 +80,8 @@ type alias LayerPacker a b =
     { commonData : a
     , layers : List b
     }
+
+
+type MsgBase a
+    = SceneOutputMsg SceneOutputMsg
+    | OtherMsg a

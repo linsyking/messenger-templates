@@ -1,5 +1,5 @@
 module Lib.Layer.Base exposing
-    ( LayerMsg(..)
+    ( LayerMsg, LayerMsg_(..)
     , LayerTarget(..)
     , Layer
     )
@@ -12,7 +12,7 @@ It is mainly used to seperate different rendering layers.
 
 Using layers can help us deal with different things in different layers.
 
-@docs LayerMsg
+@docs LayerMsg, LayerMsg_
 @docs LayerTarget
 @docs Layer
 
@@ -21,6 +21,7 @@ Using layers can help us deal with different things in different layers.
 import Canvas exposing (Renderable)
 import Lib.Audio.Base exposing (AudioOption)
 import Lib.Env.Env exposing (Env)
+import Lib.Scene.Base exposing (MsgBase)
 import Messenger.GeneralModel exposing (GeneralModel)
 
 
@@ -42,11 +43,15 @@ Add your own layer messages here.
 LayerSoundMsg name path option
 
 -}
-type LayerMsg
+type alias LayerMsg =
+    MsgBase LayerMsg_
+
+
+type LayerMsg_
     = LayerStringMsg String
     | LayerIntMsg Int
     | LayerFloatMsg Float
-    | LayerStringDataMsg String LayerMsg
+    | LayerStringDataMsg String LayerMsg_
     | LayerSoundMsg String String AudioOption
     | LayerStopSoundMsg String
     | LayerChangeSceneMsg String

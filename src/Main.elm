@@ -18,7 +18,6 @@ import Html.Attributes exposing (style)
 import Json.Decode as Decode
 import Lib.Audio.Audio exposing (audioPortFromJS, audioPortToJS, loadAudio, stopAudio)
 import Lib.Coordinate.Coordinates exposing (fromMouseToVirtual, getStartPoint, maxHandW)
-import Lib.Layer.Base exposing (LayerMsg(..))
 import Lib.LocalStorage.LocalStorage exposing (decodeLSInfo, encodeLSInfo, sendInfo)
 import Lib.Resources.Base exposing (getTexture, saveSprite)
 import Lib.Resources.SpriteSheets exposing (allSpriteSheets)
