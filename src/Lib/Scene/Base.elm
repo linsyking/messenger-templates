@@ -82,6 +82,13 @@ type alias LayerPacker a b =
     }
 
 
+{-| MsgBase
+
+MsgBase is designed for making components have the ability to directly pass the message to messenger.
+
+Thus, you can write a usable and general component.
+
+-}
 type MsgBase a
     = SceneOutputMsg SceneOutputMsg
     | OtherMsg a
