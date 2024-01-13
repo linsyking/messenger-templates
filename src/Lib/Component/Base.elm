@@ -1,5 +1,5 @@
 module Lib.Component.Base exposing
-    ( ComponentMsg(..)
+    ( ComponentMsg, ComponentMsg_(..)
     , ComponentTarget(..)
     , DefinedTypes(..)
     , ComponentInitData(..)
@@ -23,7 +23,7 @@ It is **not** fast to communicate between many components.
 
 Gamecomponents have better speed when communicating with each other. (their message types are built-in)
 
-@docs ComponentMsg
+@docs ComponentMsg, ComponentMsg_
 @docs ComponentTarget
 @docs DefinedTypes
 @docs ComponentInitData
@@ -37,6 +37,7 @@ import Canvas exposing (Renderable, empty)
 import Color exposing (Color)
 import Dict exposing (Dict)
 import Lib.Env.Env exposing (Env)
+import Lib.Scene.Base exposing (MsgBase)
 import Messenger.GeneralModel exposing (GeneralModel)
 
 
@@ -89,9 +90,22 @@ nullComponent =
     }
 
 
-{-| ComponentTMsg
+{-| ComponentMsg
 
 This is the message that can be sent to the layer
+
+It can also be directly sent to messenger if using SOMMsg type, else should use OtherMsg type.
+
+Add your own data in **ComponentMsg\_**
+
+-}
+type alias ComponentMsg =
+    MsgBase ComponentMsg_
+
+
+{-| ComponentMsg\_
+
+this message is used when you want layer to deal with the component message.
 
 Those entries are some basic data types we need.
 
@@ -99,17 +113,19 @@ You may add your own data types here.
 
 However, if your data types are too complicated, you might want to create your own component type (like game component) to achieve better performance.
 
+Only used in ComponentMsg type.
+
 -}
-type ComponentMsg
+type ComponentMsg_
     = ComponentStringMsg String
     | ComponentIntMsg Int
     | ComponentFloatMsg Float
     | ComponentBoolMsg Bool
-    | ComponentStringDataMsg String ComponentMsg
-    | ComponentListMsg (List ComponentMsg)
+    | ComponentStringDataMsg String ComponentMsg_
+    | ComponentListMsg (List ComponentMsg_)
     | ComponentComponentMsg Component
     | ComponentComponentTargetMsg ComponentTarget
-    | ComponentNamedMsg ComponentTarget ComponentMsg
+    | ComponentNamedMsg ComponentTarget ComponentMsg_
     | ComponentDTMsg DefinedTypes
     | NullComponentMsg
 

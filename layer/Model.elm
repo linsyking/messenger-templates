@@ -13,7 +13,7 @@ module Scenes.$0.$1.Model exposing
 -}
 
 import Canvas exposing (Renderable, empty)
-import Lib.Layer.Base exposing (LayerMsg(..), LayerTarget(..))
+import Lib.Layer.Base exposing (LayerMsg, LayerTarget(..))
 import Scenes.$0.$1.Common exposing (Env, Model, nullModel)
 import Scenes.$0.SceneInit exposing ($0Init)
 

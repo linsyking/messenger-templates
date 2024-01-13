@@ -13,10 +13,11 @@ module Scenes.$0.$1.Model exposing
 -}
 
 import Canvas exposing (Renderable)
-import Lib.Component.Base exposing (ComponentMsg(..))
+import Lib.Component.Base exposing (ComponentMsg)
 import Lib.Component.ComponentHandler exposing (viewComponent)
 import Lib.Env.Env exposing (noCommonData)
-import Lib.Layer.Base exposing (LayerMsg(..), LayerTarget(..))
+import Lib.Layer.Base exposing (LayerMsg, LayerTarget(..))
+import Lib.Scene.Base exposing (MsgBase(..))
 import Scenes.$0.$1.Common exposing (Env, Model, updateComponentsByHandler)
 import Scenes.$0.SceneInit exposing ($0Init)
 
@@ -30,11 +31,19 @@ initModel _ _ =
     }
 
 
-{-| Handle component messages (that are sent to this layer).
+{-| 
+Handle component messages (that are sent to this layer).
+
+Note that the comonent messanges with SOMMsg type will be directly sent to the scene.
 -}
 handleComponentMsg : Env -> ComponentMsg -> Model -> ( Model, List ( LayerTarget, LayerMsg ), Env )
-handleComponentMsg env _ model =
-    ( model, [], env )
+handleComponentMsg env msg model =
+    case msg of
+        SOMMsg sommsg ->
+            ( model, [ ( LayerParentScene, SOMMsg sommsg ) ], env )
+
+        _ ->
+            ( model, [], env )
 
 
 {-| updateModel
