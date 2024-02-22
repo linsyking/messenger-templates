@@ -18,7 +18,8 @@ The mosy commonly used one is the `updateComponents` function, which will update
 
 import Canvas exposing (Renderable, group)
 import Dict
-import Lib.Component.Base exposing (Component, ComponentMsg, ComponentTarget(..), DefinedTypes(..))
+import Lib.Component.Base exposing (Component, ComponentMsg, ComponentTarget(..))
+import Lib.DefinedTypes.DefTypes exposing (DefinedTypes(..))
 import Lib.Env.Env exposing (Env, cleanEnv, patchEnv)
 import Messenger.GeneralModel exposing (viewModelList)
 import Messenger.Recursion exposing (RecBody)
@@ -60,7 +61,7 @@ match c ct =
             False
 
         ComponentByID x ->
-            Dict.get "id" c.data == Just (CDInt x)
+            Dict.get "id" c.data == Just (DTInt x)
 
         ComponentByName x ->
             c.name == x

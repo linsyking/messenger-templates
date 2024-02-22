@@ -1,7 +1,6 @@
 module Lib.Component.Base exposing
     ( ComponentMsg, ComponentMsg_(..)
     , ComponentTarget(..)
-    , DefinedTypes(..)
     , ComponentInitData(..)
     , Component
     , Data
@@ -25,7 +24,6 @@ Gamecomponents have better speed when communicating with each other. (their mess
 
 @docs ComponentMsg, ComponentMsg_
 @docs ComponentTarget
-@docs DefinedTypes
 @docs ComponentInitData
 @docs Component
 @docs Data
@@ -34,8 +32,8 @@ Gamecomponents have better speed when communicating with each other. (their mess
 -}
 
 import Canvas exposing (Renderable, empty)
-import Color exposing (Color)
 import Dict exposing (Dict)
+import Lib.DefinedTypes.DefTypes exposing (DefinedTypes)
 import Lib.Env.Env exposing (Env)
 import Lib.Scene.Base exposing (MsgBase)
 import Messenger.GeneralModel exposing (GeneralModel)
@@ -154,25 +152,3 @@ This is the `Data` datatype for Component.
 -}
 type alias Data =
     Dict String DefinedTypes
-
-
-{-| DefinedTypes
-
-Defined type is used to store more data types in components.
-
-Those entries are the commonly used data types.
-
-Note that you can use `CDComponent` to store components inside components.
-
--}
-type DefinedTypes
-    = CDInt Int
-    | CDBool Bool
-    | CDFloat Float
-    | CDString String
-    | CDComponent Component
-    | CDComponentMsg ComponentMsg
-    | CDComponentTarget ComponentTarget
-    | CDColor Color
-    | CDListDT (List DefinedTypes)
-    | CDDictDT (Dict String DefinedTypes)
