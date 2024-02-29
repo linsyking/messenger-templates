@@ -6,9 +6,6 @@ module Lib.DefinedTypes.Parser exposing
     , dListDTGet, dListDTSet
     , dDictDTGet, dDictDTSet
     , dColorGet, dColorSet
-    -- , dComponentGet, dComponentSet
-    -- , dComponentTargetGet, dComponentTargetSet
-    -- , dComponentMsgGet, dComponentMsgSet
     )
 
 {-| This is a parser for DefinedTypes.
@@ -21,16 +18,12 @@ You have to use functions here to decode and encode DefinedTypes.
 @docs dStringGet, dStringSet
 @docs dListDTGet, dListDTSet
 @docs dDictDTGet, dDictDTSet
-@docs dComponentGet, dComponentSet
-@docs dComponentTargetGet, dComponentTargetSet
-@docs dComponentMsgGet, dComponentMsgSet
 @docs dColorGet, dColorSet
 
 -}
 
 import Color exposing (Color)
 import Dict exposing (Dict)
-import Lib.Component.Base exposing (Component, ComponentMsg, ComponentMsg_(..), ComponentTarget(..), nullComponent)
 import Lib.DefinedTypes.DefTypes exposing (DefinedTypes(..))
 import Lib.Scene.Base exposing (MsgBase(..))
 
@@ -167,51 +160,6 @@ dDictDTGet f s =
 dDictDTSet : String -> Dict String DefinedTypes -> Dict String DefinedTypes -> Dict String DefinedTypes
 dDictDTSet s t f =
     Dict.update s (\_ -> Just (DTDictDT t)) f
-
-
-
--- {-| dComponentGet
--- -}
--- dComponentGet : Dict String DefinedTypes -> String -> Component
--- dComponentGet f s =
---     case Dict.get s f of
---         Just (DTComponent x) ->
---             x
---         _ ->
---             nullComponent
--- {-| dComponentSet
--- -}
--- dComponentSet : String -> Component -> Dict String DefinedTypes -> Dict String DefinedTypes
--- dComponentSet s t f =
---     Dict.update s (\_ -> Just (DTComponent t)) f
--- {-| dComponentTargetGet
--- -}
--- dComponentTargetGet : Dict String DefinedTypes -> String -> ComponentTarget
--- dComponentTargetGet f s =
---     case Dict.get s f of
---         Just (DTComponentTarget x) ->
---             x
---         _ ->
---             ComponentParentLayer
--- {-| dComponentTargetSet
--- -}
--- dComponentTargetSet : String -> ComponentTarget -> Dict String DefinedTypes -> Dict String DefinedTypes
--- dComponentTargetSet s t f =
---     Dict.update s (\_ -> Just (DTComponentTarget t)) f
--- {-| dComponentMsgGet
--- -}
--- dComponentMsgGet : Dict String DefinedTypes -> String -> ComponentMsg
--- dComponentMsgGet f s =
---     case Dict.get s f of
---         Just (DTComponentMsg x) ->
---             x
---         _ ->
---             OtherMsg NullComponentMsg
--- {-| dComponentMsgSet
--- -}
--- dComponentMsgSet : String -> ComponentMsg -> Dict String DefinedTypes -> Dict String DefinedTypes
--- dComponentMsgSet s t f =
---     Dict.update s (\_ -> Just (DTComponentMsg t)) f
 
 
 {-| dColorGet

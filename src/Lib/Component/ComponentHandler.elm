@@ -61,7 +61,7 @@ match c ct =
             False
 
         ComponentByID x ->
-            Dict.get "id" c.data == Just (DTInt x)
+            c.data.uid == x
 
         ComponentByName x ->
             c.name == x

@@ -3,8 +3,9 @@ module Lib.Component.Base exposing
     , ComponentTarget(..)
     , ComponentInitData(..)
     , Component
+    , ComponentTypes(..)
     , Data
-    , nullComponent
+    , nullData
     )
 
 {-|
@@ -26,12 +27,13 @@ Gamecomponents have better speed when communicating with each other. (their mess
 @docs ComponentTarget
 @docs ComponentInitData
 @docs Component
+@docs ComponentTypes
 @docs Data
-@docs nullComponent
+@docs nullData
 
 -}
 
-import Canvas exposing (Renderable, empty)
+import Canvas exposing (Renderable)
 import Dict exposing (Dict)
 import Lib.DefinedTypes.DefTypes exposing (DefinedTypes)
 import Lib.Env.Env exposing (Env)
@@ -64,28 +66,6 @@ type ComponentInitData
     = ComponentID Int ComponentInitData
     | ComponentMsg ComponentMsg
     | NullComponentInitData
-
-
-{-| nullComponent
--}
-nullComponent : Component
-nullComponent =
-    { name = "NULL"
-    , data = Dict.empty
-    , update =
-        \env _ ->
-            ( Dict.empty
-            , []
-            , env
-            )
-    , updaterec =
-        \env _ _ ->
-            ( Dict.empty
-            , []
-            , env
-            )
-    , view = \_ _ -> empty
-    }
 
 
 {-| ComponentMsg
@@ -143,6 +123,12 @@ type ComponentTarget
     | ComponentByID Int
 
 
+{-| Defined Types for Component
+-}
+type ComponentTypes
+    = CP Component
+
+
 {-| Data
 
 Data is the dictionary based on DefinedTypes.
@@ -151,4 +137,17 @@ This is the `Data` datatype for Component.
 
 -}
 type alias Data =
-    Dict String DefinedTypes
+    { uid : Int
+    , sublist : List ComponentTypes
+    , extra : Dict String DefinedTypes
+    }
+
+
+{-| nullData
+-}
+nullData : Data
+nullData =
+    { uid = 0
+    , sublist = []
+    , extra = Dict.empty
+    }
