@@ -1,11 +1,11 @@
 module Lib.Component.Base exposing
     ( ComponentMsg, ComponentMsg_(..)
     , ComponentTarget(..)
-    , DefinedTypes(..)
     , ComponentInitData(..)
     , Component
+    , ComponentTypes(..)
     , Data
-    , nullComponent
+    , nullData
     )
 
 {-|
@@ -25,17 +25,17 @@ Gamecomponents have better speed when communicating with each other. (their mess
 
 @docs ComponentMsg, ComponentMsg_
 @docs ComponentTarget
-@docs DefinedTypes
 @docs ComponentInitData
 @docs Component
+@docs ComponentTypes
 @docs Data
-@docs nullComponent
+@docs nullData
 
 -}
 
-import Canvas exposing (Renderable, empty)
-import Color exposing (Color)
+import Canvas exposing (Renderable)
 import Dict exposing (Dict)
+import Lib.DefinedTypes.DefTypes exposing (DefinedTypes)
 import Lib.Env.Env exposing (Env)
 import Lib.Scene.Base exposing (MsgBase)
 import Messenger.GeneralModel exposing (GeneralModel)
@@ -66,28 +66,6 @@ type ComponentInitData
     = ComponentID Int ComponentInitData
     | ComponentMsg ComponentMsg
     | NullComponentInitData
-
-
-{-| nullComponent
--}
-nullComponent : Component
-nullComponent =
-    { name = "NULL"
-    , data = Dict.empty
-    , update =
-        \env _ ->
-            ( Dict.empty
-            , []
-            , env
-            )
-    , updaterec =
-        \env _ _ ->
-            ( Dict.empty
-            , []
-            , env
-            )
-    , view = \_ _ -> empty
-    }
 
 
 {-| ComponentMsg
@@ -145,6 +123,12 @@ type ComponentTarget
     | ComponentByID Int
 
 
+{-| Defined Types for Component
+-}
+type ComponentTypes
+    = CP Component
+
+
 {-| Data
 
 Data is the dictionary based on DefinedTypes.
@@ -153,26 +137,17 @@ This is the `Data` datatype for Component.
 
 -}
 type alias Data =
-    Dict String DefinedTypes
+    { uid : Int
+    , sublist : List ComponentTypes
+    , extra : Dict String DefinedTypes
+    }
 
 
-{-| DefinedTypes
-
-Defined type is used to store more data types in components.
-
-Those entries are the commonly used data types.
-
-Note that you can use `CDComponent` to store components inside components.
-
+{-| nullData
 -}
-type DefinedTypes
-    = CDInt Int
-    | CDBool Bool
-    | CDFloat Float
-    | CDString String
-    | CDComponent Component
-    | CDComponentMsg ComponentMsg
-    | CDComponentTarget ComponentTarget
-    | CDColor Color
-    | CDListDT (List DefinedTypes)
-    | CDDictDT (Dict String DefinedTypes)
+nullData : Data
+nullData =
+    { uid = 0
+    , sublist = []
+    , extra = Dict.empty
+    }
