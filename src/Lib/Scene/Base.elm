@@ -90,5 +90,5 @@ Thus, you can write a usable and general component.
 
 -}
 type MsgBase a
-    = SceneOutputMsg SceneOutputMsg
+    = SOMsg SceneOutputMsg
     | OtherMsg a
