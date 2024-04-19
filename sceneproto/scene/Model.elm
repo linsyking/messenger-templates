@@ -17,7 +17,7 @@ import Lib.Audio.Base exposing (AudioOption(..))
 import Lib.Env.Env exposing (Env, addCommonData, noCommonData)
 import Lib.Layer.Base exposing (LayerMsg, LayerMsg_(..))
 import Lib.Layer.LayerHandler exposing (updateLayer, viewLayer)
-import Lib.Scene.Base exposing (MsgBase(..), SceneOutputMsg(..))
+import Lib.Scene.Base exposing (MsgBase(..), SceneInitData(..), SceneOutputMsg(..))
 import SceneProtos.$0.Common exposing (Model)
 import SceneProtos.$0.LayerBase exposing (CommonData)
 

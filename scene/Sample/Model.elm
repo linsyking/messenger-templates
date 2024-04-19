@@ -17,7 +17,7 @@ import Lib.Audio.Base exposing (AudioOption(..))
 import Lib.Env.Env exposing (Env, addCommonData, noCommonData)
 import Lib.Layer.Base exposing (LayerMsg, LayerMsg_(..))
 import Lib.Layer.LayerHandler exposing (updateLayer, viewLayer)
-import Lib.Scene.Base exposing (MsgBase(..), SceneOutputMsg(..))
+import Lib.Scene.Base exposing (MsgBase(..), SceneInitData(..), SceneOutputMsg(..))
 import Scenes.$0.Common exposing (Model)
 import Scenes.$0.LayerBase exposing (CommonData)
 
@@ -39,6 +39,9 @@ handleLayerMsg env msgb model =
 
                 LayerStopSoundMsg name ->
                     ( model, [ SOMStopAudio name ], env )
+
+                LayerChangeSceneMsg name ->
+                    ( model, [ SOMChangeScene ( NullSceneInitData, name, Nothing ) ], env )
 
                 _ ->
                     ( model, [], env )
