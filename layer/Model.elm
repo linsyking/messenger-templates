@@ -1,61 +1,62 @@
-module Scenes.$0.$1.Model exposing
-    ( initModel
-    , updateModel, updateModelRec
-    , viewModel
-    )
+module Scenes.$0.$1.Model exposing (layer)
 
-{-| Model module
+{-| Layer configuration module
 
-@docs initModel
-@docs updateModel, updateModelRec
-@docs viewModel
+Set the Data Type, Init logic, Update logic, View logic and Matcher logic here.
+
+@docs layer
 
 -}
 
-import Canvas exposing (Renderable, empty)
-import Lib.Layer.Base exposing (LayerMsg(..), LayerTarget(..))
-import Scenes.$0.$1.Common exposing (Env, Model, nullModel)
-import Scenes.$0.SceneInit exposing ($0Init)
+import Canvas
+import Lib.Base exposing (SceneMsg)
+import Lib.UserData exposing (UserData)
+import Messenger.Audio.Base exposing (AudioOption(..))
+import Messenger.Base exposing (WorldEvent(..))
+import Messenger.GeneralModel exposing (Matcher, Msg(..), MsgBase(..))
+import Messenger.Layer.Layer exposing (ConcreteLayer, LayerInit, LayerStorage, LayerUpdate, LayerUpdateRec, LayerView, genLayer)
+import Scenes.$0.LayerBase exposing (..)
 
 
-{-| initModel
-Add components here
--}
-initModel : Env -> $0Init -> Model
-initModel _ _ =
-    nullModel
+type alias Data =
+    {}
 
 
-{-| updateModel
-Default update function
-
-Add your logic to handle msg here
-
--}
-updateModel : Env -> Model -> ( Model, List ( LayerTarget, LayerMsg ), Env )
-updateModel env model =
-    ( model, [], env )
+init : LayerInit SceneCommonData UserData LayerMsg Data
+init env initMsg =
+    {}
 
 
-{-| updateModelRec
-Default update function
-
-Add your logic to handle LayerMsg here
-
--}
-updateModelRec : Env -> LayerMsg -> Model -> ( Model, List ( LayerTarget, LayerMsg ), Env )
-updateModelRec env _ model =
-    ( model, [], env )
+update : LayerUpdate SceneCommonData UserData LayerTarget LayerMsg SceneMsg Data
+update env evt data =
+    ( data, [], ( env, False ) )
 
 
-{-| viewModel
-Default view function
+updaterec : LayerUpdateRec SceneCommonData UserData LayerTarget LayerMsg SceneMsg Data
+updaterec env msg data =
+    ( data, [], env )
 
-If you don't have components, remove viewComponent.
 
-If you have other elements than components, add them after viewComponent.
+view : LayerView SceneCommonData UserData Data
+view env data =
+    Canvas.empty
 
--}
-viewModel : Env -> Model -> Renderable
-viewModel _ _ =
-    empty
+
+matcher : Matcher Data LayerTarget
+matcher data tar =
+    tar == "$1"
+
+
+layercon : ConcreteLayer Data SceneCommonData UserData LayerTarget LayerMsg SceneMsg
+layercon =
+    { init = init
+    , update = update
+    , updaterec = updaterec
+    , view = view
+    , matcher = matcher
+    }
+
+
+layer : LayerStorage SceneCommonData UserData LayerTarget LayerMsg SceneMsg
+layer =
+    genLayer layercon
