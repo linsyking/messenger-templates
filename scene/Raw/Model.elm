@@ -1,4 +1,4 @@
-module Scenes.Raw.Model exposing (scene)
+module Scenes.$0.Model exposing (scene)
 
 {-| Scene configuration module
 

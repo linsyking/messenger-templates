@@ -1,4 +1,4 @@
-module Scenes.Components.ComponentBase exposing (ComponentMsg(..), ComponentTarget, BaseData)
+module Scenes.$0.Components.ComponentBase exposing (ComponentMsg(..), ComponentTarget, BaseData)
 
 {-|
 

@@ -1,4 +1,4 @@
-module Scenes.Components.Sample.Msg exposing (Init)
+module Scenes.$0.Components.$1.Msg exposing (Init)
 
 {-| Msg module for component.
 

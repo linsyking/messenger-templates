@@ -1,4 +1,4 @@
-module Scenes.Sample.Model exposing (scene)
+module Scenes.$0.Model exposing (scene)
 
 {-| Scene configuration module
 
@@ -11,7 +11,7 @@ import Lib.UserData exposing (UserData)
 import Messenger.Base exposing (Env, addCommonData)
 import Messenger.Scene.LayeredScene exposing (LayeredSceneInit, LayeredSceneSettingsFunc, genLayeredScene)
 import Messenger.Scene.Scene exposing (SceneStorage)
-import Scenes.Sample.LayerBase exposing (..)
+import Scenes.$0.LayerBase exposing (..)
 
 
 {-| Initialize the commondata used in the scene.

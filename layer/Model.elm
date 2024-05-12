@@ -1,4 +1,4 @@
-module Scenes.Sample.Layer.Model exposing
+module Scenes.$0.$1.Model exposing
     ( Data
     , init
     , update, updaterec
@@ -27,7 +27,7 @@ import Messenger.Audio.Base exposing (AudioOption(..))
 import Messenger.Base exposing (WorldEvent(..))
 import Messenger.GeneralModel exposing (Matcher, Msg(..), MsgBase(..))
 import Messenger.Layer.Layer exposing (ConcreteLayer, LayerInit, LayerStorage, LayerUpdate, LayerUpdateRec, LayerView, genLayer)
-import Scenes.Sample.LayerBase exposing (..)
+import Scenes.$0.LayerBase exposing (..)
 
 
 {-| Data type for layer

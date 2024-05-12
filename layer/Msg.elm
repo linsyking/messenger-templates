@@ -1,4 +1,4 @@
-module Scenes.Sample.Layer.Msg exposing (Init)
+module Scenes.$0.$1.Msg exposing (Init)
 
 {-| Msg module for layer.
 
