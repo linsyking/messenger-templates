@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0
+
+### Changes
+
+- Change template to the new messenger architecture
+
 ## 0.2.2
 
 ### Changes

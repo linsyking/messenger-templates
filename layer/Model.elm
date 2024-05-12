@@ -1,61 +1,93 @@
-module Scenes.$0.$1.Model exposing
-    ( initModel
-    , updateModel, updateModelRec
-    , viewModel
+module Scenes.Sample.Layer.Model exposing
+    ( Data
+    , init
+    , update, updaterec
+    , view
+    , matcher
+    , layer
     )
 
-{-| Model module
+{-| Layer configuration module
 
-@docs initModel
-@docs updateModel, updateModelRec
-@docs viewModel
+Set the Data Type, Init logic, Update logic, View logic and Matcher logic here.
 
--}
-
-import Canvas exposing (Renderable, empty)
-import Lib.Layer.Base exposing (LayerMsg(..), LayerTarget(..))
-import Scenes.$0.$1.Common exposing (Env, Model, nullModel)
-import Scenes.$0.SceneInit exposing ($0Init)
-
-
-{-| initModel
-Add components here
--}
-initModel : Env -> $0Init -> Model
-initModel _ _ =
-    nullModel
-
-
-{-| updateModel
-Default update function
-
-Add your logic to handle msg here
+@docs Data
+@docs init
+@docs update, updaterec
+@docs view
+@docs matcher
+@docs layer
 
 -}
-updateModel : Env -> Model -> ( Model, List ( LayerTarget, LayerMsg ), Env )
-updateModel env model =
-    ( model, [], env )
+
+import Canvas
+import Lib.Base exposing (SceneMsg)
+import Lib.UserData exposing (UserData)
+import Messenger.Audio.Base exposing (AudioOption(..))
+import Messenger.Base exposing (WorldEvent(..))
+import Messenger.GeneralModel exposing (Matcher, Msg(..), MsgBase(..))
+import Messenger.Layer.Layer exposing (ConcreteLayer, LayerInit, LayerStorage, LayerUpdate, LayerUpdateRec, LayerView, genLayer)
+import Scenes.Sample.LayerBase exposing (..)
 
 
-{-| updateModelRec
-Default update function
+{-| Data type for layer
+-}
+type alias Data =
+    {}
 
-Add your logic to handle LayerMsg here
+
+{-| Init function for layer
+-}
+init : LayerInit SceneCommonData UserData LayerMsg Data
+init env initMsg =
+    {}
+
+
+{-| Update function for layer
+-}
+update : LayerUpdate SceneCommonData UserData LayerTarget LayerMsg SceneMsg Data
+update env evt data =
+    ( data, [], ( env, False ) )
+
+
+{-| Recursively update function
+-}
+updaterec : LayerUpdateRec SceneCommonData UserData LayerTarget LayerMsg SceneMsg Data
+updaterec env msg data =
+    ( data, [], env )
+
+
+{-| view
+
+view function for layer **Layer** in **Test\_SOMMsg**
 
 -}
-updateModelRec : Env -> LayerMsg -> Model -> ( Model, List ( LayerTarget, LayerMsg ), Env )
-updateModelRec env _ model =
-    ( model, [], env )
+view : LayerView SceneCommonData UserData Data
+view env data =
+    Canvas.empty
 
 
-{-| viewModel
-Default view function
-
-If you don't have components, remove viewComponent.
-
-If you have other elements than components, add them after viewComponent.
-
+{-| Matcher function
 -}
-viewModel : Env -> Model -> Renderable
-viewModel _ _ =
-    empty
+matcher : Matcher Data LayerTarget
+matcher data tar =
+    tar == "Layer"
+
+
+{-| Concrete layer
+-}
+layercon : ConcreteLayer Data SceneCommonData UserData LayerTarget LayerMsg SceneMsg
+layercon =
+    { init = init
+    , update = update
+    , updaterec = updaterec
+    , view = view
+    , matcher = matcher
+    }
+
+
+{-| Generator function to generate an abstract layer storage
+-}
+layer : LayerStorage SceneCommonData UserData LayerTarget LayerMsg SceneMsg
+layer =
+    genLayer layercon
