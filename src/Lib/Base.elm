@@ -19,4 +19,4 @@ to send to a scene when switching scenes.
 
 -}
 type SceneMsg
-    = Null
+    = NullSceneMsg
