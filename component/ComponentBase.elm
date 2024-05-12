@@ -13,7 +13,7 @@ module Scenes.$0.Components.ComponentBase exposing (ComponentMsg(..), ComponentT
 {-| Component message
 -}
 type ComponentMsg
-    = Null
+    = NullComponentMsg
 
 
 {-| Component target

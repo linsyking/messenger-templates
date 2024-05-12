@@ -71,7 +71,7 @@ view env data =
 -}
 matcher : Matcher Data LayerTarget
 matcher data tar =
-    tar == "Layer"
+    tar == "$1"
 
 
 {-| Concrete layer
