@@ -14,7 +14,6 @@ Record all the scenes here
 import Lib.Base exposing (SceneMsg)
 import Lib.UserData exposing (UserData)
 import Messenger.Scene.Scene exposing (AllScenes)
-import Scenes.Sample.Model as Sample
 $0
 
 {-| All Scenes
