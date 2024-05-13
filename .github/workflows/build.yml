@@ -42,17 +42,5 @@ jobs:
         make
         printf "\n" | messenger layer H KC -c
         make
-        printf "\n" | messenger component K
-        make
-        printf "\n" | messenger component S -d K
-        make
-        printf "\n" | messenger sceneproto Core
-        make
-        printf "\n" | messenger protolayer core gamelayer
-        make
-        printf "\n" | messenger level Core L1
-        make
-        printf "\n" | messenger level Core level2
-        make
-        printf "\n" | messenger protolayer core l2
+        printf "\n" | messenger component H K
         make
