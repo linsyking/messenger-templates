@@ -13,13 +13,13 @@ import Lib.Base exposing (SceneMsg)
 import Lib.UserData exposing (UserData)
 import Messenger.Component.Component exposing (AbstractComponent, updateComponents)
 import Messenger.GeneralModel exposing (Matcher, Msg(..), MsgBase(..))
-import Messenger.Layer.Layer exposing (BasicUpdater, ConcreteLayer, Handler, LayerInit, LayerStorage, LayerUpdate, LayerUpdateRec, LayerView, genLayer, handleComponentMsgs)
-import Scenes.$0.Components.ComponentBase exposing (BaseData, ComponentMsg, ComponentTarget)
+import Messenger.Layer.Layer exposing (ConcreteLayer, Handler, LayerInit, LayerStorage, LayerUpdate, LayerUpdateRec, LayerView, genLayer, handleComponentMsgs)
+import Scenes.$0.Components.ComponentBase exposing (BaseData, ComponentMsg)
 import Scenes.$0.LayerBase exposing (..)
 
 
 type alias Data =
-    { components : List (AbstractComponent SceneCommonData UserData ComponentTarget ComponentMsg BaseData SceneMsg)
+    { components : List (AbstractComponent SceneCommonData UserData LayerTarget ComponentMsg BaseData SceneMsg)
     }
 
 
@@ -28,7 +28,7 @@ init env initMsg =
     Data []
 
 
-handleComponentMsg : Handler Data SceneCommonData UserData ComponentTarget LayerMsg SceneMsg ComponentMsg
+handleComponentMsg : Handler Data SceneCommonData UserData LayerTarget LayerMsg SceneMsg ComponentMsg
 handleComponentMsg env compmsg data =
     case compmsg of
         SOMMsg som ->
@@ -38,7 +38,7 @@ handleComponentMsg env compmsg data =
             ( data, [], env )
 
 
-update : LayerUpdate SceneCommonData UserData ComponentTarget LayerMsg SceneMsg Data
+update : LayerUpdate SceneCommonData UserData LayerTarget LayerMsg SceneMsg Data
 update env evt data =
     let
         ( comps1, msgs1, ( env1, block1 ) ) =
@@ -50,7 +50,7 @@ update env evt data =
     ( data1, msgs2, ( env2, block1 ) )
 
 
-updaterec : LayerUpdateRec SceneCommonData UserData ComponentTarget LayerMsg SceneMsg Data
+updaterec : LayerUpdateRec SceneCommonData UserData LayerTarget LayerMsg SceneMsg Data
 updaterec env msg data =
     ( data, [], env )
 
@@ -60,12 +60,12 @@ view env data =
     Canvas.empty
 
 
-matcher : Matcher Data ComponentTarget
+matcher : Matcher Data LayerTarget
 matcher data tar =
     tar == "$1"
 
 
-layercon : ConcreteLayer Data SceneCommonData UserData ComponentTarget LayerMsg SceneMsg
+layercon : ConcreteLayer Data SceneCommonData UserData LayerTarget LayerMsg SceneMsg
 layercon =
     { init = init
     , update = update
@@ -75,6 +75,6 @@ layercon =
     }
 
 
-layer : LayerStorage SceneCommonData UserData ComponentTarget LayerMsg SceneMsg
+layer : LayerStorage SceneCommonData UserData LayerTarget LayerMsg SceneMsg
 layer =
     genLayer layercon
