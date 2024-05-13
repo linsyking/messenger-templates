@@ -11,9 +11,7 @@ Set the Data Type, Init logic, Update logic, View logic and Matcher logic here.
 import Canvas
 import Lib.Base exposing (SceneMsg)
 import Lib.UserData exposing (UserData)
-import Messenger.Audio.Base exposing (AudioOption(..))
-import Messenger.Base exposing (WorldEvent(..))
-import Messenger.GeneralModel exposing (Matcher, Msg(..), MsgBase(..))
+import Messenger.GeneralModel exposing (Matcher)
 import Messenger.Layer.Layer exposing (ConcreteLayer, LayerInit, LayerStorage, LayerUpdate, LayerUpdateRec, LayerView, genLayer)
 import Scenes.$0.LayerBase exposing (..)
 
