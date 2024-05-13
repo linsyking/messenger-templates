@@ -8,10 +8,9 @@ Set the Data Type, Init logic, Update logic, View logic and Matcher logic here.
 
 -}
 
-import Canvas
 import Lib.Base exposing (SceneMsg)
 import Lib.UserData exposing (UserData)
-import Messenger.Component.Component exposing (AbstractComponent, updateComponents)
+import Messenger.Component.Component exposing (AbstractComponent, updateComponents, viewComponents)
 import Messenger.GeneralModel exposing (Matcher, Msg(..), MsgBase(..))
 import Messenger.Layer.Layer exposing (ConcreteLayer, Handler, LayerInit, LayerStorage, LayerUpdate, LayerUpdateRec, LayerView, genLayer, handleComponentMsgs)
 import Scenes.$0.Components.ComponentBase exposing (BaseData, ComponentMsg)
@@ -57,7 +56,7 @@ updaterec env msg data =
 
 view : LayerView SceneCommonData UserData Data
 view env data =
-    Canvas.empty
+    viewComponents env data.components
 
 
 matcher : Matcher Data LayerTarget
