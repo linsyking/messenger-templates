@@ -13,12 +13,12 @@ import Lib.UserData exposing (UserData)
 import Messenger.Component.Component exposing (AbstractComponent, updateComponents, viewComponents)
 import Messenger.GeneralModel exposing (Matcher, Msg(..), MsgBase(..))
 import Messenger.Layer.Layer exposing (ConcreteLayer, Handler, LayerInit, LayerStorage, LayerUpdate, LayerUpdateRec, LayerView, genLayer, handleComponentMsgs)
-import Scenes.$0.Components.ComponentBase exposing (BaseData, ComponentMsg)
+import Scenes.$0.Components.ComponentBase exposing (BaseData, ComponentMsg, ComponentTarget)
 import Scenes.$0.LayerBase exposing (..)
 
 
 type alias Data =
-    { components : List (AbstractComponent SceneCommonData UserData LayerTarget ComponentMsg BaseData SceneMsg)
+    { components : List (AbstractComponent SceneCommonData UserData ComponentTarget ComponentMsg BaseData SceneMsg)
     }
 
 
