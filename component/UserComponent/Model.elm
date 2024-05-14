@@ -1,4 +1,4 @@
-module Scenes.$0.Components.$1.Model exposing (component)
+module $0.$1.$2.$3.Model exposing (component)
 
 {-| Component model
 
@@ -10,8 +10,8 @@ import Canvas
 import Lib.Base exposing (SceneMsg)
 import Lib.UserData exposing (UserData)
 import Messenger.Component.Component exposing (ComponentInit, ComponentMatcher, ComponentStorage, ComponentUpdate, ComponentUpdateRec, ComponentView, ConcreteUserComponent, genComponent)
-import Scenes.$0.Components.ComponentBase exposing (BaseData, ComponentMsg, ComponentTarget)
-import Scenes.$0.LayerBase exposing (SceneCommonData)
+import $0.$1.$2.ComponentBase exposing (BaseData, ComponentMsg, ComponentTarget)
+import $0.$1.LayerBase exposing (SceneCommonData)
 
 
 type alias Data =
