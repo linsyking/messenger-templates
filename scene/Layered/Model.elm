@@ -14,18 +14,11 @@ import Messenger.Scene.Scene exposing (SceneStorage)
 import Scenes.$0.LayerBase exposing (..)
 
 
-{-| Initialize the commondata used in the scene.
--}
 commonDataInit : Env () UserData -> Maybe SceneMsg -> SceneCommonData
 commonDataInit _ _ =
     {}
 
 
-{-| Init function for the scene.
-
-Add all the layers with their init msg here.
-
--}
 init : LayeredSceneInit SceneCommonData UserData LayerTarget LayerMsg SceneMsg
 init env msg =
     let
@@ -42,14 +35,12 @@ init env msg =
     }
 
 
-{-| Render setting function
--}
 settings : LayeredSceneSettingsFunc SceneCommonData UserData LayerTarget LayerMsg SceneMsg
 settings _ _ _ =
     []
 
 
-{-| Generate an abstract scnene storage
+{-| Scene generator
 -}
 scene : SceneStorage UserData SceneMsg
 scene =

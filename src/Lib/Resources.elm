@@ -13,9 +13,7 @@ import Dict
 import Messenger.Render.SpriteSheet exposing (SpriteSheet)
 
 
-{-| allTexture
-
-A list of all the textures.
+{-| A list of all the textures.
 
 Add your textures here. Don't worry if your list is too long. You can split those resources according to their usage.
 
@@ -32,7 +30,7 @@ allTexture =
     []
 
 
-{-| Add all your sprite sheets here.
+{-| All sprite sheets.
 
 Example:
 
