@@ -1,23 +1,24 @@
-module Scenes.$0.Model exposing (scene)
+module SceneProtos.$0.Model exposing (genScene)
 
 {-| Scene configuration module
 
-@docs scene
+@docs genScene
 
 -}
 
 import Canvas
 import Lib.Base exposing (SceneMsg)
 import Lib.UserData exposing (UserData)
-import Messenger.Scene.RawScene exposing (RawSceneInit, RawSceneUpdate, RawSceneView, genRawScene)
+import Messenger.Scene.RawScene exposing (RawSceneProtoInit, RawSceneProtoLevelInit, RawSceneUpdate, RawSceneView, genRawScene, initCompose)
 import Messenger.Scene.Scene exposing (MConcreteScene, SceneStorage)
+import SceneProtos.$0.Init exposing (InitData)
 
 
 type alias Data =
     {}
 
 
-init : RawSceneInit Data UserData SceneMsg
+init : RawSceneProtoInit Data UserData InitData
 init env msg =
     {}
 
@@ -32,9 +33,9 @@ view env data =
     Canvas.empty
 
 
-scenecon : MConcreteScene Data UserData SceneMsg
-scenecon =
-    { init = init
+scenecon : RawSceneProtoLevelInit UserData SceneMsg InitData -> MConcreteScene Data UserData SceneMsg
+scenecon initd =
+    { init = initCompose init initd
     , update = update
     , view = view
     }
@@ -42,6 +43,6 @@ scenecon =
 
 {-| Scene generator
 -}
-scene : SceneStorage UserData SceneMsg
-scene =
-    genRawScene scenecon
+genScene : RawSceneProtoLevelInit UserData SceneMsg InitData -> SceneStorage UserData SceneMsg
+genScene initd =
+    genRawScene <| scenecon initd
