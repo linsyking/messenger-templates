@@ -53,7 +53,7 @@ componentcon =
     }
 
 
-{-| Exported component
+{-| Component generator
 -}
 component : ComponentStorage SceneCommonData UserData ComponentTarget ComponentMsg BaseData SceneMsg
 component =

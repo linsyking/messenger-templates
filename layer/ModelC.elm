@@ -74,6 +74,8 @@ layercon =
     }
 
 
+{-| Layer generator
+-}
 layer : LayerStorage SceneCommonData UserData LayerTarget LayerMsg SceneMsg
 layer =
     genLayer layercon

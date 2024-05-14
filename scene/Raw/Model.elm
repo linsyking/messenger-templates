@@ -13,17 +13,10 @@ import Messenger.Scene.RawScene exposing (RawSceneInit, RawSceneUpdate, RawScene
 import Messenger.Scene.Scene exposing (MConcreteScene, SceneStorage)
 
 
-{-| Scene data
--}
 type alias Data =
     {}
 
 
-{-| Init function for the scene.
-
-Add all the layers with their init msg here.
-
--}
 init : RawSceneInit Data UserData SceneMsg
 init env msg =
     {}
@@ -47,7 +40,7 @@ scenecon =
     }
 
 
-{-| Generate an abstract scnene storage
+{-| Scene generator
 -}
 scene : SceneStorage UserData SceneMsg
 scene =
