@@ -1,8 +1,8 @@
-module SceneProtos.$0.Model exposing (scene)
+module SceneProtos.$0.Model exposing (genScene)
 
 {-| Scene configuration module
 
-@docs scene
+@docs genScene
 
 -}
 
@@ -43,6 +43,6 @@ settings _ _ _ =
 
 {-| Scene generator
 -}
-scene : LayeredSceneLevelInit UserData SceneMsg InitData -> SceneStorage UserData SceneMsg
-scene initd =
+genScene : LayeredSceneLevelInit UserData SceneMsg InitData -> SceneStorage UserData SceneMsg
+genScene initd =
     genLayeredScene (initCompose init initd) settings
