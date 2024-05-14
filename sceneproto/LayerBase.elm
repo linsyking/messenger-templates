@@ -1,4 +1,4 @@
-module $0.$1.LayerBase exposing
+module SceneProtos.$0.LayerBase exposing
     ( LayerTarget
     , SceneCommonData
     , LayerMsg(..)
