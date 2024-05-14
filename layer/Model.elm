@@ -1,4 +1,4 @@
-module Scenes.$0.$1.Model exposing (layer)
+module $0.$1.$2.Model exposing (layer)
 
 {-| Layer configuration module
 
@@ -13,7 +13,7 @@ import Lib.Base exposing (SceneMsg)
 import Lib.UserData exposing (UserData)
 import Messenger.GeneralModel exposing (Matcher)
 import Messenger.Layer.Layer exposing (ConcreteLayer, LayerInit, LayerStorage, LayerUpdate, LayerUpdateRec, LayerView, genLayer)
-import Scenes.$0.LayerBase exposing (..)
+import $0.$1.LayerBase exposing (..)
 
 
 type alias Data =
@@ -42,7 +42,7 @@ view env data =
 
 matcher : Matcher Data LayerTarget
 matcher data tar =
-    tar == "$1"
+    tar == "$2"
 
 
 layercon : ConcreteLayer Data SceneCommonData UserData LayerTarget LayerMsg SceneMsg
