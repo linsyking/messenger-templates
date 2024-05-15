@@ -13,7 +13,7 @@ import Lib.UserData exposing (UserData)
 import Messenger.Component.Component exposing (AbstractComponent, updateComponents, viewComponents)
 import Messenger.GeneralModel exposing (Matcher, Msg(..), MsgBase(..))
 import Messenger.Layer.Layer exposing (ConcreteLayer, Handler, LayerInit, LayerStorage, LayerUpdate, LayerUpdateRec, LayerView, genLayer, handleComponentMsgs)
-import $0.$1.Components.ComponentBase exposing (BaseData, ComponentMsg, ComponentTarget)
+import $0.$1.$3.ComponentBase exposing (BaseData, ComponentMsg, ComponentTarget)
 import $0.$1.LayerBase exposing (..)
 
 
