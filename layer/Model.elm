@@ -13,7 +13,7 @@ import Lib.Base exposing (SceneMsg)
 import Lib.UserData exposing (UserData)
 import Messenger.GeneralModel exposing (Matcher)
 import Messenger.Layer.Layer exposing (ConcreteLayer, LayerInit, LayerStorage, LayerUpdate, LayerUpdateRec, LayerView, genLayer)
-import $0.$1.LayerBase exposing (..)
+import $0.$1.SceneBase exposing (..)
 
 
 type alias Data =

@@ -14,7 +14,7 @@ import Messenger.Component.Component exposing (AbstractComponent, updateComponen
 import Messenger.GeneralModel exposing (Matcher, Msg(..), MsgBase(..))
 import Messenger.Layer.Layer exposing (ConcreteLayer, Handler, LayerInit, LayerStorage, LayerUpdate, LayerUpdateRec, LayerView, genLayer, handleComponentMsgs)
 import $0.$1.$3.ComponentBase exposing (BaseData, ComponentMsg, ComponentTarget)
-import $0.$1.LayerBase exposing (..)
+import $0.$1.SceneBase exposing (..)
 
 
 type alias Data =

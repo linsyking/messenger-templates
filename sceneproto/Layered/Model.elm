@@ -12,7 +12,7 @@ import Messenger.Base exposing (Env, addCommonData)
 import Messenger.Scene.LayeredScene exposing (LayeredSceneLevelInit, LayeredSceneProtoInit, LayeredSceneSettingsFunc, genLayeredScene, initCompose)
 import Messenger.Scene.Scene exposing (SceneStorage)
 import SceneProtos.$0.Init exposing (InitData)
-import SceneProtos.$0.LayerBase exposing (..)
+import SceneProtos.$0.SceneBase exposing (..)
 
 
 commonDataInit : Env () UserData -> Maybe InitData -> SceneCommonData
