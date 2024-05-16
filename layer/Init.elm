@@ -1,4 +1,4 @@
-module SceneProtos.$0.Init exposing (InitData)
+module $0.$1.$2.Init exposing (InitData)
 
 {-|
 

@@ -1,4 +1,4 @@
-module Scenes.$0.LayerBase exposing
+module Scenes.$0.SceneBase exposing
     ( LayerTarget
     , SceneCommonData
     , LayerMsg(..)
@@ -7,9 +7,9 @@ module Scenes.$0.LayerBase exposing
 {-|
 
 
-# LayerBase
+# SceneBase
 
-Basic data for the layers.
+Basic data for the scene.
 
 @docs LayerTarget
 @docs SceneCommonData
