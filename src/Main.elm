@@ -13,7 +13,7 @@ Main module for the whole game.
 
 import Lib.Base exposing (SceneMsg)
 import Lib.Ports exposing (alert, audioPortFromJS, audioPortToJS, prompt, promptReceiver, sendInfo)
-import Lib.Resources exposing (allSpriteSheets, allTexture)
+import Lib.Resources exposing (resources)
 import Lib.UserData exposing (UserData)
 import MainConfig exposing (background, debug, initGlobalData, initScene, initSceneMsg, saveGlobalData, timeInterval, virtualSize)
 import Messenger.UI exposing (Output, genMain)
@@ -52,4 +52,5 @@ userConfig =
 -}
 main : Output UserData SceneMsg
 main =
-    genMain { config = userConfig, allScenes = allScenes }
+    genMain { config = userConfig, scenes = allScenes, resources = resources }
+
