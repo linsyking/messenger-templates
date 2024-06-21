@@ -11,7 +11,7 @@
             "linsyking/elm-canvas": "4.1.0",
             "avh4/elm-color": "1.0.0",
             "ianmackenzie/elm-units": "2.10.0",
-            "linsyking/messenger-core": "12.1.0"
+            "linsyking/messenger-core": "13.0.0"
         },
         "indirect": {
             "elm/html": "1.0.0",
