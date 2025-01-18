@@ -9,7 +9,7 @@ module Scenes.$0.Model exposing (scene)
 import Lib.Base exposing (SceneMsg)
 import Lib.UserData exposing (UserData)
 import Messenger.Base exposing (Env, addCommonData)
-import Messenger.Scene.LayeredScene exposing (LayeredSceneInit, LayeredSceneSettingsFunc, genLayeredScene)
+import Messenger.Scene.LayeredScene exposing (LayeredSceneInit, LayeredSceneEffectFunc, genLayeredScene)
 import Messenger.Scene.Scene exposing (SceneStorage)
 import Scenes.$0.SceneBase exposing (..)
 
@@ -35,7 +35,7 @@ init env msg =
     }
 
 
-settings : LayeredSceneSettingsFunc SceneCommonData UserData LayerTarget LayerMsg SceneMsg
+settings : LayeredSceneEffectFunc SceneCommonData UserData LayerTarget LayerMsg SceneMsg
 settings _ _ _ =
     []
 
