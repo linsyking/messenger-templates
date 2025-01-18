@@ -2,8 +2,6 @@ module GlobalComponents.$0.Model exposing (InitOption, genGC)
 
 {-| Global component configuration module
 
-A Global Component to show FPS at the corner
-
 @docs InitOption, genGC
 
 -}
