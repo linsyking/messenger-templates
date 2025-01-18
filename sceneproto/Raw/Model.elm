@@ -6,7 +6,7 @@ module SceneProtos.$0.Model exposing (genScene)
 
 -}
 
-import Canvas
+import REGL
 import Lib.Base exposing (SceneMsg)
 import Lib.UserData exposing (UserData)
 import Messenger.Scene.RawScene exposing (RawSceneProtoInit, RawSceneProtoLevelInit, RawSceneUpdate, RawSceneView, genRawScene, initCompose)
@@ -30,7 +30,7 @@ update env msg data =
 
 view : RawSceneView UserData Data
 view env data =
-    Canvas.empty
+    REGL.empty
 
 
 scenecon : RawSceneProtoLevelInit UserData SceneMsg InitData -> MConcreteScene Data UserData SceneMsg

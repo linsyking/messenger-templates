@@ -6,7 +6,7 @@ module $0.$1.$2.$3.Model exposing (component)
 
 -}
 
-import Canvas
+import REGL
 import Lib.Base exposing (SceneMsg)
 import Lib.UserData exposing (UserData)
 import Messenger.Component.Component exposing (ComponentInit, ComponentMatcher, ComponentStorage, ComponentUpdate, ComponentUpdateRec, ComponentView, ConcreteUserComponent, genComponent)
@@ -35,7 +35,7 @@ updaterec env msg data basedata =
 
 view : ComponentView SceneCommonData UserData Data BaseData
 view env data basedata =
-    ( Canvas.empty, 0 )
+    ( REGL.empty, 0 )
 
 
 matcher : ComponentMatcher Data BaseData ComponentTarget

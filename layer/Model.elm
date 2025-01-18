@@ -8,7 +8,7 @@ Set the Data Type, Init logic, Update logic, View logic and Matcher logic here.
 
 -}
 
-import Canvas
+import REGL
 import Lib.Base exposing (SceneMsg)
 import Lib.UserData exposing (UserData)
 import Messenger.GeneralModel exposing (Matcher)
@@ -37,7 +37,7 @@ updaterec env msg data =
 
 view : LayerView SceneCommonData UserData Data
 view env data =
-    Canvas.empty
+    REGL.empty
 
 
 matcher : Matcher Data LayerTarget
