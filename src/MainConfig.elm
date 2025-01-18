@@ -1,12 +1,13 @@
 module MainConfig exposing
-    ( background
-    , debug
+    ( debug
     , initGlobalData
     , initScene
     , initSceneMsg
     , saveGlobalData
     , timeInterval
     , virtualSize
+    , fboNum
+    , enabledBuiltinPrograms
     )
 
 {-|
@@ -14,7 +15,6 @@ module MainConfig exposing
 
 # Main Config
 
-@docs background
 @docs debug
 @docs initGlobalData
 @docs initScene
@@ -22,14 +22,16 @@ module MainConfig exposing
 @docs saveGlobalData
 @docs timeInterval
 @docs virtualSize
+@docs fboNum
+@docs enabledBuiltinPrograms
 
 -}
 
-import Canvas exposing (Renderable)
 import Lib.Base exposing (SceneMsg)
 import Lib.UserData exposing (UserData, decodeUserData, encodeUserData)
-import Messenger.Base exposing (InternalData, UserViewGlobalData)
-import Messenger.UserConfig exposing (TimeInterval(..), transparentBackground)
+import Messenger.Base exposing (UserViewGlobalData)
+import Messenger.UserConfig exposing (EnabledBuiltinProgram(..))
+import REGL
 
 
 {-| Initial scene
@@ -60,18 +62,11 @@ debug =
     True
 
 
-{-| Background of the scene
--}
-background : InternalData -> Renderable
-background =
-    transparentBackground
-
-
 {-| Interval between two Tick messages
 -}
-timeInterval : TimeInterval
+timeInterval : REGL.TimeInterval
 timeInterval =
-    Animation
+    REGL.AnimationFrame
 
 
 {-| Initialize the global data with the user data.
@@ -104,3 +99,17 @@ Used when saving the user data to local storage.
 saveGlobalData : UserViewGlobalData UserData -> String
 saveGlobalData globalData =
     encodeUserData globalData.userData
+
+
+{-| The number of frame buffers used in the game.
+-}
+fboNum : Int
+fboNum =
+    5
+
+
+{-| Builtin programs that are enabled.
+-}
+enabledBuiltinPrograms : EnabledBuiltinProgram
+enabledBuiltinPrograms =
+    AllBuiltinProgram

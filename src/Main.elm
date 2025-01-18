@@ -11,14 +11,14 @@ Main module for the whole game.
 
 -}
 
-import GlobalComponents exposing (allGlobalComopnents)
+import GlobalComponents exposing (allGlobalComponents)
 import Lib.Base exposing (SceneMsg)
-import Lib.Ports exposing (alert, audioPortFromJS, audioPortToJS, prompt, promptReceiver, sendInfo)
+import Lib.Ports exposing (alert, audioPortFromJS, audioPortToJS, execREGLCmd, prompt, promptReceiver, recvREGLCmd, reglupdate, sendInfo, setView)
 import Lib.Resources exposing (resources)
 import Lib.UserData exposing (UserData)
-import MainConfig exposing (background, debug, initGlobalData, initScene, initSceneMsg, saveGlobalData, timeInterval, virtualSize)
+import MainConfig exposing (debug, enabledBuiltinPrograms, fboNum, initGlobalData, initScene, initSceneMsg, saveGlobalData, timeInterval, virtualSize)
 import Messenger.UI exposing (Output, genMain)
-import Messenger.UserConfig exposing (UserConfig)
+import Messenger.UserConfig exposing (EnabledBuiltinProgram(..), UserConfig)
 import Scenes.AllScenes exposing (allScenes)
 
 
@@ -30,7 +30,6 @@ userConfig =
     , initSceneMsg = initSceneMsg
     , virtualSize = virtualSize
     , debug = debug
-    , background = background
     , timeInterval = timeInterval
     , globalDataCodec =
         { encode = saveGlobalData
@@ -43,7 +42,13 @@ userConfig =
         , alert = alert
         , prompt = prompt
         , promptReceiver = promptReceiver
+        , reglupdate = reglupdate
+        , setView = setView
+        , execREGLCmd = execREGLCmd
+        , recvREGLCmd = recvREGLCmd
         }
+    , enabledProgram = enabledBuiltinPrograms
+    , fboNum = fboNum
     }
 
 
@@ -51,5 +56,4 @@ userConfig =
 -}
 main : Output UserData SceneMsg
 main =
-    genMain { config = userConfig, scenes = allScenes, resources = resources, globalComponents = allGlobalComopnents }
-
+    genMain { config = userConfig, scenes = allScenes, resources = resources, globalComponents = allGlobalComponents }

@@ -1,4 +1,4 @@
-module GlobalComponents exposing (allGlobalComopnents)
+module GlobalComponents exposing (allGlobalComponents)
 
 {-|
 
@@ -7,7 +7,7 @@ module GlobalComponents exposing (allGlobalComopnents)
 
 Record all the global components to load at the beginning here
 
-@docs allGlobalComopnents
+@docs allGlobalComponents
 
 -}
 
@@ -18,6 +18,6 @@ import Messenger.Scene.Scene exposing (GlobalComponentStorage)
 
 {-| All global components to load at the beginning of the game.
 -}
-allGlobalComopnents : List (GlobalComponentStorage UserData SceneMsg)
-allGlobalComopnents =
+allGlobalComponents : List (GlobalComponentStorage UserData SceneMsg)
+allGlobalComponents =
     []
