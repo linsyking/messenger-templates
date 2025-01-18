@@ -9,7 +9,7 @@ module SceneProtos.$0.Model exposing (genScene)
 import Lib.Base exposing (SceneMsg)
 import Lib.UserData exposing (UserData)
 import Messenger.Base exposing (Env, addCommonData)
-import Messenger.Scene.LayeredScene exposing (LayeredSceneLevelInit, LayeredSceneProtoInit, LayeredSceneSettingsFunc, genLayeredScene, initCompose)
+import Messenger.Scene.LayeredScene exposing (LayeredSceneLevelInit, LayeredSceneProtoInit, LayeredSceneEffectFunc, genLayeredScene, initCompose)
 import Messenger.Scene.Scene exposing (SceneStorage)
 import SceneProtos.$0.Init exposing (InitData)
 import SceneProtos.$0.SceneBase exposing (..)
@@ -36,7 +36,7 @@ init env data =
     }
 
 
-settings : LayeredSceneSettingsFunc SceneCommonData UserData LayerTarget LayerMsg SceneMsg
+settings : LayeredSceneEffectFunc SceneCommonData UserData LayerTarget LayerMsg SceneMsg
 settings _ _ _ =
     []
 
